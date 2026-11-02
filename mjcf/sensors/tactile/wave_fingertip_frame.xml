@@ -1,0 +1,8 @@
+<mujoco model="wave_fingertip_frame">
+  <!-- Massless F6 measurement frame, attached to each fingertip DP body. -->
+  <worldbody>
+    <body name="mount_frame">
+      <site name="frame" type="sphere" size="0.001" rgba="1 0 0 0"/>
+    </body>
+  </worldbody>
+</mujoco>

@@ -1,0 +1,8 @@
+<mujoco model="hesai_jt16_mock">
+  <!-- The robot model already contains the JT16 housing. -->
+  <worldbody>
+    <body name="mount_frame">
+      <site name="ray_origin" type="sphere" size="0.001"/>
+    </body>
+  </worldbody>
+</mujoco>

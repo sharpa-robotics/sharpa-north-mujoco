@@ -1,0 +1,30 @@
+{
+  "archive": "sharpa-platform.tar.gz",
+  "archive_format": "tar.gz",
+  "archive_sha256": "c9740dcf2c8a17686cb5c0ec52749561b380893134aa04f122fca3cc1b1965ee",
+  "archive_size": 206497001,
+  "default_profile": "sim_north",
+  "entrypoint": "loader",
+  "name": "sharpa_platform",
+  "profiles": {
+    "sim_north": {
+      "config": "config/sim/sim_north.json",
+      "files": [
+        "config/sim/sim_north.D01W.HA12.json"
+      ]
+    }
+  },
+  "release": {
+    "build_id": "1.7.10+868484dbc138.GEN_X86",
+    "build_time": "2026-10-21T17:58:08+08:00",
+    "config_schema_version": 1,
+    "features": {
+      "webrtc_client": true
+    },
+    "git_commit": "868484dbc138",
+    "loader_abi": "2026091301",
+    "product_version": "1.7.10",
+    "target_platform": "GEN_X86"
+  },
+  "schema_version": 2
+}

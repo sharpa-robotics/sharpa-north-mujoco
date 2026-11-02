@@ -1,0 +1,12 @@
+<mujoco model="hesai_ftx140_frame">
+  <!--
+    The production POC2 torso STL already contains both FTX140 housings.
+    Runtime assembly adds the massless mount body and ray_origin site so the
+    visual mesh is not duplicated.
+  -->
+  <worldbody>
+    <body name="mount_frame">
+      <site name="ray_origin" type="sphere" size="0.001"/>
+    </body>
+  </worldbody>
+</mujoco>

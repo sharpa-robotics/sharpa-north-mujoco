@@ -1,0 +1,14 @@
+build*/
+dist/
+.venv/
+MUJOCO_LOG.TXT
+__pycache__/
+*.py[cod]
+.vscode/
+/AGENTS.override.md
+/.local-tools/
+/.local-tests/
+.import.lock
+.stage.lock
+.import-*/
+.stage-*/

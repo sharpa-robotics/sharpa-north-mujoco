@@ -1,0 +1,4 @@
+# Keep repository text files consistent with the Linux build environment.
+* text=auto eol=lf
+third_party/sharpa_platform/**/*.tar.zst filter=lfs diff=lfs merge=lfs -text
+third_party/sharpa_platform/**/*.tar.gz filter=lfs diff=lfs merge=lfs -text

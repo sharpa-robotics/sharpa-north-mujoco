@@ -1,0 +1,15 @@
+{
+    "zenoh": {
+        "mode": "client",
+        "transport_mode": "udp",
+        "udp_endpoint": "udp/127.0.0.1:7449?rel=1;multistream=1;mixed_rel=0",
+        "connect_timeout_ms": 3000,
+        "scouting_multicast": false,
+        "scouting_gossip": false,
+        "shared_memory": false,
+        "lowlatency": false,
+        "qos": true,
+        "timestamping": false,
+        "communication_policy": "communication_policy.json"
+    }
+}

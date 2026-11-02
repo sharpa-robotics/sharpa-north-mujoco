@@ -1,0 +1,26 @@
+{
+  "archive": "sharpa-platform.tar.gz",
+  "archive_format": "tar.gz",
+  "archive_sha256": "8d063c6969ee64857648373afab16476e096847a25a94daffa87f99a5f9254d5",
+  "archive_size": 123713537,
+  "default_profile": "sim_north",
+  "entrypoint": "loader",
+  "name": "sharpa_platform",
+  "profiles": {
+    "sim_north": "config/sim/sim_north.json",
+    "sim_north_teleop": "config/sim/sim_north_teleop.json"
+  },
+  "release": {
+    "build_id": "1.7.10+f6beb84c2a46.GEN_THOR",
+    "build_time": "2026-10-21T15:15:00+08:00",
+    "config_schema_version": 1,
+    "features": {
+      "webrtc_client": true
+    },
+    "git_commit": "f6beb84c2a46",
+    "loader_abi": "2026091301",
+    "product_version": "1.7.10",
+    "target_platform": "GEN_THOR"
+  },
+  "schema_version": 1
+}

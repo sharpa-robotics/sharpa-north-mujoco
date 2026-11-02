@@ -1,0 +1,2240 @@
+syntax = "proto3";
+
+// =============================================================================
+// Sharpa Platform North Proto
+// =============================================================================
+// 命名与单位规范以本文件头部约束为准。修改字段、message 或单位时必须先核对
+// 下述规则，再提交本文件。
+//
+// 单位约束（必读）：
+//   - 默认 SI 基本单位（m / s / rad / N / Nm / A / V / Hz / Pa），无后缀即 SI
+//   - 时间字段强制后缀 _ns / _ms / _s（即便 s 也写出）
+//   - 温度强制 _celsius（°C 非 SI）
+//   - 百分比强制 _pct（0-100）
+//   - 严禁 proto 中出现非 SI 遗留单位 _deg / _rpm / _ma / _mv / _kpa
+//
+// 后缀语义（严格）：
+//   State    设备测得的当前状态（含 Header，周期上报）
+//   Command  控制输入（多模式收敛到同一 message 的 oneof）
+//   Status   健康/诊断（区别于物理 State）
+//   Event    一次性事件
+//   Info     慢变元信息
+//   Frame    单帧多模态传感器载荷
+//   Target   Command oneof 分支子结构
+//   Bundle   显式聚合容器
+//   Request / Response  RPC 载荷
+// =============================================================================
+
+package proto;
+
+import "google/protobuf/timestamp.proto";
+
+// =============================================================================
+// SECTION 01  Common primitives  (Header / 几何 / 力学基元)
+// =============================================================================
+
+message Header {
+  google.protobuf.Timestamp stamp = 1;
+  string key                      = 2;   // 来源插件/设备实例标识
+  string frame_id                 = 3;   // 数据所在坐标系
+  google.protobuf.Timestamp sys_time = 4;
+  uint32 seq                      = 5;
+}
+
+message Point      { float x = 1; float y = 2; float z = 3; }
+message Vector2    { float x = 1; float y = 2; }
+message Vector3    { float x = 1; float y = 2; float z = 3; }
+message Quaternion { float w = 1; float x = 2; float y = 3; float z = 4; }
+
+message Pose        { Point  position = 1; Quaternion orientation = 2; }
+message PoseStamped { Header header   = 1; Pose pose = 2; }
+
+message Twist        { Vector3 linear = 1; Vector3 angular = 2; }
+message TwistStamped { Header  header = 1; Twist twist = 2; }
+
+message Wrench        { Vector3 force = 1; Vector3 torque = 2; }
+message WrenchStamped { Header header = 1; Wrench wrench = 2; }
+
+message Transform {
+  Vector3    translation = 1;
+  Quaternion rotation    = 2;
+}
+message TransformStamped {
+  Header    header         = 1;
+  string    child_frame_id = 2;
+  Transform transform      = 3;
+}
+
+// =============================================================================
+// SECTION 02  Global enums
+// =============================================================================
+
+enum Side {
+  SIDE_UNSPECIFIED = 0;
+  SIDE_LEFT        = 1;
+  SIDE_RIGHT       = 2;
+}
+
+enum TactileFinger {
+  TACTILE_FINGER_UNSPECIFIED = 0;
+  TACTILE_FINGER_THUMB       = 1;
+  TACTILE_FINGER_INDEX       = 2;
+  TACTILE_FINGER_MIDDLE      = 3;
+  TACTILE_FINGER_RING        = 4;
+  TACTILE_FINGER_LITTLE      = 5;
+}
+
+enum CameraMount {
+  CAMERA_MOUNT_UNSPECIFIED = 0;
+  CAMERA_MOUNT_HEAD_LEFT   = 1;
+  CAMERA_MOUNT_HEAD_RIGHT  = 2;
+  CAMERA_MOUNT_WRIST_LEFT  = 3;
+  CAMERA_MOUNT_WRIST_RIGHT = 4;
+}
+
+enum SpaceMode {
+  SPACE_MODE_UNSPECIFIED    = 0;
+  SPACE_MODE_JOINT_SPACE    = 1;  // 关节空间控制
+  SPACE_MODE_CARTESIAN_SPACE = 2; // 笛卡尔空间控制
+}
+
+// Runtime control modes shared by plugin status/service payloads. Values
+// intentionally match sharpa::ArmControlMode; 0 is
+// JointPosition for compatibility with existing arm mode service payloads.
+enum ControlMode {
+  CONTROL_MODE_JOINT_POSITION      = 0;
+  CONTROL_MODE_JOINT_PD            = 1;
+  CONTROL_MODE_JOINT_TORQUE        = 2;
+  CONTROL_MODE_SPEED               = 3;
+  CONTROL_MODE_FLOATING            = 4;
+  CONTROL_MODE_MOTOR_PD            = 5;
+  CONTROL_MODE_CARTESIAN_IMPEDANCE = 6;
+}
+
+enum LifecyclePhase {
+  LIFECYCLE_PHASE_UNSPECIFIED = 0;
+  LIFECYCLE_PHASE_INIT        = 1;
+  LIFECYCLE_PHASE_STANDBY     = 2;
+  LIFECYCLE_PHASE_RUNNING     = 3;
+  LIFECYCLE_PHASE_ERROR       = 4;
+  LIFECYCLE_PHASE_FATAL       = 5;
+}
+
+enum FaultLevel {
+  FAULT_LEVEL_UNSPECIFIED = 0;
+  FAULT_LEVEL_INFO        = 1;
+  FAULT_LEVEL_WARNING     = 2;
+  FAULT_LEVEL_ERROR       = 3;
+  FAULT_LEVEL_FATAL       = 4;
+}
+
+// =============================================================================
+// SECTION 03  Observe / Sensor primitives  (IMU / Image / Lidar / Radar / Camera)
+// =============================================================================
+
+// 设备 State 的具体来源、回退策略、后端例外及验证边界：sharpa_platform/docs/device-state-timestamps.md。
+// Timestamp 以 seconds/nanos 编码；ns 单位不代表 ns 精度。集合最大值不证明同时采样或全部时间可用。
+message Imu {
+  // 本子项反馈时间（来源与基准见上述 Platform 时间语义文档）；零表示时间不可用，不代表数据无效。
+  Header     header              = 1;
+  Quaternion orientation         = 2;   // 原始姿态四元数
+  Vector3    angular_velocity    = 3;   // rad/s
+  Vector3    linear_acceleration = 4;   // m/s^2
+  Quaternion aligned_orientation = 5;   // 重力对齐后的姿态
+  // IMU/body 系重力方向单位向量（朝下）。由 orientation 推出：g = -R01^T*[0,0,1]；
+  // 静止且 +Z 朝上时约 (0,0,-1)。无量纲，非 m/s^2。
+  Vector3    gravity             = 6;
+}
+
+message ImuSamples {
+  uint64     stamp_ns = 1;  // 当前所含子项已知时间最大值（ns）；全零/空为零，子项时间保留。
+  repeated Imu imus   = 2;
+}
+
+enum UltrasonicDistanceStatus {
+  ULTRASONIC_DISTANCE_STATUS_UNSPECIFIED = 0;
+  ULTRASONIC_DISTANCE_STATUS_VALID       = 1;
+  ULTRASONIC_DISTANCE_STATUS_NO_TARGET   = 2;
+  ULTRASONIC_DISTANCE_STATUS_INTERFERENCE = 3;
+  ULTRASONIC_DISTANCE_STATUS_NOT_READY   = 4;
+  ULTRASONIC_DISTANCE_STATUS_INVALID     = 5;
+}
+
+message Ultrasonic {
+  // 本响应数据时间；来源可为 MCU 组帧、传输或主机接收，零不代表距离无效。
+  Header                   header              = 1;
+  uint32                   distance_mm         = 2;
+  uint32                   raw_value           = 3;
+  float                    temperature_celsius = 4;
+  UltrasonicDistanceStatus status              = 5;
+  bool                     valid               = 6;
+}
+
+message UltrasonicSamples {
+  uint64               stamp_ns    = 1;  // 当前所含子项已知时间最大值（ns）；全零/空为零，子项时间保留。
+  repeated Ultrasonic  ultrasonics = 2;
+}
+
+message TactileSkinPoint {
+  string serial_id = 1;  // "U6"
+  uint32 row       = 2;
+  uint32 col       = 3;
+  float  force_n   = 4;  // 牛顿
+}
+
+message TactileSkin {
+  // 与本块皮肤反馈配对的数据时间；零表示不可用，无逐触点时间。
+  Header header      = 1;  // key=sensor_name, frame_id, seq=sequence_num
+  repeated TactileSkinPoint points = 3;
+  bool valid         = 4;
+}
+
+message TactileSkinSamples {
+  uint64 stamp_ns = 1;  // 当前所含子项已知时间最大值（ns）；全零/空为零，子项时间保留。
+  repeated TactileSkin skins = 2;
+}
+
+message Image {
+  Header header        = 1;
+  uint32 height        = 2;             // 像素
+  uint32 width         = 3;             // 像素
+  string encoding      = 4;             // "rgb8" / "bgr8" / "mono8" / ...
+  uint32 step          = 5;             // bytes per row
+  bool   is_bigendian  = 6;
+  bytes  data          = 7;
+}
+
+message CompressedImage {
+  Header header = 1;
+  string format = 2;                    // "jpeg" / "png" / "h264"
+  bytes  data   = 3;
+}
+
+// 单帧相机：colour / depth / IR 合并到同一 message，由可选字段决定包含哪些通道
+message CameraFrame {
+  // 腕部 JPEG：与 color.header.stamp 等值的帧数据时间；零表示不可用。其他挂载保持各自来源契约。
+  Header          header     = 1;
+  CameraMount     mount      = 2;
+  CompressedImage color      = 3;       // 主彩色通道
+  Image           depth      = 4;       // 深度（mm 或 m，按 encoding 区分）
+  Image           ir         = 5;       // 红外
+  CompressedImage color_left = 6;       // 立体相机左目
+  CompressedImage color_right = 7;      // 立体相机右目
+}
+
+message PointField {
+  string name      = 1;
+  uint32 offset    = 2;
+  uint32 datatype  = 3;
+  uint32 count     = 4;
+}
+
+message PointCloud {
+  Header              header       = 1;
+  uint32              height       = 2;
+  uint32              width        = 3;
+  repeated PointField fields       = 4;
+  bool                is_bigendian = 5;
+  uint32              point_step   = 6;
+  uint32              row_step     = 7;
+  bytes               data         = 8;
+  bool                is_dense     = 9;
+}
+
+// 激光雷达单点，坐标单位为 m。
+message LidarPoint {
+  float  x            = 1;
+  float  y            = 2;
+  float  z            = 3;
+  uint32 reflectivity = 4;  // 当前设备有效范围 0-255
+}
+
+// JT16 同一方位角下的一组通道点。
+message LaserShot {
+  uint64              timestamp_ns = 1;  // 本扫描线数据时间（ns）；零表示不可用，事件不保证为物理采样。
+  float               azimuth_rad  = 2;
+  repeated LidarPoint points       = 3;
+}
+
+// JT16 一圈完整扫描。
+message LaserShots {
+  repeated LaserShot shots = 1;
+}
+
+// FTX140 单个 UDP 数据包对应的扫描区域。
+message SubArea {
+  uint64              timestamp_ns = 1;  // 本区域设备时间或主机接收时间（ns）；均不可用为零。
+  uint32              row_id       = 2;
+  uint32              column_id    = 3;
+  repeated LidarPoint points       = 4;
+}
+
+// FTX140 一帧完整扫描。
+message SubAreas {
+  repeated SubArea subareas = 1;
+}
+
+// JT16 packed 传输：定长小端组头表 + 按 shot 顺序拼接的点表。
+// shots：每条 16B = u64 timestamp_ns | f32 azimuth_rad | u16 point_count | u16 pad
+// points：每点 16B = f32 x | f32 y | f32 z | u8 reflectivity | u8[3] pad（与 MsgLidarPoint 一致）
+message PackedLaserShots {
+  string compression = 1;  // "" | "zstd" | "lz4"；当前发布端只压缩 points
+  uint32 shot_count  = 2;
+  uint32 point_count = 3;
+  bytes  shots       = 4;
+  bytes  points      = 5;
+}
+
+// FTX140 packed 传输：定长小端组头表 + 按 subarea 顺序拼接的点表。
+// subareas：每条 16B = u64 timestamp_ns | u16 row_id | u16 column_id | u16 point_count | u16 pad
+// points：布局同 PackedLaserShots.points
+message PackedSubAreas {
+  string compression  = 1;  // "" | "zstd" | "lz4"；当前发布端只压缩 points
+  uint32 subarea_count = 2;
+  uint32 point_count   = 3;
+  bytes  subareas      = 4;
+  bytes  points        = 5;
+}
+
+// 单台激光雷达的一帧数据。
+message LidarFrame {
+  Header header   = 1;  // key=设备名，frame_id=坐标系，seq=设备独立帧序号
+  uint64 stamp_ns = 2;  // 当前所含扫描线/区域已知时间最大值（ns）；全零/空为零，与 header.stamp 等值。
+  oneof payload {
+    LaserShots       laser_scan        = 3;  // JT16 旧明文，过渡期保留
+    SubAreas         lidar_scan        = 4;  // FTX140 旧明文，过渡期保留
+    PackedLaserShots packed_laser_scan = 5;  // JT16 packed + zstd
+    PackedSubAreas   packed_lidar_scan = 6;  // FTX140 packed + zstd
+  }
+}
+
+// 毫米波雷达
+message RadarTrack {
+  uint32  track_id = 1;
+  Vector3 position = 2;                 // m，本体系
+  Vector3 velocity = 3;                 // m/s
+  float   rcs      = 4;                 // 反射截面 (dBsm)
+  float   snr      = 5;                 // dB
+}
+
+message RadarFrame {
+  Header              header = 1;
+  string              sensor = 2;       // "front" / "rear" / ...
+  repeated RadarTrack tracks = 3;
+  PointCloud          cloud  = 4;
+}
+
+// =============================================================================
+// SECTION 04  Tactile  (单触觉传感器多模态合并)
+// =============================================================================
+
+message TactileFrame {
+  Header          header       = 1;
+  Side            side         = 2;
+  TactileFinger   finger       = 3;
+  uint32          channel_id   = 4;     // 物理通道（追溯用，对应硬件 ch_0..ch_9）
+  Wrench          force6d      = 5;     // 6D 力/力矩
+  CompressedImage raw    = 6;     // 原图
+  CompressedImage deform = 7;     // 变形图
+  ContactPoints   contact_points = 8;   // 接触点，按 x/y/z 连续排列
+}
+
+message ContactPoints {
+  Header         header      = 1;
+  uint32         point_count = 2;
+  repeated float points      = 3;       // x0,y0,z0,x1,y1,z1...
+}
+
+// =============================================================================
+// SECTION 05  Joint primitive  (Arm / Hand / Torso 共用)
+// =============================================================================
+
+message JointState {
+  repeated string name     = 1;
+  repeated float  position = 2;         // rad（revolute）或 m（prismatic）
+  repeated float  velocity = 3;         // rad/s 或 m/s
+  repeated float  torque   = 4;         // Nm 或 N
+}
+
+
+message JointCommand {
+  repeated string name        = 1;
+  repeated float  position    = 2;
+  repeated float  velocity    = 3;
+  repeated float  torque      = 4;
+}
+
+message JointElectricalState {
+  repeated string name                = 1;
+  repeated float  temperature_celsius = 2;  // °C
+  repeated float  current             = 3;  // A
+  repeated float  bus_voltage         = 4;  // V
+}
+
+// =============================================================================
+// SECTION 06  Arm
+// =============================================================================
+
+message ArmState {
+  // UDP：当前启用轴反馈的已知时间最大值；全不可用为零，不代表逐轴完整性。CAN/tcp_sim 保留旧 tick。
+  Header               header     = 1;
+  Side                 side       = 2;
+  Pose                 cartesian  = 3;            // TCP 位姿
+  JointState           joints     = 4;
+  Wrench               wrench     = 5;            // TCP 外力
+  JointElectricalState electrical = 6;
+}
+
+message ArmCommand {
+  Header        header = 1;
+  Side          side   = 2;
+  SpaceMode     mode   = 3;
+  oneof target {
+    JointCommand        joints     = 4;   // 关节空间
+    Pose                cartesian  = 5;   // 笛卡尔单点
+  }
+}
+
+// =============================================================================
+// SECTION 07  Hand
+// =============================================================================
+
+message HandState {
+  // Platform 首次接受本 SDK 快照的观察时间；来源见 Platform 时间戳规格，零表示不可用，缓存不重新打戳。
+  Header               header     = 1;
+  Side                 side       = 2;
+  JointState           joints     = 3;
+  JointElectricalState electrical = 4;
+  repeated HandForceInfo force_info = 5;
+}
+
+message HandCommand {
+  Header       header = 1;
+  Side         side   = 2;
+  SpaceMode    mode   = 3;
+  JointCommand joints = 4;
+}
+
+// Glove teleop raw frame for action/{left,right}_glove/raw.
+// Side is implied by topic. Carries joint-space HandCommand plus the glove-mounted
+// Imu sample for the same frame. Downstream retarget uses hand; imu is optional
+// but should be filled when the glove IMU is available.
+message GloveRaw {
+  Header      header = 1;
+  HandCommand hand   = 2;  // required: joints.position length 22 (raw glove space)
+  Imu         imu    = 3;  // optional: glove IMU aligned to this frame
+}
+
+message HandForceInfo {
+  uint32 online              = 1;
+  int32  strain_sensor_1     = 2;
+  int32  strain_sensor_2     = 3;
+  int32  strain_sensor_3     = 4;
+  int32  strain_sensor_4     = 5;
+  int32  torque_x            = 6;
+  int32  torque_y            = 7;
+  int32  force_z             = 8;
+  int32  temperature_celsius = 9;
+  int32  error_code          = 10;
+}
+
+// =============================================================================
+// SECTION 08  Torso  (颈 3 + 身体 5)
+// =============================================================================
+
+message TorsoState {
+  // 当前关节反馈的已知时间最大值；全不可用为零，不保证所有关节均有新反馈。
+  Header               header     = 1;
+  JointState           joints     = 2;         // 8 个关节
+  JointElectricalState electrical = 3;
+}
+
+message TorsoCommand {
+  Header      header = 1;
+  SpaceMode   mode   = 2;
+  oneof target {
+    JointCommand     joints = 3;
+  }
+}
+
+// Physical torso motor IDs 1..5 switch as one group. Position selects CSP
+// frames (0x200); MIT selects impedance frames (0x210).
+enum TorsoControlMode {
+  TORSO_CONTROL_MODE_POSITION = 0;
+  TORSO_CONTROL_MODE_MIT      = 1;
+}
+
+message TorsoModeRequest {
+  Header            header = 1;
+  TorsoControlMode  mode   = 2;
+}
+
+message TorsoModeResponse {
+  bool              success       = 1;
+  TorsoControlMode  previous_mode = 2;
+  TorsoControlMode  current_mode  = 3;
+  string            message       = 4;
+}
+
+// =============================================================================
+// SECTION 09  Chassis  (4 轮 + 伸缩轴)
+// =============================================================================
+
+message ChassisState {
+  // 当前有效反馈的主机接收时间最大值；全不可用为零，不是设备采样或发布时间。
+  Header               header     = 1;
+  Twist                velocity   = 2;   // 机器人基系下速度
+  // 轴顺序：lf_drive lf_steer rf_drive rf_steer rr_drive rr_steer lr_drive lr_steer
+  //         stretch_a stretch_b stretch_c stretch_d
+  JointState           joints     = 3;
+  JointElectricalState electrical = 4;
+  // sharpa::ControlMode per joint (same order as joints)
+  repeated uint32      joint_mode = 5;
+}
+
+/** 各关节目标量，轴序与 ChassisState.joints 一致；position rad, velocity rad/s, current A */
+message ChassisTarget {
+  Header header = 1;
+  repeated float joint_target_position = 2;
+  repeated float joint_target_velocity = 3;
+  repeated float joint_target_current  = 4;
+}
+
+message ChassisCommand {
+  Header header  = 1;
+  float  vx      = 2;   // m/s 前向
+  float  vy      = 3;   // m/s 横向
+  float  vtheta  = 4;   // rad/s 自转
+  float  v_l     = 5;   // m/s 轴距变化率（4DOF）
+}
+
+/** 原始关节旁路轨迹。A/B/C/D 与 chassis wheel_mappings 顺序一致；position rad, velocity rad/s, feedforward Nm */
+message ChassisRawCommand {
+  Header header = 1;
+
+  float wheelA_position    = 2;
+  float wheelA_velocity    = 3;
+  float wheelA_feedforward = 4;
+  float wheelB_position    = 5;
+  float wheelB_velocity    = 6;
+  float wheelB_feedforward = 7;
+  float wheelC_position    = 8;
+  float wheelC_velocity    = 9;
+  float wheelC_feedforward = 10;
+  float wheelD_position    = 11;
+  float wheelD_velocity    = 12;
+  float wheelD_feedforward = 13;
+
+  float steerA_position    = 14;
+  float steerA_velocity    = 15;
+  float steerA_feedforward = 16;
+  float steerB_position    = 17;
+  float steerB_velocity    = 18;
+  float steerB_feedforward = 19;
+  float steerC_position    = 20;
+  float steerC_velocity    = 21;
+  float steerC_feedforward = 22;
+  float steerD_position    = 23;
+  float steerD_velocity    = 24;
+  float steerD_feedforward = 25;
+}
+
+/** 3DOF 相对位姿命令：Δx/Δy/Δθ 相对当前估计位姿；flags bit0=cancel */
+message ChassisPoseCommand {
+  Header header           = 1;
+  float  target_x_m       = 2;
+  float  target_y_m       = 3;
+  float  target_theta_rad = 4;
+  float  v_max_mps        = 5;
+  float  omega_max_rps    = 6;
+  uint32 flags            = 7;
+}
+
+// Overall chassis mode. Heartbeat.control_mode carries these numbers for chassis,
+// the same way torso heartbeat carries TorsoControlMode. Not part of ControlMode.
+// MOTION: steer position, wheel speed. Stretch is unchanged.
+// FORCE: steer force, wheel force. Stretch is unchanged.
+enum ChassisControlMode {
+  CHASSIS_CONTROL_MODE_MOTION = 0;
+  CHASSIS_CONTROL_MODE_FORCE  = 1;
+}
+
+// Values match sharpa::control enumerations. Wheel request only accepts
+// CLOSED_LOOP_SPEED and FORCE_CURRENT_MIT; other wheel strategies remain JSON-only.
+enum ChassisCommandMode {
+  CHASSIS_COMMAND_MODE_KINEMATIC = 0;
+  CHASSIS_COMMAND_MODE_RAW       = 1;
+}
+
+enum ChassisSteerStrategy {
+  CHASSIS_STEER_STRATEGY_CLOSED_LOOP_POSITION = 0;
+  CHASSIS_STEER_STRATEGY_FORCE_CURRENT_MIT    = 1;
+}
+
+enum ChassisWheelStrategy {
+  CHASSIS_WHEEL_STRATEGY_CLOSED_LOOP_SPEED = 0;
+  CHASSIS_WHEEL_STRATEGY_FORCE_CURRENT_MIT = 1;
+}
+
+enum ChassisStretchStrategy {
+  CHASSIS_STRETCH_STRATEGY_PROFILE_VELOCITY = 0;
+  CHASSIS_STRETCH_STRATEGY_PROFILE_POSITION = 1;
+}
+
+message ChassisModeRequest {
+  Header             header = 1;
+  ChassisControlMode mode   = 2;
+}
+
+message ChassisModeResponse {
+  bool               success       = 1;
+  ChassisControlMode previous_mode = 2;
+  ChassisControlMode current_mode  = 3;
+  string             message       = 4;
+}
+
+message ChassisStrategyRequest {
+  Header header = 1;
+  optional ChassisCommandMode command_mode = 2;
+  optional ChassisSteerStrategy steer = 3;
+  optional ChassisWheelStrategy wheel = 4;
+  optional ChassisStretchStrategy stretch = 5;
+}
+
+message ChassisStrategyResponse {
+  bool success = 1;
+  ChassisCommandMode command_mode = 2;
+  ChassisSteerStrategy steer = 3;
+  ChassisWheelStrategy wheel = 4;
+  ChassisStretchStrategy stretch = 5;
+  ChassisCommandMode previous_command_mode = 6;
+  ChassisSteerStrategy previous_steer = 7;
+  ChassisWheelStrategy previous_wheel = 8;
+  ChassisStretchStrategy previous_stretch = 9;
+  string message = 10;
+}
+
+
+// =============================================================================
+// SECTION 11  Power & Safety
+// =============================================================================
+
+// Semantic power telemetry. Replaces the retired wire-oriented power state API.
+// Readings carry a value ONLY when quality == POWER_DATA_VALID. Zero is a real value.
+// Source clocks are never implicitly converted to Unix time. Topics publish at 10 Hz,
+// including unavailable/stale states; consumers must also time out missing topic updates.
+enum PowerDataQuality {
+  POWER_DATA_UNSPECIFIED = 0;
+  POWER_DATA_VALID = 1;
+  POWER_DATA_NOT_RECEIVED = 2;
+  POWER_DATA_STALE = 3;
+  POWER_DATA_SOURCE_OFFLINE = 4;
+  POWER_DATA_SENSOR_INVALID = 5;
+  POWER_DATA_NOT_SUPPORTED = 6;
+  POWER_DATA_UNVERIFIED = 7;
+}
+enum PowerClockDomain {
+  POWER_CLOCK_UNKNOWN = 0;
+  POWER_CLOCK_DEVICE_MONOTONIC = 1;
+  POWER_CLOCK_GPTP = 2; // Synchronized domain; not necessarily Unix UTC.
+}
+enum PowerLinkState {
+  POWER_LINK_UNKNOWN = 0;
+  POWER_LINK_ONLINE = 1;
+  POWER_LINK_OFFLINE = 2;
+}
+message PowerSampleMetadata {
+  bool received = 1;
+  bool transport_online = 2;
+  PowerLinkState source_link = 3; // UNKNOWN when packet does not specify link status, or transport stale.
+  google.protobuf.Timestamp received_at = 4; // Host UTC reception time of last accepted frame.
+  uint64 receive_age_ms = 5; // Host monotonic elapsed time, not device sampling age.
+  uint64 sample_time_ns = 6;
+  uint64 envelope_time_ns = 7;
+  PowerClockDomain clock_domain = 8;
+  uint32 envelope_seq = 9;
+  uint32 sample_seq = 10;
+}
+message PowerVoltageReading {
+  optional float value = 1; // V; absent unless VALID.
+  PowerDataQuality quality = 2;
+  uint64 sample_time_ns = 3; // Device clock specified by enclosing metadata.
+}
+message PowerCurrentReading {
+  optional float value = 1; // A; absent unless VALID.
+  PowerDataQuality quality = 2;
+  uint64 sample_time_ns = 3; // Device clock specified by enclosing metadata.
+}
+message PowerTemperatureReading {
+  optional float celsius = 1; // degrees Celsius; absent unless VALID.
+  PowerDataQuality quality = 2;
+  uint64 sample_time_ns = 3; // Device clock specified by enclosing metadata.
+}
+message PowerPercentageReading {
+  optional float pct = 1; // percent, 0..100; absent unless VALID.
+  PowerDataQuality quality = 2;
+  uint64 sample_time_ns = 3; // Device clock specified by enclosing metadata.
+}
+message PowerPowerReading {
+  optional float value = 1; // W; absent unless VALID.
+  PowerDataQuality quality = 2;
+  uint64 sample_time_ns = 3; // Device clock specified by enclosing metadata.
+}
+enum ChestPowerOperatingState {
+  CHEST_POWER_UNSPECIFIED = 0;
+  CHEST_POWER_MONITOR_ONLY = 1;
+  CHEST_POWER_BOOT_WAIT = 2;
+  CHEST_POWER_STANDBY = 3;
+  CHEST_POWER_RUNNING = 4;
+  CHEST_POWER_FAULT = 5;
+}
+message ChestPowerOutputs {
+  optional bool thor_24v_enabled = 1;
+  optional bool left_arm_48v_enabled = 2;
+  optional bool right_arm_48v_enabled = 3;
+  optional bool ftx_12v_enabled = 4;
+  optional bool mcu_15v_buck_enabled = 5;
+  optional bool audio_15v_enabled = 6;
+  // GPIO output readback, not confirmation that voltage is good.
+}
+message ChestPowerDiagnostics {
+  uint32 flags = 1; // bit0 TIME_SYNCED; remaining bits reserved, not fault codes.
+  uint32 adc_update_seq = 2;
+  uint32 last_adc_channel = 3;
+  uint32 sequence_phase_code = 4; // Firmware phase enum not yet version-verified.
+  PowerCurrentReading current_channel_6 = 5; // LARM_ISENSE; physical assignment unconfirmed.
+  PowerCurrentReading current_channel_7 = 6; // RARM_ISENSE; physical assignment unconfirmed.
+}
+message ChassisPowerDiagnostics {
+  repeated PowerTemperatureReading reserved_ntc = 1; // N1..N4; no functional fault implied by absence.
+  repeated PowerVoltageReading battery_switch_inputs = 2; // Input 1,2 pin voltages ONLY.
+  // Firmware has no support/valid bit for switch inputs. Quality UNVERIFIED, value absent.
+  repeated float reported_battery_switch_voltage = 3; // Last wire observations (V), possibly unimplemented zero.
+}
+message ChestPowerState {
+  Header header = 1; // stamp is HOST publication UTC. key is configured device name.
+  PowerSampleMetadata sample = 2;
+  PowerVoltageReading motor_15v_voltage = 10; // Motor 15V bus; voltage ch0.
+  PowerVoltageReading thor_24v_voltage = 11; // Thor 24V input; voltage ch1.
+  PowerVoltageReading buck_24v_voltage = 12; // 24V buck output; voltage ch2.
+  PowerVoltageReading input_48v_voltage = 13; // 48V input; voltage ch3.
+  PowerVoltageReading left_arm_voltage = 14; // Left arm 48V; voltage ch4.
+  PowerVoltageReading right_arm_voltage = 15; // Right arm 48V; voltage ch5.
+  PowerVoltageReading audio_15v_voltage = 16; // Audio 15V; voltage ch6.
+  PowerVoltageReading ftx_12v_voltage = 17; // FTX 12V; voltage ch7.
+  PowerCurrentReading input_48v_current = 18; // 48V input total current; current ch0.
+  PowerCurrentReading bus_24v_current = 19; // 24V bus current; ch1, not necessarily Thor alone.
+  PowerCurrentReading left_arm_current = 20; // Left arm 48V; current ch4.
+  PowerCurrentReading right_arm_current = 21; // Right arm 48V; current ch5.
+  PowerTemperatureReading left_arm_efuse_temperature = 22; // TMP0 / 0x48.
+  PowerTemperatureReading right_arm_efuse_temperature = 23; // TMP1 / 0x49.
+  PowerTemperatureReading buck_24v_mos_temperature = 24; // TMP2 / 0x4a.
+  PowerTemperatureReading efuse_24v_temperature = 25; // TMP3 / 0x4b.
+  PowerTemperatureReading buck_15_36v_mos_temperature = 26; // TMP4 / 0x4c.
+  PowerTemperatureReading imu_ambient_temperature = 27; // TMP5 / 0x4d.
+  ChestPowerOperatingState operating_state = 3;
+  ChestPowerOutputs outputs = 4;
+  optional bool switching = 5;
+  ChestPowerDiagnostics diagnostics = 6;
+}
+message ChassisPowerState {
+  Header header = 1; // stamp is HOST publication UTC. key is configured device name.
+  PowerSampleMetadata sample = 2;
+  PowerVoltageReading bus_48v_voltage = 10; // V48: 48V bus.
+  PowerVoltageReading precharge_voltage = 11; // VCHARGE: precharge voltage, not battery charging voltage.
+  PowerVoltageReading upper_body_voltage = 12; // V_UL.
+  PowerVoltageReading chassis_voltage = 13; // V_MB.
+  PowerVoltageReading lower_body_voltage = 14; // V_LL.
+  PowerCurrentReading chassis_current = 15; // MB current.
+  PowerCurrentReading lower_body_current = 16; // LL current.
+  PowerCurrentReading upper_body_current = 17; // Wire name THOR; physical meaning is upper-body current.
+  PowerCurrentReading buck_24v_output_current = 18; // 24V buck output current.
+  PowerTemperatureReading upper_body_switch_temperature = 19; // TUL: upper-body TPS.
+  PowerTemperatureReading lower_body_switch_temperature = 20; // TLL: lower-body TPS.
+  PowerTemperatureReading chassis_switch_temperature = 21; // TMB: chassis TPS.
+  PowerVoltageReading stm32_analog_supply_voltage = 22; // STM32 VDDA.
+  PowerVoltageReading stm32_vbat_voltage = 23; // STM32 telemetry VBAT test point; do not equate with traction pack voltage.
+  PowerTemperatureReading stm32_die_temperature = 24; // STM32 die.
+  PowerVoltageReading peripheral_3v3_voltage = 25; // VDD3V3_PERI; flags bit9.
+  PowerVoltageReading local_12v_voltage = 26; // CM7 local ADC, independent of STM32 SPI.
+  PowerVoltageReading local_5v_voltage = 27; // CM7 local ADC.
+  PowerVoltageReading local_3v3_voltage = 28; // CM7 local ADC.
+  PowerVoltageReading local_0v9_voltage = 29; // CM7 local ADC.
+  ChassisPowerDiagnostics diagnostics = 3;
+}
+message BatteryPackDiagnostics {
+  optional uint32 fault_code = 1; // Vendor register; not decoded without vendor codebook.
+  optional uint32 alarm_code = 2;
+  optional uint32 protection_code = 3;
+  optional float reported_capacity_coulomb = 4; // Wire capacity *36 C; remaining/full/rated meaning UNCONFIRMED.
+  // No healthy boolean is inferred from these undecoded registers.
+}
+message BatteryPackState {
+  uint32 pack_id = 1; // 0=RS485 0x16; 1=0x17, stable even when unavailable.
+  PowerLinkState online = 2; // UNKNOWN if transport stale or CM7/STM32 link down.
+  PowerDataQuality quality = 3;
+  repeated PowerTemperatureReading cell_temperatures = 4; // Probe indices 0..3, not anatomical locations.
+  repeated PowerTemperatureReading mos_temperatures = 5; // Probe indices 0..1.
+  BatteryPackDiagnostics diagnostics = 6;
+  PowerVoltageReading voltage = 10; // Pack voltage.
+  PowerCurrentReading current = 11; // Positive charging, negative discharging.
+  PowerPercentageReading soc = 12; // State of charge, 0..100 percent.
+  PowerPercentageReading soh = 13; // State of health, 0..100 percent.
+  PowerVoltageReading minimum_cell_voltage = 14; // Minimum cell voltage.
+  PowerVoltageReading maximum_cell_voltage = 15; // Maximum cell voltage.
+  PowerPowerReading charge_power_limit = 16; // Allowed charging power, not measured power (BMS protocol).
+  PowerPowerReading discharge_power_limit = 17; // Allowed discharging power, not measured power.
+  PowerTemperatureReading ambient_temperature = 18; // Ambient temperature.
+}
+message BatterySystemState {
+  Header header = 1; // Host publication UTC.
+  PowerSampleMetadata sample = 2;
+  repeated BatteryPackState packs = 3; // Always two entries, identified by pack_id.
+}
+
+message BatteryState {
+  Header header              = 1;
+  uint32 battery_id          = 2;
+  float  voltage             = 3;       // V
+  float  current             = 4;       // A
+  uint32 capacity_pct        = 5;       // %
+  uint32 status_code         = 6;
+}
+
+message EstopState {
+  Header header = 1;
+  uint32 state  = 2;                    // 0=IDLE, 1=ACTIVE, 2=RELEASED
+  uint32 count  = 3;
+}
+
+message MosState {
+  uint32 mos_id              = 1;
+  float  voltage             = 2;       // V
+  float  current             = 3;       // A
+  float  temperature_celsius = 4;       // °C
+  uint32 estop_state         = 5;
+  uint32 error_code          = 6;
+}
+
+message FanState {
+  uint32 fan_id     = 1;
+  uint32 speed_pct  = 2;                // %
+  uint32 error_code = 3;
+}
+
+message PowerPgState {
+  uint32          total_pg_status  = 1;
+  uint32          charge_pg_status = 2;
+  repeated uint32 pg_pins          = 3;
+}
+
+// Thor -> MCU 电源板 canfd_pwr CAN 控制协议操作码，与 canfd_pwr::OpCode 数值对齐
+// （见 plugins/sharpa_power_plugin/drivers/canfd_pwr_protocol_codec.h）。
+enum PowerOpCode {
+  POWER_OP_NOP = 0;
+  POWER_OP_PING = 1;
+  POWER_OP_GET_PROTO_VER = 2;
+  POWER_OP_SET_CHANNEL = 16;        // 0x10 PWR_SET_CHANNEL
+  POWER_OP_SET_MASK = 17;           // 0x11 PWR_SET_MASK
+  POWER_OP_GET_STATUS = 18;         // 0x12 PWR_GET_STATUS
+  POWER_OP_ALL_ON = 19;             // 0x13 PWR_ALL_ON
+  POWER_OP_ALL_OFF = 20;            // 0x14 PWR_ALL_OFF
+  POWER_OP_SYS_SLEEP = 32;          // 0x20 SYS_SLEEP
+  POWER_OP_SYS_WAKEUP = 33;         // 0x21 SYS_WAKEUP
+  POWER_OP_SYS_GET_STATUS = 34;     // 0x22 SYS_GET_STATUS
+  POWER_OP_SYS_RESET = 35;          // 0x23 SYS_RESET
+  POWER_OP_SYS_SET_HB_PERIOD = 36;  // 0x24 SYS_SET_HB_PERIOD
+}
+
+// service/power/channel_cmd：桥接 MsgPowerChannelCmd/MsgPowerChannelCmdResponse
+// (eMsgType_PowerChannelCmd, loader/include/plugin_msg_define.h)。
+message PowerChannelCmdRequest {
+  Header      header       = 1;
+  uint32      dst_node     = 2;   // 0x10=底盘电源 0x20=身体电源 0x30=RT1186
+  PowerOpCode opcode       = 3;
+  uint32      channel_id   = 4;
+  uint32      action       = 5;   // SET_CHANNEL: 0=OFF 1=ON 2=READ；SET_HB_PERIOD: 0=SET 1=GET
+  uint32      set_mask     = 6;
+  uint32      clr_mask     = 7;
+  uint32      hb_period_ms = 8;
+}
+
+message PowerChannelCmdResponse {
+  bool   success    = 1;
+  uint32 dst_node   = 2;
+  uint32 err_code   = 3;
+  uint32 state_mask = 4;
+  string message    = 5;
+}
+
+// service/power/estop：桥接 MsgPowerCtrlEstop/MsgPowerCtrlEstopResponse
+// (eMsgType_PowerCtrlEstop, loader/include/plugin_msg_define.h)。
+message PowerEstopRequest {
+  Header header   = 1;
+  uint32 dst_node = 2;   // 0=广播全部节点
+  bool   release  = 3;
+  string reason   = 4;
+}
+
+message PowerEstopResponse {
+  bool   success  = 1;
+  uint32 dst_node = 2;
+  string message  = 3;
+}
+
+// service/power/shutdown：桥接 MsgPowerCtrlShutdown/MsgPowerCtrlShutdownResponse
+// (eMsgType_PowerCtrlShutdown, loader/include/plugin_msg_define.h)。
+message PowerShutdownRequest {
+  Header header   = 1;
+  uint32 dst_node = 2;   // 0=广播全部节点
+  string reason   = 3;
+}
+
+message PowerShutdownResponse {
+  bool   success  = 1;
+  uint32 dst_node = 2;
+  string message  = 3;
+}
+
+// service/head/stereo/stream/start and service/head/stereo/stream/stop.
+// Zenoh endpoints are configured by the caller/session and are deliberately
+// not part of this contract. destination_ip is the Thor-side RTP receiver IP.
+enum HeadStereoStreamResult {
+  HEAD_STEREO_STREAM_RESULT_UNSPECIFIED     = 0;
+  HEAD_STEREO_STREAM_RESULT_OK              = 1;
+  HEAD_STEREO_STREAM_RESULT_INVALID_REQUEST = 2;
+  HEAD_STEREO_STREAM_RESULT_BUSY            = 3;
+  HEAD_STEREO_STREAM_RESULT_UNAVAILABLE     = 4;
+  HEAD_STEREO_STREAM_RESULT_REMOTE_ERROR    = 5;
+}
+
+enum HeadStereoStreamState {
+  HEAD_STEREO_STREAM_STATE_UNSPECIFIED = 0;
+  HEAD_STEREO_STREAM_STATE_STOPPED     = 1;
+  HEAD_STEREO_STREAM_STATE_STREAMING   = 2;
+}
+
+message HeadStereoStreamParams {
+  string destination_ip = 1;
+  uint32 port0           = 2;
+  uint32 port1           = 3;
+  uint32 bps             = 4;
+  uint32 fps             = 5;
+  uint32 gop             = 6;
+}
+
+message HeadStereoStreamStartRequest {
+  Header header     = 1;
+  string request_id = 2;
+}
+
+message HeadStereoStreamStopRequest {
+  Header header     = 1;
+  string request_id = 2;
+}
+
+message HeadStereoStreamResponse {
+  HeadStereoStreamResult result           = 1;
+  HeadStereoStreamState state             = 2;
+  HeadStereoStreamParams effective_params = 3;
+  string remote_error                     = 4;
+  string message                          = 5;
+}
+
+// service/recorder/start, stop, set_mode, and delete_last.
+// A timeout has an unknown outcome because the recorder may finish the
+// operation after the caller's deadline. Callers must not retry automatically.
+enum RecorderCommandResult {
+  RECORDER_COMMAND_RESULT_UNSPECIFIED     = 0;
+  RECORDER_COMMAND_RESULT_OK              = 1;
+  RECORDER_COMMAND_RESULT_INVALID_REQUEST = 2;
+  RECORDER_COMMAND_RESULT_REJECTED        = 3;
+  RECORDER_COMMAND_RESULT_UNAVAILABLE     = 4;
+  RECORDER_COMMAND_RESULT_OUTCOME_UNKNOWN = 5;
+}
+
+enum RecorderRecordingMode {
+  RECORDER_RECORDING_MODE_UNSPECIFIED = 0;
+  RECORDER_RECORDING_MODE_DEBUG       = 1;
+  RECORDER_RECORDING_MODE_NORMAL      = 2;
+}
+
+message RecorderStartRequest {
+  Header header = 1;
+}
+
+message RecorderStopRequest {
+  Header header = 1;
+}
+
+message RecorderSetModeRequest {
+  Header header              = 1;
+  RecorderRecordingMode mode = 2;
+}
+
+// Deletes the most recently completed session under data_path (session folder).
+// Rejected while a task-owned recording is in progress.
+message RecorderDeleteLastRequest {
+  Header header = 1;
+}
+
+message RecorderCommandResponse {
+  RecorderCommandResult result = 1;
+  string message                = 2;
+  string session                = 3;
+}
+
+// =============================================================================
+// SECTION 12  Events
+// =============================================================================
+
+message EstopEvent {
+  Header header     = 1;
+  uint32 event_type = 2;                // 0=triggered, 1=released
+}
+
+message FaultEvent {
+  Header     header        = 1;
+  string     source        = 2;         // "arm.left" / "chassis" / ...
+  FaultLevel level         = 3;
+  uint32     error_code    = 4;
+  string     error_message = 5;
+}
+
+message BatteryAlertEvent {
+  Header header      = 1;
+  uint32 alert_level = 2;               // 20 / 5（剩余 %）
+  string message     = 3;
+}
+
+message MarkEvent {
+  Header header = 1;
+  string mark   = 2;
+}
+
+message ErrorMarkEvent {
+  Header header = 1;
+  uint32 mark   = 2;
+}
+
+// =============================================================================
+// SECTION 13  System  (lifecycle / heartbeat / health / monitor)
+// =============================================================================
+
+message LifecycleState {
+  Header         header         = 1;
+  LifecyclePhase phase          = 2;
+  LifecyclePhase sub_phase      = 3;    // ENTER / LEAVING
+  uint32         operation_mode = 4;    // 业务操作模式
+}
+
+// =============================================================================
+// Heartbeat (统一心跳)
+//
+// 与 loader/include/plugin_msg_define.h 的 MsgHeartbeat 字段一一对齐，
+// 由各 plugin 通过 BroadcastMsg(eMsgType_Heartbeat_*, MsgHeartbeat) 发布，
+// 上层（client/diagnostics）通过 SDK 转 protobuf 后消费。
+//
+// 设计原则：
+//   - 纯数值，不带可变长字符串（详细文本走未来的 Diagnostics 通道）；
+//   - 设备 mask 位序按子系统在 docs/heartbeat_spec.md 锁定（32 位起步）；
+//   - fault_codes 与 mask 位序一致，0 表示无故障；
+//   - 三个 *_rate_hz 对应控制循环 / 状态发布 / 心跳本身三个线程的实测频率。
+// =============================================================================
+enum HeartbeatMetricKind {
+  HEARTBEAT_METRIC_KIND_UNSPECIFIED           = 0;
+  HEARTBEAT_METRIC_KIND_TACTILE_FRAME_RATE_HZ = 1;
+  HEARTBEAT_METRIC_KIND_LIDAR_FRAME_RATE_HZ   = 2;
+  // instance 0 = left eye, 1 = right eye; H.265 access-unit FPS after RTP depayloading/parsing.
+  HEARTBEAT_METRIC_KIND_WEBRTC_H265_INPUT_FRAME_RATE_HZ = 3;
+}
+
+message HeartbeatMetric {
+  uint32 kind     = 1;  // HeartbeatMetricKind numeric value; unknown future kinds may be forwarded
+  uint32 instance = 2;
+  float  value    = 3;
+}
+
+message Heartbeat {
+  Header         header              = 1;
+  string         subsystem           = 2;   // "arm_left" / "arm_right" / "torso" / "chassis" / "hand_left" / ...
+  uint32         seq                 = 3;   // 子系统内单调递增
+  LifecyclePhase phase               = 4;
+  uint32         severity            = 5;   // 0=OK 1=WARN 2=ERROR 3=FATAL
+  ControlMode    control_mode        = 6;   // 通用运行控制模式；与 MsgHeartbeat 字段顺序一致
+  // 设备级 mask（32 位起步，bit i = 设备 i）
+  uint32         expected_mask       = 7;
+  uint32         online_mask         = 8;
+  uint32         fault_mask          = 9;
+  repeated uint32 fault_codes        = 10 [packed = true];  // 与 mask 同位序，长度 ≤ 32
+  uint32         error_code          = 11;  // 子系统级"最严重"错误码
+  // L1 + 三线程心跳速率
+  float          feedback_age_ms     = 12;
+  float          ctrl_rate_hz        = 13;
+  float          state_rate_hz       = 14;
+  float          pub_rate_hz         = 15;
+  float          bus_busload_pct     = 16;  // NaN = 未实现
+  // 可选诊断指标；不参与 phase/severity/verdict 判定。
+  repeated HeartbeatMetric metrics   = 17;
+  uint32         enabled_mask        = 18;  // bit i = 伺服使能反馈；未实现保持 0
+}
+
+enum HardwareHealthVerdict {
+  HARDWARE_HEALTH_OK         = 0;
+  HARDWARE_HEALTH_WARNING    = 1;
+  HARDWARE_HEALTH_FAULT      = 2;
+  HARDWARE_HEALTH_STALE      = 3;
+  HARDWARE_HEALTH_NEVER_SEEN = 4;
+}
+
+enum HealthRequirement {
+  UNSPECIFIED = 0;
+  OK          = 1;
+  WARNING     = 2;
+  OFF         = 3;
+}
+
+message HardwareHealth {
+  Heartbeat             heartbeat          = 1;
+  uint64                receive_age_ms     = 2;
+  HardwareHealthVerdict verdict            = 3;
+  HealthRequirement     health_requirement = 4;
+}
+
+message SafetyGuardStatus {
+  string guard_id = 1;
+  bool   enabled  = 2;
+}
+
+// Host CPU/memory diagnostics sampled by Master. Missing readings are NaN.
+// This is not a hardware subsystem and does not affect worst_severity or verdicts.
+message HostResourceMetrics {
+  float cpu_temp_c   = 1;  // Celsius
+  float cpu_load_pct = 2;  // 0-100 busy percent from /proc/stat aggregate cpu line
+  float mem_used_pct = 3;  // 0-100 = 100 * (1 - MemAvailable / MemTotal)
+  repeated float cpu_core_load_pct = 4;  // per-core busy% from /proc/stat cpuN; index = core id
+}
+
+// WholeBodyCommand Loader channel. Numeric values match Master WholeBodyCommandSource.
+enum WholeBodyCommandChannel {
+  WHOLE_BODY_COMMAND_CHANNEL_UNSPECIFIED   = 0;
+  WHOLE_BODY_COMMAND_CHANNEL_TELEOPERATION = 1;
+  WHOLE_BODY_COMMAND_CHANNEL_INFERENCE     = 2;
+  WHOLE_BODY_COMMAND_CHANNEL_AUTOMATION    = 3;
+  WHOLE_BODY_COMMAND_CHANNEL_UNIVERSAL     = 4;
+}
+
+// Per-channel WholeBodyCommand rates sampled by Master. Diagnostic only; not a
+// subsystem and does not affect worst_severity or verdicts.
+message WholeBodyCommandChannelRate {
+  uint32 channel     = 1;  // WholeBodyCommandChannel numeric value; unknown future channels may be forwarded
+  float  rx_hz       = 2;  // commands that passed size checks
+  float  accepted_hz = 3;  // authorized and FanOut succeeded
+}
+
+// Master 在一次评估中生成的整机硬件健康快照。
+message SystemHardwareHealth {
+  Header                              header          = 1;
+  uint32                              worst_severity  = 2;  // Max effective severity among health_requirement != off; 0 if none are open.
+  repeated HardwareHealth             subsystems      = 3;
+  MasterStatus                        master_status   = 4;
+  repeated SafetyGuardStatus          safety_guards   = 5;
+  HostResourceMetrics                 host           = 6;
+  repeated WholeBodyCommandChannelRate command_rates = 7;
+}
+
+enum OperationMode {
+  OPERATION_MODE_UNSPECIFIED   = 0;
+  OPERATION_MODE_TELEOPERATION = 1;
+  OPERATION_MODE_INFERENCE     = 2;
+  OPERATION_MODE_AUTOMATION    = 3;
+}
+
+
+
+enum MasterPhase {
+  MASTER_PHASE_UNSPECIFIED = 0;
+  MASTER_PHASE_INIT        = 1;
+  MASTER_PHASE_STANDBY     = 2;
+  MASTER_PHASE_RUNNING     = 3;
+  MASTER_PHASE_ERROR       = 4;
+  MASTER_PHASE_OTA         = 5;
+  MASTER_PHASE_ESTOP       = 6;
+}
+
+
+
+message StartTaskCommand {
+  string task_id = 1;
+  reserved 2;
+}
+
+message SetModeCommand {
+  OperationMode mode = 1;
+}
+
+message SetHealthRequirementCommand {
+  string            subsystem_id = 1;
+  HealthRequirement requirement  = 2;
+}
+
+message SetSafetyGuardEnabledCommand {
+  string guard_id = 1;
+  bool   enabled  = 2;
+}
+
+message StopTaskCommand {
+  int32 status = 1; // Task exit code. Defaults to 0 (success).
+}
+message ResetConfirmCommand {}
+message EnterOtaCommand {}
+message ExitOtaCommand {}
+message EnterEstopCommand {}
+message ExitEstopCommand {}
+
+// Retained for protobuf wire compatibility only. Master control is exposed as
+// per-operation request/response services rather than this former pub/sub envelope.
+message MasterCommand {
+  Header header = 1;
+  oneof command {
+    StartTaskCommand start_task = 2;
+    StopTaskCommand stop_task = 3;
+    ResetConfirmCommand reset_confirm = 5;
+    SetModeCommand set_mode = 6;
+    EnterOtaCommand enter_ota = 7;
+    ExitOtaCommand exit_ota = 8;
+    SetHealthRequirementCommand set_health_requirement = 9;
+    SetSafetyGuardEnabledCommand set_safety_guard_enabled = 10;
+    EnterEstopCommand enter_estop = 11;
+    ExitEstopCommand exit_estop = 12;
+  }
+  reserved 4;
+}
+
+// Stable result codes for all Master control services. Callers must use this
+// field rather than parsing the human-readable message.
+enum MasterCommandResult {
+  MASTER_COMMAND_RESULT_UNSPECIFIED         = 0;
+  MASTER_COMMAND_RESULT_OK                  = 1;
+  MASTER_COMMAND_RESULT_INVALID_REQUEST     = 2;
+  MASTER_COMMAND_RESULT_INVALID_PHASE       = 3;
+  MASTER_COMMAND_RESULT_UNKNOWN_TARGET      = 4;
+  MASTER_COMMAND_RESULT_BUSY                = 5;
+  MASTER_COMMAND_RESULT_UNAVAILABLE         = 6;
+  MASTER_COMMAND_RESULT_HEALTH_CHECK_FAILED = 7;
+  MASTER_COMMAND_RESULT_EXECUTION_FAILED    = 8;
+  // The response deadline expired. The command may already have executed;
+  // callers must observe Master state and must not retry automatically.
+  MASTER_COMMAND_RESULT_OUTCOME_UNKNOWN     = 9;
+  MASTER_COMMAND_RESULT_INTERNAL_ERROR      = 10;
+}
+
+enum MasterTaskHealthLevel {
+  MASTER_TASK_HEALTH_NORMAL   = 0;
+  MASTER_TASK_HEALTH_DEGRADED = 1;
+}
+
+message MasterStateSnapshot {
+  MasterPhase           phase             = 1;
+  OperationMode         mode              = 2;
+  string                task_id           = 3;
+  MasterTaskHealthLevel task_health_level = 4;
+}
+
+message StartTaskResult { string task_id = 1; }
+message StopTaskResult {
+  string task_id = 1;
+  int32  status  = 2;
+}
+message SetModeResult { OperationMode requested_mode = 1; }
+message SetHealthRequirementResult {
+  string            subsystem_id = 1;
+  HealthRequirement requirement  = 2;
+}
+message SetSafetyGuardEnabledResult {
+  string guard_id = 1;
+  bool   enabled  = 2;
+}
+
+enum MasterPhaseTransitionOperation {
+  MASTER_PHASE_TRANSITION_OPERATION_UNSPECIFIED = 0;
+  MASTER_PHASE_TRANSITION_OPERATION_RESET       = 1;
+  MASTER_PHASE_TRANSITION_OPERATION_ENTER_OTA   = 2;
+  MASTER_PHASE_TRANSITION_OPERATION_EXIT_OTA    = 3;
+  MASTER_PHASE_TRANSITION_OPERATION_ENTER_ESTOP = 4;
+  MASTER_PHASE_TRANSITION_OPERATION_EXIT_ESTOP  = 5;
+}
+message PhaseTransitionResult {
+  MasterPhaseTransitionOperation operation = 1;
+}
+
+message MasterCommandResponse {
+  Header                header  = 1;
+  MasterCommandResult   result  = 2;
+  string                message = 3;
+  MasterStateSnapshot   before  = 4;
+  MasterStateSnapshot   after   = 5;
+  oneof detail {
+    StartTaskResult                 start_task         = 10;
+    StopTaskResult                  stop_task          = 11;
+    SetModeResult                   set_mode           = 12;
+    SetHealthRequirementResult      health_requirement = 13;
+    SetSafetyGuardEnabledResult     safety_guard       = 14;
+    PhaseTransitionResult           phase_transition   = 15;
+  }
+}
+
+message TeleoperationPrepareRequest {}
+message TeleoperationPrepareResponse {
+  bool success = 1;
+}
+
+message MasterStatus {
+  Header                header            = 1;
+  MasterPhase           phase             = 2;
+  OperationMode         mode              = 3;
+  string                task_id           = 4;
+  MasterTaskHealthLevel task_health_level = 5;
+}
+
+message MasterTaskStartEvent {
+  Header header   = 1;
+  bool   accepted = 2;
+  string task_id  = 3;
+  string reason   = 4;
+}
+
+message MasterTaskStopEvent {
+  Header header   = 1;
+  bool   accepted = 2;
+  string task_id  = 3;
+  string reason   = 4;
+  int32  status   = 5; // Echoes StopTaskCommand.status.
+}
+
+message MasterDegradationEvent {
+  Header header   = 1;
+  bool   active   = 2;
+  string task_id  = 3;
+}
+
+message MasterDeviceError {
+  string                subsystem_id = 1;
+  HealthRequirement     required     = 2;
+  HardwareHealthVerdict actual       = 3;
+  uint32                error_code   = 4;
+  uint32                fault_mask   = 5;
+  repeated uint32       fault_codes  = 6;
+}
+
+message MasterErrorEvent {
+  Header header                             = 1;
+  reserved 2, 4;
+  string task_id                            = 3;
+  uint32 error_code                         = 5;
+  repeated MasterDeviceError device_errors = 6;
+  string guard_id                           = 7;
+}
+
+message PluginStatus {
+  string         plugin_name         = 1;
+  LifecyclePhase phase               = 2;
+  bool           is_alive            = 3;
+  uint32         error_code          = 4;
+  string         error_message       = 5;
+  double         latency_s           = 6;
+  double         data_rate_hz        = 7;
+  uint32         online_device_count = 8;
+  uint32         total_device_count  = 9;
+}
+
+message SystemStatus {
+  Header                header  = 1;
+  LifecyclePhase        phase   = 2;
+  repeated PluginStatus plugins = 3;
+}
+
+message TopicRate {
+  string topic         = 1;
+  double rate_hz       = 2;
+  uint64 message_count = 3;
+}
+
+message MonitorReport {
+  Header             header           = 1;
+  repeated TopicRate topic_rates      = 2;
+  uint32             record_count     = 3;   // 已存储的 .h5 条数
+  string             record_data_path = 4;
+}
+
+// =============================================================================
+// SECTION 14  Aggregates / Services
+// =============================================================================
+
+// ---- Aggregates -------------------------------------------------------------
+
+message WholeBodyState {
+  Header                    header     = 1;
+  ArmState                  arm_left   = 2;
+  ArmState                  arm_right  = 3;
+  HandState                 hand_left  = 4;
+  HandState                 hand_right = 5;
+  repeated TactileFrame     tactile    = 6;
+  TorsoState                torso      = 7;
+  ChassisState              chassis    = 8;
+  repeated TransformStamped transforms = 10;
+}
+
+// Whole-robot command aggregate contract.
+// Each message field is independently optional: publishers may send sparse
+// bundles and consumers must use has_*() to decide which subsystems to update.
+// The chassis field carries velocity commands only; RL-MIT and pose commands
+// remain on their dedicated command paths.
+message WholeBodyCommand {
+  Header            header     = 1;
+  ArmCommand        arm_left   = 2;
+  ArmCommand        arm_right  = 3;
+  HandCommand       hand_left  = 4;
+  HandCommand       hand_right = 5;
+  TorsoCommand      torso      = 6;
+  ChassisCommand    chassis    = 7;
+}
+
+// HMD / 手柄观测
+message GamepadState {
+  Header  header     = 1;
+  Side    side       = 2;
+  Pose    pose       = 14;
+  bool    is_valid   = 15;
+  bool    is_tracked = 16;
+}
+
+// HMD / 动捕全身观测帧（action/whole_body/raw），与 WholeBodyCommand 控制聚合区分。
+message WholeBodyRaw {
+  Header        header               = 1;
+  Pose          head_pose            = 2;
+  GamepadState  gamepad_state_left   = 3;
+  GamepadState  gamepad_state_right  = 4;
+  repeated Pose full_body_joint_pose = 7;
+  bool          is_confident         = 8;  // 全身观测置信度有效标志
+}
+
+// ---- Service RPC payloads ---------------------------------------------------
+
+message EnableRequest {
+  Header header = 1;
+  bool   enable = 2;
+}
+message EnableResponse {
+  bool   success = 1;
+  string message = 2;
+}
+
+message Waypoint {
+  uint32 override_flags = 1;  // low 8 bits only; bit0=vmax_scale, bit1=amax_scale, bit2=dwell_ms
+  oneof target {
+    JointCommand joints = 2;
+    Pose cartesian = 3;
+  }
+  float vmax_scale = 4;
+  float amax_scale = 5;
+  uint32 dwell_ms = 6;
+}
+
+message WaypointTask {
+  Header header = 1;
+  uint32 repeat_count = 2;  // 1..N finite repeats, 0 = infinite loop
+  float default_vmax_scale = 3;
+  float default_amax_scale = 4;
+  uint32 default_dwell_ms = 5;
+  repeated Waypoint waypoints = 6;
+}
+
+message WaypointSubmitRequest {
+  Header header = 1;
+  WaypointTask task = 2;
+}
+message WaypointSubmitResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message WaypointCancelRequest {
+  Header header = 1;
+}
+message WaypointCancelResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Arm runtime mode switch request for service/left_arm/mode and service/right_arm/mode.
+message ArmModeRequest {
+  Header         header = 1;
+  ControlMode    mode   = 2;
+}
+message ArmModeResponse {
+  bool           success       = 1;
+  ControlMode    previous_mode = 2;
+  string         message       = 3;
+}
+
+message EstopRequest {
+  Header header = 1;
+  string reason = 2;
+}
+message EstopResponse {
+  bool   success = 1;
+  string message = 2;
+}
+
+message ResetRequest {
+  Header header = 1;
+}
+message ResetResponse {
+  bool   success = 1;
+  string message = 2;
+}
+
+message BrakeRequest {
+  Header header = 1;
+  Side   side   = 2;
+  uint32 action = 3;                    // 0=release, 1=engage
+}
+message BrakeResponse {
+  bool   success = 1;
+  string message = 2;
+}
+
+enum HandServiceResult {
+  HAND_SERVICE_RESULT_OK              = 0;
+  HAND_SERVICE_RESULT_INVALID_REQUEST = 1;
+  HAND_SERVICE_RESULT_UNAVAILABLE     = 2;
+  HAND_SERVICE_RESULT_BUSY            = 3;
+  HAND_SERVICE_RESULT_SDK_ERROR       = 4;
+}
+
+message HandModeRequest {
+  Header header    = 1;
+  Side   side      = 2;
+  // SharpaWave SDK 模式值：10=zero-force, 13=position, 14=admittance, 15=MIT。
+  // 为兼容旧调用方仍接受 0=position、1=zero-force。
+  uint32 hand_mode = 3;
+}
+message HandModeResponse {
+  bool              success       = 1;
+  string            message       = 2;
+  HandServiceResult result        = 3;
+  uint32            previous_mode = 4;
+  uint32            current_mode  = 5;
+  int32             sdk_error_code = 6;
+}
+
+message CalibTactileRequest {
+  Header header           = 1;
+  // 旧双手聚合调用字段，保留 wire compatibility；新左右手独立服务使用 side。
+  bool   enable_calib_left  = 2;
+  bool   enable_calib_right = 3;
+  Side   side               = 4;
+}
+message CalibTactileResponse {
+  bool              success        = 1;
+  string            message        = 2;
+  HandServiceResult result         = 3;
+  int32             sdk_error_code = 4;
+}
+
+// Wave 手部电子皮肤（ESKIN，SDK 通道 10/11），与躯干 state/tactile_skin 分离。
+message HandEskinForce {
+  Header header = 1;
+  int32  frame_id = 2;
+  int32  channel = 3;          // 10=right, 11=left
+  repeated float force_n = 4;  // Newtons per sensing point
+}
+
+message HandEskinRaw {
+  Header header = 1;
+  int32  frame_id = 2;
+  int32  channel = 3;
+  bytes  data = 4;  // uint8 ADC per sensing point
+}
+
+// service/{left_hand|right_hand}/eskin/calibrate
+message CalibEskinRequest {
+  Header header = 1;
+  Side   side   = 2;
+}
+
+message CalibEskinResponse {
+  bool              success        = 1;
+  string            message        = 2;
+  HandServiceResult result         = 3;
+  int32             sdk_error_code = 4;
+}
+
+enum HandZeroCalibrationState {
+  HAND_ZERO_CALIBRATION_STATE_IDLE      = 0;
+  HAND_ZERO_CALIBRATION_STATE_RUNNING   = 1;
+  HAND_ZERO_CALIBRATION_STATE_SUCCEEDED = 2;
+  HAND_ZERO_CALIBRATION_STATE_FAILED    = 3;
+  HAND_ZERO_CALIBRATION_STATE_STOPPED   = 4;
+}
+
+// 分别用于 service/{left_hand|right_hand}/zero_calibration/{start|status|stop}。
+message HandZeroCalibrationRequest {
+  Header header = 1;
+  Side   side   = 2;
+}
+
+message HandZeroCalibrationResponse {
+  bool                     success          = 1;
+  HandServiceResult        result           = 2;
+  HandZeroCalibrationState state            = 3;
+  uint32                   progress_percent = 4;
+  int32                    sdk_error_code   = 5;
+  string                   message          = 6;
+}
+
+// 透传 SharpaWave SDK set_parameter(json)。用于 service/{left_hand|right_hand}/parameter/set。
+// 常见 joint-action 字段示例：
+//   {"angle_threshold": <rad>, "interpolate_coefficient": <0.01..1>}
+// angle_threshold 固件单位为弧度，合法范围约 10°~60°。
+message HandSetParameterRequest {
+  Header header = 1;
+  Side   side   = 2;
+  string json   = 3;
+}
+
+message HandSetParameterResponse {
+  bool              success        = 1;
+  string            message        = 2;
+  HandServiceResult result         = 3;
+  int32             sdk_error_code = 4;
+}
+
+// 电子皮肤软件标零（service/tactile_skin/zero）。enable=true 把当前 6 项拟合力当作 0N，
+// 之后 state/tactile_skin 的 force_n 为相对该基准的增量；enable=false 恢复原始拟合力。
+// 不写 MCU / 标定文件。与躯干电机 ZeroCalib（编码器零点 + Flash）不是同一条契约。
+message TactileSkinZeroRequest {
+  Header header = 1;
+  bool   enable = 2;
+}
+message TactileSkinZeroResponse {
+  bool   success = 1;
+  string message = 2;
+}
+
+// 力矩传感器零漂标定（CANopen 0x2531 操作码2，见文档"CANopen 当前力矩标定协议"）。
+// joint_index 对应 TorsoState/TorsoCommand 的关节下标（0~7），仅 0~4（J1/J2/qp/qr/J5）受重力模型
+// 覆盖，超出范围直接失败。调用前无需手动失能——服务内部会自动让全身所有电机失能抱闸，保证操作期间
+// 全身电机状态同步；理论力矩由插件用当前整机重力模型（含实时头/双臂姿态，见 BodyGravityModel）现算
+// g(q) 得到（不再支持调用方直接传入理论力矩），实际写入值见响应的 theoretical_torque_nm。
+// 该服务内部会阻塞等待 ~2s 采样完成后再返回，measured_torque_nm 为标定后读取到的实际力矩反馈。
+message TorqueCalibRequest {
+  Header header      = 1;
+  uint32 joint_index = 2;
+  reserved 3, 4;               // 曾用于调用方传入的 theoretical_torque_nm / use_gravity_model_torque 开关，已废弃
+  reserved "theoretical_torque_nm", "use_gravity_model_torque";
+}
+message TorqueCalibResponse {
+  bool   success               = 1;
+  float  measured_torque_nm    = 2;  // 标定后实际力矩反馈，Nm（success=false 时无意义）
+  string message                = 3;  // 失败原因 / 备注
+  float  theoretical_torque_nm = 4;  // 插件用重力模型现算出的、实际写入的理论力矩，Nm（success=false 时无意义）
+}
+
+// 电机标零（CANopen 0x2531 操作码1）。joint_index 对应 TorsoState/TorsoCommand 的关节下标（0~7）；
+// 调用前无需手动失能——服务内部会自动让全身所有电机失能抱闸，标零成功后默认自动持久化到 Flash（0x2539）。
+// 若持久化失败则整体判定为失败。操作完成后全身保持失能抱闸状态，需另行调用 EnableRequest 才会重新使能。
+message ZeroCalibRequest {
+  Header header      = 1;
+  uint32 joint_index = 2;
+}
+message ZeroCalibResponse {
+  bool   success            = 1;  // 0x2531 标零 SDO + 0x2539 持久化是否都成功
+  bool   persisted          = 2;  // 是否已成功持久化到Flash；success=false 时无意义
+  float  position_after_deg = 3;  // 标零后电机侧原始角度反馈，供诊断参考
+  string message            = 4;
+}
+
+message GenericServiceRequest {
+  string key       = 1;
+  uint32 cmd       = 2;
+  uint32 device_id = 3;
+  bytes  payload   = 4;
+}
+message GenericServiceResponse {
+  bool   success = 1;
+  int32  code    = 2;
+  string message = 3;
+  bytes  payload = 4;
+}
+
+// ---- Device Setup Service -------------------------------------------------
+// Generic envelope for plugin-specific device setup operations (zero_motors,
+// set_ip, set_can_id, …).  The operation vocabulary is plugin-defined.
+
+message DeviceSetupTarget {
+  repeated uint32 device_index = 1;
+}
+
+message DeviceSetupRequest {
+  Header            header    = 1;
+  string            operation = 2;
+  DeviceSetupTarget target    = 3;
+  bytes             payload   = 4;
+}
+
+message DeviceSetupResponse {
+  bool             success                = 1;
+  string           message                = 2;
+  repeated uint32  affected_device_index  = 3;
+  bytes            payload                = 4;
+}
+
+// ---- OTA orchestration ----------------------------------------------------
+
+// Agent-to-peripheral-execution action contract.
+//
+// The Agent owns a durable action_id and verified, pinned artifact paths. The
+// peripheral domain owns physical topology, preflight, retry, and verification,
+// and exposes only an aggregate action state. The three request/response pairs
+// are used on service/ota/submit, service/ota/status, and service/ota/versions.
+// Do not add rollback, restore, direction, recovery-mode, cancel, retry,
+// per-target status, or another task identity to this contract.
+//
+// Submit treats targets as an unordered set keyed by (plugin, component).
+// Empty fields and duplicate keys are INVALID_REQUEST. The same action_id with
+// the same normalized set is idempotent and returns OK; the same action_id
+// with a different set returns CONFLICT. A different action_id while an action
+// is non-terminal returns BUSY. The executor owns these checks.
+
+enum OtaResult {
+  OTA_RESULT_UNSPECIFIED     = 0;
+  OTA_RESULT_OK              = 1;
+  OTA_RESULT_INVALID_REQUEST = 2;
+  OTA_RESULT_BUSY            = 3;
+  OTA_RESULT_NOT_FOUND       = 4;
+  OTA_RESULT_CONFLICT        = 5;
+  OTA_RESULT_UNAVAILABLE     = 6;
+}
+
+enum OtaTaskState {
+  OTA_TASK_STATE_UNSPECIFIED = 0;
+  OTA_TASK_STATE_QUEUED      = 1;
+  OTA_TASK_STATE_RUNNING     = 2;
+  OTA_TASK_STATE_SUCCEEDED   = 3;
+  OTA_TASK_STATE_FAILED      = 4;
+}
+
+// Stable, provider-independent causes for a failed peripheral target. The
+// UNSPECIFIED zero value is a wire default and is invalid in a present failure
+// report. Consumers must reject unknown values rather than infer a cause from
+// diagnostic text.
+enum OtaPeripheralFailureReason {
+  OTA_PERIPHERAL_FAILURE_REASON_UNSPECIFIED            = 0;
+  OTA_PERIPHERAL_FAILURE_REASON_PACKAGE_INVALID        = 1;
+  OTA_PERIPHERAL_FAILURE_REASON_TARGET_UNSUPPORTED     = 2;
+  OTA_PERIPHERAL_FAILURE_REASON_DEPENDENCY_UNAVAILABLE = 3;
+  OTA_PERIPHERAL_FAILURE_REASON_PRECONDITION_FAILED    = 4;
+  OTA_PERIPHERAL_FAILURE_REASON_TRANSFER_FAILED        = 5;
+  OTA_PERIPHERAL_FAILURE_REASON_ACTIVATION_FAILED      = 6;
+  OTA_PERIPHERAL_FAILURE_REASON_VERIFICATION_FAILED    = 7;
+  OTA_PERIPHERAL_FAILURE_REASON_EXECUTION_TIMED_OUT    = 8;
+  OTA_PERIPHERAL_FAILURE_REASON_PROTOCOL_INVALID       = 9;
+  OTA_PERIPHERAL_FAILURE_REASON_EXECUTION_FAILED       = 10;
+}
+
+message OtaTarget {
+  string plugin    = 1;
+  string component = 2;
+  // Agent-owned verified artifact path, pinned until the action converges.
+  string file_path = 3;
+}
+
+message OtaSubmitRequest {
+  string              action_id = 1;
+  repeated OtaTarget  targets   = 2;
+}
+
+message OtaSubmitResponse {
+  OtaResult result  = 1;
+  string    message = 2;  // diagnostic, at most 1024 UTF-8 bytes
+}
+
+message OtaStatusRequest {
+  string action_id = 1;
+}
+
+message OtaComponentFailure {
+  // Exact submitted identities. Component is empty only for a plugin-wide
+  // failure; both identities are empty only for a coordinator-wide failure.
+  string                     plugin    = 1;
+  string                     component = 2;
+  OtaPeripheralFailureReason reason    = 3;
+  // Optional source-redacted diagnostic, at most 160 UTF-8 bytes.
+  string                     detail    = 4;
+}
+
+message OtaFailureReport {
+  repeated OtaComponentFailure failures = 1;
+}
+
+// Independent proof for every side effect of the complete peripheral action.
+enum OtaEffectClosure {
+  OTA_EFFECT_CLOSURE_UNSPECIFIED = 0;
+  OTA_EFFECT_CLOSURE_CONFIRMED_CLOSED = 1;
+  OTA_EFFECT_CLOSURE_UNCONFIRMED = 2;
+}
+
+message OtaTaskStatus {
+  OtaTaskState state            = 1;
+  uint32       progress_percent = 2;  // observational only, 0..100
+  string       message          = 3;  // diagnostic, at most 1024 UTF-8 bytes
+  // Present and nonempty exactly when state is OTA_TASK_STATE_FAILED. Reports
+  // on other states, or a failed state without failures, are invalid.
+  OtaFailureReport failure_report = 4;
+  // QUEUED/RUNNING: UNSPECIFIED; SUCCEEDED: CONFIRMED_CLOSED;
+  // FAILED: CONFIRMED_CLOSED or UNCONFIRMED. Missing terminal closure,
+  // unknown state/closure, or invalid failure_report invalidates the WHOLE
+  // status. Terminal results are frozen; late evidence cannot upgrade them.
+  OtaEffectClosure effect_closure = 5;
+}
+
+message OtaStatusResponse {
+  OtaResult     result  = 1;
+  OtaTaskStatus status  = 2;
+  string        message = 3;  // diagnostic, at most 1024 UTF-8 bytes
+}
+
+message OtaComponentRef {
+  string plugin    = 1;
+  string component = 2;
+}
+
+message OtaVersionRequest {
+  repeated OtaComponentRef components = 1;
+}
+
+message OtaComponentVersionResult {
+  string    plugin    = 1;
+  string    component = 2;
+  OtaResult result    = 3;
+  // Set only when result is OK. It is empty for a failed component query.
+  string    version   = 4;
+  // Per-component diagnostic; callers must branch on result, not this text.
+  string    message   = 5;
+}
+
+message OtaVersionResponse {
+  // OK requires one reliable logical version for every requested component.
+  // A non-OK response still carries every component result that the OTA
+  // service could identify.
+  // NOT_FOUND means a requested plugin/component is not an OTA capability of
+  // this Platform release. UNAVAILABLE means the capability is known but its
+  // version cannot currently be read reliably. INVALID_REQUEST is reserved
+  // for malformed requests; callers must not branch on diagnostic message.
+  OtaResult                           result            = 1;
+  repeated OtaComponentVersionResult  component_results = 2;
+  string                              message           = 3;  // overall diagnostic, at most 1024 UTF-8 bytes
+}
+
+// ---- Agent-owned Platform OTA task intake ---------------------------------
+// Distinct from peripheral plugin OTA above (local file_path targets).
+// Frozen Zenoh keys:
+//   service/ota/agent/submit
+//   service/ota/agent/status
+//   service/ota/agent/system-version
+// Maintenance observation (no enter RPC in this contract):
+//   state/system/master -> MasterStatus.phase == MASTER_PHASE_OTA
+// Do not add release_id, TUF metadata, or trust-root fields to these messages.
+
+enum OtaAgentSubmitResult {
+  OTA_AGENT_SUBMIT_RESULT_UNSPECIFIED          = 0;
+  OTA_AGENT_SUBMIT_RESULT_CREATED              = 1;
+  OTA_AGENT_SUBMIT_RESULT_EXISTING             = 2;
+  OTA_AGENT_SUBMIT_RESULT_INVALID_REQUEST      = 3;
+  OTA_AGENT_SUBMIT_RESULT_BUSY                 = 4;
+  OTA_AGENT_SUBMIT_RESULT_IDEMPOTENCY_CONFLICT = 5;
+  OTA_AGENT_SUBMIT_RESULT_SERVICE_UNAVAILABLE  = 6;
+}
+
+enum OtaAgentStatusResult {
+  OTA_AGENT_STATUS_RESULT_UNSPECIFIED         = 0;
+  OTA_AGENT_STATUS_RESULT_OK                  = 1;
+  OTA_AGENT_STATUS_RESULT_NOT_FOUND           = 2;
+  OTA_AGENT_STATUS_RESULT_INVALID_REQUEST     = 3;
+  OTA_AGENT_STATUS_RESULT_SERVICE_UNAVAILABLE = 4;
+  // A valid current-task query observed no active task. No other result value
+  // has idle semantics.
+  OTA_AGENT_STATUS_RESULT_NO_ACTIVE_TASK      = 5;
+}
+
+enum OtaAgentTerminalResult {
+  OTA_AGENT_TERMINAL_RESULT_UNSPECIFIED       = 0;
+  OTA_AGENT_TERMINAL_RESULT_REJECTED          = 1;
+  OTA_AGENT_TERMINAL_RESULT_FAILED            = 2;
+  OTA_AGENT_TERMINAL_RESULT_COMMITTED         = 3;
+  OTA_AGENT_TERMINAL_RESULT_RESTORED_BASELINE = 4;
+  OTA_AGENT_TERMINAL_RESULT_NEEDS_SERVICE     = 5;
+  // Preparation succeeded. This is not installed-version or cache authority.
+  OTA_AGENT_TERMINAL_RESULT_DOWNLOADED        = 6;
+  OTA_AGENT_TERMINAL_RESULT_CANCELLED         = 7;
+}
+
+enum OtaAgentCompletionProvenance {
+  OTA_AGENT_COMPLETION_PROVENANCE_UNSPECIFIED       = 0;
+  OTA_AGENT_COMPLETION_PROVENANCE_UPDATED           = 1;
+  OTA_AGENT_COMPLETION_PROVENANCE_ALREADY_SATISFIED = 2;
+}
+
+enum OtaAgentTaskKind {
+  OTA_AGENT_TASK_KIND_UNSPECIFIED = 0;
+  OTA_AGENT_TASK_KIND_INSTALL = 1;
+  OTA_AGENT_TASK_KIND_DOWNLOAD_ONLY = 2;
+}
+
+// Only service/ota/agent/download accepts this operation. An unavailable
+// operation must never cause a client to fall back to ordinary submit.
+message OtaAgentDownloadRequest {
+  string request_id = 1;
+  string release_version = 2;
+  string product_code = 3;
+}
+
+// Only service/ota/agent/cancel accepts this operation.
+// Cancellation applies only to DownloadOnly and selects an exact request.
+// ACCEPTED means intent is durable; final status becomes CANCELLED only after
+// the old writer and checker have exited. Retry this operation after reply loss.
+message OtaAgentCancelRequest { string request_id = 1; }
+enum OtaAgentCancelResult {
+  OTA_AGENT_CANCEL_RESULT_UNSPECIFIED = 0;
+  OTA_AGENT_CANCEL_RESULT_ACCEPTED = 1;
+  OTA_AGENT_CANCEL_RESULT_ALREADY_TERMINAL = 2;
+  OTA_AGENT_CANCEL_RESULT_NOT_FOUND = 3;
+  OTA_AGENT_CANCEL_RESULT_NOT_DOWNLOAD_ONLY = 4;
+  OTA_AGENT_CANCEL_RESULT_INVALID_REQUEST = 5;
+  OTA_AGENT_CANCEL_RESULT_SERVICE_UNAVAILABLE = 6;
+}
+message OtaAgentCancelResponse {
+  OtaAgentCancelResult result = 1;
+  string request_id = 2;
+  string task_id = 3;
+  OtaAgentTerminalResult terminal_result = 4;
+}
+
+message OtaAgentSubmitRequest {
+  string request_id      = 1;
+  string release_version = 2;
+  // Required. Together with release_version, this is the immutable release
+  // identity bound to request_id. Consumers must reject an empty value and
+  // must not fill it from device configuration.
+  string product_code    = 3;
+}
+
+message OtaAgentSubmitResponse {
+  OtaAgentSubmitResult result             = 1;
+  string               request_id         = 2;
+  string               release_version    = 3;
+  string               task_id            = 4;
+  string               reason_code        = 5;
+  string               diagnostic_summary = 6;  // bounded; no free-text manifest dump
+  string               product_code       = 7;
+}
+
+message OtaAgentStatusRequest {
+  // A nonempty value selects the exact historical request. The canonical
+  // default message (present zero-byte payload) selects the current task.
+  string request_id = 1;
+}
+
+message OtaAgentPeripheralFailureSummary {
+  string                     plugin = 1;
+  OtaPeripheralFailureReason reason = 2;
+}
+
+message OtaAgentStatusResponse {
+  OtaAgentStatusResult         result                = 1;
+  string                       request_id            = 2;
+  string                       release_version       = 3;
+  string                       task_id               = 4;
+  OtaAgentTerminalResult       terminal_result       = 5;
+  string                       reason_code           = 6;
+  string                       product_code          = 7;
+  OtaAgentCompletionProvenance completion_provenance = 8;
+  OtaTaskProgress              task_progress         = 9;
+  // Stable public summaries only. Component identity, diagnostic detail, and
+  // forward/recovery phase remain private or are represented by reason_code.
+  repeated OtaAgentPeripheralFailureSummary peripheral_failures = 10;
+  OtaAgentTaskKind task_kind = 11;
+}
+
+// Agent-owned product-domain version query. This is distinct from
+// OtaVersion*, which remains the Platform-owned peripheral-version contract.
+message OtaAgentSystemVersionRequest {
+  string product_code = 1;
+}
+
+message OtaAgentSystemVersionResponse {
+  OtaResult result          = 1;
+  string    product_code    = 2;
+  string    release_version = 3;
+  string    message         = 4;  // diagnostic, at most 1024 UTF-8 bytes
+}
+
+// Read-only Agent module-version report, served by
+// service/ota/agent/module-versions. No task identity or durable side effect.
+message OtaAgentModuleVersionsRequest {
+  // Absent: fresh inventory. Present: conformance to this product's last
+  // committed release. Present empty or invalid identifiers are INVALID_REQUEST.
+  optional string product_code = 1;
+}
+
+message OtaAgentModuleVersionsResponse {
+  // OK means collection completed, including partial or mismatched reports.
+  // OK requires report; non-OK requires no report and a stable error_code.
+  OtaResult result = 1;
+  OtaAgentModuleVersionsReport report = 2;
+  string error_code = 3;
+  string message = 4; // at most 1024 UTF-8 bytes; empty on OK
+  optional string product_code = 5; // selected product on authority errors only
+}
+
+// Inventory omits product/release/conformance fields and expected versions.
+// Conformance carries these fields and lists only the committed target set.
+message OtaAgentModuleVersionsReport {
+  optional string product_code = 1;
+  optional string release_version = 2;
+  optional OtaAgentModuleConformanceStatus conformance_status = 3;
+  repeated OtaAgentModuleVersion components = 4;
+  repeated OtaAgentModuleDiagnostic diagnostics = 5; // inventory only
+}
+
+message OtaAgentModuleVersion {
+  string module_code = 1;
+  OtaAgentModuleVersionStatus status = 2;
+  optional string observed_version = 3;
+  optional string expected_version = 4; // conformance only
+  optional string reason = 5; // at most 1024 UTF-8 bytes
+}
+
+// Same outcomes as the versions CLI. Firmware Conflict remains ERROR with a
+// diagnostic reason; it is not a distinct observation or a release mismatch.
+enum OtaAgentModuleVersionStatus {
+  OTA_AGENT_MODULE_VERSION_STATUS_UNSPECIFIED = 0;
+  OTA_AGENT_MODULE_VERSION_STATUS_OBSERVED = 1; // inventory only
+  OTA_AGENT_MODULE_VERSION_STATUS_MATCHED = 2; // conformance only
+  OTA_AGENT_MODULE_VERSION_STATUS_MISMATCHED = 3; // conformance only
+  OTA_AGENT_MODULE_VERSION_STATUS_UNAVAILABLE = 4;
+  OTA_AGENT_MODULE_VERSION_STATUS_UNSUPPORTED = 5;
+  OTA_AGENT_MODULE_VERSION_STATUS_ERROR = 6;
+}
+
+enum OtaAgentModuleConformanceStatus {
+  OTA_AGENT_MODULE_CONFORMANCE_STATUS_UNSPECIFIED = 0;
+  OTA_AGENT_MODULE_CONFORMANCE_STATUS_MATCHED = 1;
+  OTA_AGENT_MODULE_CONFORMANCE_STATUS_MISMATCHED = 2;
+  OTA_AGENT_MODULE_CONFORMANCE_STATUS_INCONCLUSIVE = 3;
+}
+
+// Peripheral-versions provider diagnostics, including whole-service failures
+// and plugin-level failures that cannot be assigned to a specific component.
+// Their presence does not mean all peripheral versions are unavailable.
+// Identified component outcomes remain on the corresponding module.
+// Diagnostic status is restricted to UNAVAILABLE or ERROR.
+message OtaAgentModuleDiagnostic {
+  OtaAgentModuleVersionStatus status = 1;
+  string reason = 2; // at most 1024 UTF-8 bytes
+}
+
+enum OtaPublicTaskState {
+  OTA_PUBLIC_TASK_STATE_UNSPECIFIED   = 0;
+  OTA_PUBLIC_TASK_STATE_PENDING       = 1;
+  OTA_PUBLIC_TASK_STATE_RUNNING       = 2;
+  OTA_PUBLIC_TASK_STATE_RECOVERING    = 3;
+  OTA_PUBLIC_TASK_STATE_SUCCEEDED     = 4;
+  OTA_PUBLIC_TASK_STATE_FAILED        = 5;
+  OTA_PUBLIC_TASK_STATE_NEEDS_SERVICE = 6;
+  OTA_PUBLIC_TASK_STATE_RESTORED_BASELINE = 7;
+}
+
+enum OtaPublicStageState {
+  OTA_PUBLIC_STAGE_STATE_UNSPECIFIED = 0;
+  OTA_PUBLIC_STAGE_STATE_PENDING     = 1;
+  OTA_PUBLIC_STAGE_STATE_RUNNING     = 2;
+  OTA_PUBLIC_STAGE_STATE_SUCCEEDED   = 3;
+  OTA_PUBLIC_STAGE_STATE_FAILED      = 4;
+  OTA_PUBLIC_STAGE_STATE_SKIPPED     = 5;
+}
+
+enum OtaStageOperation {
+  OTA_STAGE_OPERATION_UNSPECIFIED = 0;
+  OTA_STAGE_OPERATION_SETUP       = 1;
+  OTA_STAGE_OPERATION_TRANSFERRING = 2;
+  OTA_STAGE_OPERATION_INSTALLING  = 3;
+  OTA_STAGE_OPERATION_RESTARTING  = 4;
+  OTA_STAGE_OPERATION_VERIFYING   = 5;
+  OTA_STAGE_OPERATION_RECOVERING  = 6;
+}
+
+enum OtaStageTarget {
+  OTA_STAGE_TARGET_UNSPECIFIED = 0;
+  OTA_STAGE_TARGET_TASK        = 1;
+  OTA_STAGE_TARGET_PLATFORM    = 2;
+  OTA_STAGE_TARGET_PERIPHERALS = 3;
+  OTA_STAGE_TARGET_AGENT       = 4;
+  OTA_STAGE_TARGET_THOR_BSP    = 5;
+}
+
+message OtaStageProgress {
+  // A monotonic, comparable measure of work for this stage only. Clients must
+  // use completed / total only; total == 0 means no reliable measure exists.
+  uint64 completed = 1;
+  uint64 total = 2;
+}
+
+message OtaPublicStage {
+  OtaStageOperation operation = 1;
+  OtaStageTarget target = 2;
+  OtaPublicStageState state = 3;
+  OtaStageProgress progress = 4;
+}
+
+message OtaStageSummary {
+  OtaStageOperation operation = 1;
+  OtaStageTarget target = 2;
+  OtaPublicStageState state = 3;
+}
+
+message OtaTaskProgress {
+  OtaPublicTaskState state = 1;
+  uint32 current_stage_index = 2;
+  uint32 stage_count = 3;
+  OtaPublicStage current_stage = 4;
+  repeated OtaStageSummary stages = 5;
+  uint32 interrupted_stage_index = 6;
+}
+
+// User configuration. Query presence denotes confirmed values; writes may be unavailable.
+enum ConfigValueType {
+  CONFIG_VALUE_TYPE_UNSPECIFIED = 0;
+  CONFIG_VALUE_TYPE_BOOL = 1;
+  CONFIG_VALUE_TYPE_INTEGER = 2;
+  CONFIG_VALUE_TYPE_DOUBLE = 3;
+  CONFIG_VALUE_TYPE_STRING = 4;
+  CONFIG_VALUE_TYPE_ARRAY = 5;
+}
+enum ConfigApplyPolicy {
+  CONFIG_APPLY_POLICY_UNSPECIFIED = 0;
+  CONFIG_APPLY_POLICY_IMMEDIATE = 1;
+  CONFIG_APPLY_POLICY_SAFE_STATE = 2;
+  CONFIG_APPLY_POLICY_INIT_ONLY = 3;
+}
+enum ConfigOperation {
+  CONFIG_OPERATION_UNSPECIFIED = 0;
+  CONFIG_OPERATION_SET = 1;
+  CONFIG_OPERATION_RESET = 2;
+}
+enum ConfigOverrideStatus {
+  CONFIG_OVERRIDE_STATUS_UNSPECIFIED = 0;
+  CONFIG_OVERRIDE_STATUS_NONE = 1;
+  CONFIG_OVERRIDE_STATUS_APPLIED = 2;
+  CONFIG_OVERRIDE_STATUS_PENDING_INIT = 3;
+  CONFIG_OVERRIDE_STATUS_NOT_ADOPTED = 4;
+}
+enum ConfigResult {
+  CONFIG_RESULT_UNSPECIFIED = 0;
+  CONFIG_RESULT_OK = 1;
+  CONFIG_RESULT_INVALID_REQUEST = 2;
+  CONFIG_RESULT_INSTANCE_UNAVAILABLE = 3;
+  CONFIG_RESULT_VALIDATION_REJECTED = 4;
+  CONFIG_RESULT_BUSY = 5;
+  CONFIG_RESULT_SAFETY_CONDITION_UNMET = 6;
+  CONFIG_RESULT_STORAGE_FAILED_UNCHANGED = 7;
+  CONFIG_RESULT_APPLY_FAILED_UNCHANGED = 8;
+  CONFIG_RESULT_FAILED_RESTORED = 9;
+  CONFIG_RESULT_RECOVERY_REQUIRED = 10;
+  CONFIG_RESULT_RESOURCE_LIMIT = 11;
+}
+message ConfigDoubleArray { repeated double values = 1; }
+message ConfigIntegerArray { repeated sint64 values = 1; }
+message ConfigValue {
+  oneof value {
+    bool bool_value = 1;
+    sint64 int_value = 2;
+    double double_value = 3;
+    string string_value = 4;
+    string raw_json_value = 5;
+    ConfigDoubleArray double_array_value = 6;
+    ConfigIntegerArray integer_array_value = 7;
+  }
+}
+message ConfigEnumOption { int64 value = 1; string name = 2; }
+message ConfigConstraints {
+  optional double minimum = 1;
+  optional double maximum = 2;
+  bool minimum_exclusive = 3;
+  bool maximum_exclusive = 4;
+  optional uint32 max_string_bytes = 5;
+  repeated ConfigEnumOption enum_options = 6;
+  optional sint64 integer_minimum = 7;
+  optional sint64 integer_maximum = 8;
+  optional uint32 min_items = 9;
+  optional uint32 max_items = 10;
+}
+// Additional numeric bounds for one array position; intersect with field bounds.
+message ConfigElementConstraints {
+  optional double minimum = 1;
+  optional double maximum = 2;
+  bool minimum_exclusive = 3;
+  bool maximum_exclusive = 4;
+  optional sint64 integer_minimum = 5;
+  optional sint64 integer_maximum = 6;
+}
+message ConfigArrayElementDescriptor {
+  // Presence is required; zero is a valid position.
+  optional uint32 index = 1;
+  string name = 2;
+  ConfigElementConstraints constraints = 3;
+}
+message ConfigFieldDescriptor {
+  string field_id = 1;
+  string name = 2;
+  string description = 3;
+  string group = 4;
+  ConfigValueType value_type = 5;
+  string unit = 6;
+  ConfigConstraints constraints = 7;
+  ConfigApplyPolicy apply_policy = 8;
+  string safety_condition = 9;
+  ConfigValueType element_type = 10;
+  repeated ConfigArrayElementDescriptor array_elements = 11;
+}
+message ConfigDiagnostic {
+  string code = 1;
+  string field_id = 2;
+  string message = 3;
+  optional uint32 element_index = 4;
+}
+message ConfigFieldInfo {
+  string field_id = 1;
+  ConfigFieldDescriptor field_descriptor = 2;
+  ConfigValue effective_value = 3;
+  ConfigOverrideStatus override_status = 4;
+  ConfigValue saved_override = 5;
+  bool pending_init = 6;
+  repeated ConfigDiagnostic diagnostics = 7;
+}
+message ConfigInstanceInfo {
+  string plugin_id = 1;
+  repeated ConfigFieldInfo fields = 2;
+  repeated ConfigDiagnostic diagnostics = 3;
+}
+message ConfigGetRequest { string plugin_id = 1; }
+message ConfigGetResponse {
+  ConfigResult result = 1;
+  repeated ConfigInstanceInfo instances = 2;
+  repeated ConfigDiagnostic diagnostics = 3;
+}
+message ConfigFieldOperation { string field_id = 1; ConfigOperation operation = 2; ConfigValue value = 3; }
+message ConfigSetRequest { string plugin_id = 1; repeated ConfigFieldOperation operations = 2; }
+message ConfigSetResponse { ConfigResult result = 1; ConfigInstanceInfo instance = 2; repeated ConfigDiagnostic diagnostics = 3; }

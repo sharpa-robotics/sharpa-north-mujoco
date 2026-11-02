@@ -1,0 +1,39 @@
+<mujoco model="lidar_test_scene">
+  <include file="../../mjcf/NTH-HA1-MJCF/NTH-HA1-scene.xml"/>
+
+  <worldbody>
+    <!-- Front FTX140 (-Y): three square steps and a flat wall. -->
+    <geom name="lidar_test_front_wall" type="box" pos="0 -5.0 1.25"
+          size="3.5 0.08 1.25" rgba="0.80 0.28 0.22 1"/>
+    <geom name="lidar_test_front_step_near" type="box" pos="-1.45 -1.45 0.35"
+          size="0.42 0.42 0.35" rgba="1.00 0.76 0.18 1"/>
+    <geom name="lidar_test_front_step_middle" type="box" pos="0 -2.25 0.70"
+          size="0.52 0.45 0.70" rgba="0.96 0.55 0.16 1"/>
+    <geom name="lidar_test_front_step_far" type="box" pos="1.45 -3.10 1.10"
+          size="0.62 0.48 1.10" rgba="0.88 0.35 0.14 1"/>
+
+    <!-- Rear FTX140 (+Y): a round column and V-shaped walls. -->
+    <geom name="lidar_test_rear_column" type="cylinder" pos="0 2.0 1.05"
+          size="0.62 1.05" rgba="0.18 0.86 0.52 1"/>
+    <geom name="lidar_test_rear_v_wall_left" type="box" pos="-1.65 4.0 1.25"
+          euler="0 0 -0.418879" size="2.0 0.08 1.25"
+          rgba="0.20 0.52 0.92 1"/>
+    <geom name="lidar_test_rear_v_wall_right" type="box" pos="1.65 4.0 1.25"
+          euler="0 0 0.418879" size="2.0 0.08 1.25"
+          rgba="0.20 0.72 0.88 1"/>
+    <geom name="lidar_test_rear_marker_left" type="cylinder"
+          pos="-1.5 2.45 0.65" size="0.18 0.65" rgba="0.28 0.92 0.42 1"/>
+    <geom name="lidar_test_rear_marker_right" type="cylinder"
+          pos="1.5 2.85 0.65" size="0.28 0.65" rgba="0.22 0.76 0.62 1"/>
+
+    <!-- Side targets make chassis JT16 movement easy to inspect. -->
+    <geom name="lidar_test_left_wall" type="box" pos="-3.2 0 0.9"
+          size="0.08 1.4 0.9" rgba="0.60 0.32 0.85 1"/>
+    <geom name="lidar_test_right_wall" type="box" pos="3.0 0 0.9"
+          size="0.08 1.8 0.9" rgba="0.86 0.34 0.68 1"/>
+    <geom name="lidar_test_side_pole_left" type="cylinder"
+          pos="-1.7 -0.6 0.65" size="0.13 0.65" rgba="0.76 0.62 0.94 1"/>
+    <geom name="lidar_test_side_pole_right" type="cylinder"
+          pos="1.6 0.8 0.65" size="0.20 0.65" rgba="0.98 0.40 0.72 1"/>
+  </worldbody>
+</mujoco>

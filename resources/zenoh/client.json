@@ -1,0 +1,15 @@
+{
+    "mode": "client",
+    "connect": {
+        "endpoints": ["udp/127.0.0.1:7449?rel=1;multistream=1;mixed_rel=0"],
+        "timeout_ms": 3000
+    },
+    "scouting": {
+        "multicast": {"enabled": false},
+        "gossip": {"enabled": false}
+    },
+    "transport": {
+        "shared_memory": {"enabled": false},
+        "unicast": {"qos": {"enabled": true}}
+    }
+}

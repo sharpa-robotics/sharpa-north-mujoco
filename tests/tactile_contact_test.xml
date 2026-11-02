@@ -1,0 +1,52 @@
+<mujoco model="tactile_contact_test">
+  <option timestep="0.001" gravity="0 0 -9.81"/>
+  <worldbody>
+    <geom name="floor" type="plane" size="2 2 0.1" condim="4" friction="1 0.1 0.001"/>
+    <body name="contact_finger" pos="0 0 0.049">
+      <!-- Keep the sensor Z axis upright while allowing normal/tangential
+           motion and torsional contact around Z. A free joint lets the sphere
+           roll around X/Y and makes the expected local Fz sign ambiguous. -->
+      <joint name="contact_slide_x" type="slide" axis="1 0 0"/>
+      <joint name="contact_slide_z" type="slide" axis="0 0 1"/>
+      <joint name="contact_hinge_z" type="hinge" axis="0 0 1"/>
+      <geom name="right_pinky_tactile_surface" type="sphere" size="0.05" density="1000" condim="4" friction="1 0.1 0.001"/>
+      <site name="right_pinky_tactile_frame" pos="0.01 0 0" type="sphere" size="0.001"/>
+    </body>
+    <body pos="0.2 0 1">
+      <geom name="right_ring_tactile_surface" type="sphere" size="0.01" contype="0" conaffinity="0"/>
+      <site name="right_ring_tactile_frame" type="sphere" size="0.001"/>
+    </body>
+    <body pos="0.4 0 1">
+      <geom name="right_middle_tactile_surface" type="sphere" size="0.01" contype="0" conaffinity="0"/>
+      <site name="right_middle_tactile_frame" type="sphere" size="0.001"/>
+    </body>
+    <body pos="0.6 0 1">
+      <geom name="right_index_tactile_surface" type="sphere" size="0.01" contype="0" conaffinity="0"/>
+      <site name="right_index_tactile_frame" type="sphere" size="0.001"/>
+    </body>
+    <body pos="0.8 0 1">
+      <geom name="right_thumb_tactile_surface" type="sphere" size="0.01" contype="0" conaffinity="0"/>
+      <site name="right_thumb_tactile_frame" type="sphere" size="0.001"/>
+    </body>
+    <body pos="0.2 0.2 1">
+      <geom name="left_pinky_tactile_surface" type="sphere" size="0.01" contype="0" conaffinity="0"/>
+      <site name="left_pinky_tactile_frame" type="sphere" size="0.001"/>
+    </body>
+    <body pos="0.4 0.2 1">
+      <geom name="left_ring_tactile_surface" type="sphere" size="0.01" contype="0" conaffinity="0"/>
+      <site name="left_ring_tactile_frame" type="sphere" size="0.001"/>
+    </body>
+    <body pos="0.6 0.2 1">
+      <geom name="left_middle_tactile_surface" type="sphere" size="0.01" contype="0" conaffinity="0"/>
+      <site name="left_middle_tactile_frame" type="sphere" size="0.001"/>
+    </body>
+    <body pos="0.8 0.2 1">
+      <geom name="left_index_tactile_surface" type="sphere" size="0.01" contype="0" conaffinity="0"/>
+      <site name="left_index_tactile_frame" type="sphere" size="0.001"/>
+    </body>
+    <body pos="1 0.2 1">
+      <geom name="left_thumb_tactile_surface" type="sphere" size="0.01" contype="0" conaffinity="0"/>
+      <site name="left_thumb_tactile_frame" type="sphere" size="0.001"/>
+    </body>
+  </worldbody>
+</mujoco>

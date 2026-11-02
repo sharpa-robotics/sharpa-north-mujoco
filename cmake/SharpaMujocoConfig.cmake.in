@@ -1,0 +1,21 @@
+# Copyright 2026 Sharpa
+# SPDX-License-Identifier: Apache-2.0
+
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+find_dependency(Threads)
+find_package(mujoco CONFIG QUIET)
+if(NOT mujoco_FOUND)
+    list(PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
+    find_dependency(MuJoCo MODULE)
+endif()
+
+if(@SHARPA_MUJOCO_VIEWER_BUILT@)
+    find_dependency(glfw3 3.3)
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/SharpaMujocoTargets.cmake")
+
+check_required_components(SharpaMujoco)

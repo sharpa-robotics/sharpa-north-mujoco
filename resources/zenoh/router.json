@@ -1,0 +1,15 @@
+{
+    "mode": "router",
+    "listen": {
+        "endpoints": ["udp/0.0.0.0:7449?rel=1;multistream=1;mixed_rel=0"]
+    },
+    "connect": {"endpoints": []},
+    "scouting": {
+        "multicast": {"enabled": false},
+        "gossip": {"enabled": false}
+    },
+    "transport": {
+        "link": {"protocols": ["udp"], "tx": {"lease": 2000}},
+        "unicast": {"qos": {"enabled": true}}
+    }
+}

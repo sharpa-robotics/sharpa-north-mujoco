@@ -1,0 +1,18 @@
+<mujoco model="sharpa_mujoco_smoke">
+  <option timestep="0.002"/>
+  <worldbody>
+    <geom name="floor" type="plane" size="2 2 0.1"/>
+    <body name="test_body" pos="0 0 0.2">
+      <joint name="test_hinge" type="hinge" axis="0 1 0"/>
+      <joint name="test_slide" type="slide" axis="1 0 0"/>
+      <geom name="test_geom" type="box" size="0.05 0.05 0.2" mass="1"/>
+    </body>
+  </worldbody>
+  <actuator>
+    <position name="test_actuator" joint="test_hinge" kp="20"/>
+    <position name="test_slide_actuator" joint="test_slide" kp="20"/>
+  </actuator>
+  <sensor>
+    <jointpos name="test_joint_position" joint="test_hinge"/>
+  </sensor>
+</mujoco>
