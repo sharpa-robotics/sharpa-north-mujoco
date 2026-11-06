@@ -21,7 +21,8 @@ usage() {
 Usage: ./scripts/build.sh [options]
 
 Configure and build Sharpa MuJoCo incrementally by default.
-Existing build outputs and the CMake cache are reused.
+Existing build outputs are reused. The MuJoCo SDK location is refreshed from
+MUJOCO_ROOT or sharpa_mujoco.conf on every build.
 Tests are built and run only when --tests is specified.
 
 Options:
@@ -232,9 +233,14 @@ echo "  viewer:  $BUILD_VIEWER"
 echo "  platform: $STAGE_PLATFORM"
 echo "  jobs:    $JOBS"
 
+# Refresh SDK discovery without discarding compiled outputs or other CMake options.
 cmake \
     -S "$PROJECT_ROOT" \
     -B "$BUILD_DIR" \
+    -U MUJOCO_ROOT \
+    -U MuJoCo_INCLUDE_DIR \
+    -U MuJoCo_LIBRARY \
+    -U MuJoCo_RUNTIME_LIBRARY \
     -DCMAKE_BUILD_TYPE="$BUILD_TYPE" \
     -DSHARPA_MUJOCO_BUILD_TESTS="$BUILD_TESTS" \
     -DSHARPA_MUJOCO_BUILD_VIEWER="$BUILD_VIEWER" \

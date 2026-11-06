@@ -343,10 +343,17 @@ if [[ "${BUILD_VIEWER}" == ON && -f /usr/share/doc/libglfw3/copyright ]]; then
         "${STAGING_DIR}/licenses/glfw/copyright"
 fi
 
-MODEL_DIRECTORY_NAME="$(basename -- "${MODEL_DIR}")"
-PACKAGE_MODEL_PATH="mjcf/${MODEL_DIRECTORY_NAME}/$(basename -- "${MODEL_PATH}")"
-install -d "${STAGING_DIR}/mjcf"
-cp -a -- "${MODEL_DIR}" "${STAGING_DIR}/mjcf/${MODEL_DIRECTORY_NAME}"
+ASSET_ROOT="${PROJECT_ROOT}/mjcf/sharpa-assets"
+if [[ "${MODEL_PATH}" == "${ASSET_ROOT}/"* ]]; then
+    PACKAGE_MODEL_PATH="mjcf/sharpa-assets/${MODEL_PATH#"${ASSET_ROOT}/"}"
+    python3 "${PROJECT_ROOT}/tools/robot_assets.py" copy \
+        "${STAGING_DIR}/mjcf/sharpa-assets" --scene "${MODEL_PATH#"${ASSET_ROOT}/"}"
+else
+    MODEL_DIRECTORY_NAME="$(basename -- "${MODEL_DIR}")"
+    PACKAGE_MODEL_PATH="mjcf/${MODEL_DIRECTORY_NAME}/$(basename -- "${MODEL_PATH}")"
+    install -d "${STAGING_DIR}/mjcf"
+    cp -a -- "${MODEL_DIR}" "${STAGING_DIR}/mjcf/${MODEL_DIRECTORY_NAME}"
+fi
 
 copy_config_resources() {
     local key value source relative destination

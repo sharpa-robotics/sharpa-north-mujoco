@@ -9,7 +9,26 @@ add_test(
     NAME sharpa_mujoco_companion_process
     COMMAND sharpa_mujoco_companion_process_test $<TARGET_FILE:sharpa_mujoco_companion_process_worker>)
 find_package(Python3 3.10 QUIET COMPONENTS Interpreter)
+if(TARGET SharpaMujoco::Viewer)
+    add_executable(sharpa_mujoco_benchmark_metrics_test benchmark_metrics_test.cpp)
+    target_compile_features(sharpa_mujoco_benchmark_metrics_test PRIVATE cxx_std_17)
+    add_test(NAME sharpa_mujoco_benchmark_metrics COMMAND sharpa_mujoco_benchmark_metrics_test)
+endif()
 if(Python3_Interpreter_FOUND)
+    add_test(NAME sharpa_mujoco_update_submodules_script
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/update_submodules_script_test.py")
+    add_test(NAME sharpa_mujoco_sdk_motion
+        COMMAND "${Python3_EXECUTABLE}" -m unittest discover
+            -s "${PROJECT_SOURCE_DIR}/examples/sdk/tests" -v)
+    add_test(NAME sharpa_mujoco_robot_assets
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/robot_assets_test.py")
+    add_test(NAME sharpa_mujoco_graphics_benchmark_runner
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/graphics_benchmark_runner_test.py")
+    if(TARGET SharpaMujoco::Viewer)
+        add_test(NAME sharpa_mujoco_viewer_check
+            COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/viewer_check_test.py"
+                    $<TARGET_FILE:sharpa_mujoco_simulator>)
+    endif()
     add_test(NAME sharpa_mujoco_build_script
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/build_script_test.py")
     add_test(NAME sharpa_mujoco_run_script
@@ -30,10 +49,18 @@ target_compile_definitions(
     sharpa_mujoco_runtime_test
     PRIVATE
         SHARPA_MUJOCO_TEST_MODEL="${CMAKE_CURRENT_SOURCE_DIR}/data/minimal.xml"
-        SHARPA_MUJOCO_RUNTIME_ROBOT_MODEL="${PROJECT_SOURCE_DIR}/mjcf/NTH-HA1-MJCF/NTH-HA1.xml"
+        SHARPA_MUJOCO_RUNTIME_ROBOT_MODEL="${SHARPA_MUJOCO_ROBOT_MODEL}"
 )
 
 add_test(NAME sharpa_mujoco_runtime COMMAND sharpa_mujoco_runtime_test)
+
+add_executable(sharpa_mujoco_asset_collision_test asset_collision_test.cpp)
+target_link_libraries(sharpa_mujoco_asset_collision_test PRIVATE ${SHARPA_MUJOCO_MUJOCO_TARGET})
+target_compile_features(sharpa_mujoco_asset_collision_test PRIVATE cxx_std_17)
+target_compile_definitions(sharpa_mujoco_asset_collision_test PRIVATE
+    SHARPA_MUJOCO_COLLISION_SCENE="${SHARPA_MUJOCO_SCENE_MODEL}")
+add_test(NAME sharpa_mujoco_asset_collision COMMAND sharpa_mujoco_asset_collision_test)
+set_tests_properties(sharpa_mujoco_asset_collision PROPERTIES TIMEOUT 60)
 
 add_executable(sharpa_mujoco_runtime_input_test runtime_input_test.cpp)
 target_link_libraries(sharpa_mujoco_runtime_input_test PRIVATE SharpaMujoco::Core)
@@ -59,7 +86,7 @@ target_compile_definitions(
     sharpa_mujoco_scene_builder_test
     PRIVATE
         SHARPA_MUJOCO_TEST_MODEL="${CMAKE_CURRENT_SOURCE_DIR}/data/minimal.xml"
-        SHARPA_MUJOCO_SCENE_ROBOT_MODEL="${PROJECT_SOURCE_DIR}/mjcf/NTH-HA1-MJCF/NTH-HA1.xml"
+        SHARPA_MUJOCO_SCENE_ROBOT_MODEL="${SHARPA_MUJOCO_ROBOT_MODEL}"
 )
 add_test(NAME sharpa_mujoco_scene_builder COMMAND sharpa_mujoco_scene_builder_test)
 
@@ -87,7 +114,7 @@ if(TARGET SharpaMujoco::SimulatorService)
     target_compile_definitions(
         sharpa_mujoco_simulator_service_c_api_test
         PRIVATE
-            SHARPA_MUJOCO_NTH_HA1_MODEL="${PROJECT_SOURCE_DIR}/mjcf/NTH-HA1-MJCF/NTH-HA1.xml"
+            SHARPA_MUJOCO_NTH_HA1_MODEL="${SHARPA_MUJOCO_ROBOT_MODEL}"
             SHARPA_MUJOCO_TEST_MODEL="${CMAKE_CURRENT_SOURCE_DIR}/data/minimal.xml"
             SHARPA_MUJOCO_SNAPSHOT_CONFIG="${CMAKE_CURRENT_SOURCE_DIR}/data/embedded_snapshot.conf"
             SHARPA_MUJOCO_TORSO_CONFIG="${CMAKE_CURRENT_SOURCE_DIR}/data/embedded_torso.conf"
@@ -132,7 +159,7 @@ if(TARGET SharpaMujoco::DeviceCommon)
     target_compile_definitions(
         sharpa_mujoco_startup_brake_test
         PRIVATE
-            SHARPA_MUJOCO_NTH_HA1_MODEL="${PROJECT_SOURCE_DIR}/mjcf/NTH-HA1-MJCF/NTH-HA1.xml"
+            SHARPA_MUJOCO_NTH_HA1_MODEL="${SHARPA_MUJOCO_ROBOT_MODEL}"
     )
     add_test(
         NAME sharpa_mujoco_startup_brake
@@ -170,7 +197,7 @@ if(TARGET SharpaMujoco::TorsoPlugin)
     target_compile_definitions(
         sharpa_mujoco_device_plugin_test
         PRIVATE
-            SHARPA_MUJOCO_POC2_MODEL="${PROJECT_SOURCE_DIR}/mjcf/NTH-HA1-MJCF/NTH-HA1.xml"
+            SHARPA_MUJOCO_POC2_MODEL="${SHARPA_MUJOCO_ROBOT_MODEL}"
     )
     add_test(
         NAME sharpa_mujoco_device_plugin
@@ -216,8 +243,8 @@ if(TARGET SharpaMujoco::ChassisPlugin)
     target_compile_definitions(
         sharpa_mujoco_chassis_udp_test
         PRIVATE
-            SHARPA_MUJOCO_NTH_HA1_MODEL="${PROJECT_SOURCE_DIR}/mjcf/NTH-HA1-MJCF/NTH-HA1.xml"
-            SHARPA_MUJOCO_NTH_HA1_SCENE="${PROJECT_SOURCE_DIR}/mjcf/NTH-HA1-MJCF/NTH-HA1-scene.xml"
+            SHARPA_MUJOCO_NTH_HA1_MODEL="${SHARPA_MUJOCO_ROBOT_MODEL}"
+            SHARPA_MUJOCO_NTH_HA1_SCENE="${SHARPA_MUJOCO_SCENE_MODEL}"
     )
     add_test(
         NAME sharpa_mujoco_chassis_udp
@@ -241,7 +268,7 @@ if(TARGET SharpaMujoco::ArmPlugin)
     target_compile_definitions(
         sharpa_mujoco_arm_udp_test
         PRIVATE
-            SHARPA_MUJOCO_POC2_MODEL="${PROJECT_SOURCE_DIR}/mjcf/NTH-HA1-MJCF/NTH-HA1.xml"
+            SHARPA_MUJOCO_POC2_MODEL="${SHARPA_MUJOCO_ROBOT_MODEL}"
     )
     add_test(NAME sharpa_mujoco_arm_udp COMMAND sharpa_mujoco_arm_udp_test)
 endif()
@@ -278,7 +305,7 @@ if(TARGET SharpaMujoco::WaveHandPlugin)
     target_compile_definitions(
         sharpa_mujoco_wave_hand_test
         PRIVATE
-            SHARPA_MUJOCO_POC2_MODEL="${PROJECT_SOURCE_DIR}/mjcf/NTH-HA1-MJCF/NTH-HA1.xml"
+            SHARPA_MUJOCO_POC2_MODEL="${SHARPA_MUJOCO_ROBOT_MODEL}"
     )
     add_test(NAME sharpa_mujoco_wave_hand COMMAND sharpa_mujoco_wave_hand_test)
 endif()
@@ -304,7 +331,7 @@ if(TARGET SharpaMujoco::TactilePlugin)
     target_compile_definitions(
         sharpa_mujoco_tactile_test
         PRIVATE
-            SHARPA_MUJOCO_TACTILE_MODEL="${PROJECT_SOURCE_DIR}/mjcf/NTH-HA1-MJCF/NTH-HA1.xml"
+            SHARPA_MUJOCO_TACTILE_MODEL="${SHARPA_MUJOCO_ROBOT_MODEL}"
             SHARPA_MUJOCO_TACTILE_FRAME="${PROJECT_SOURCE_DIR}/mjcf/sensors/tactile/wave_fingertip_frame.xml"
             SHARPA_MUJOCO_TACTILE_CONTACT_MODEL="${CMAKE_CURRENT_SOURCE_DIR}/tactile_contact_test.xml"
     )

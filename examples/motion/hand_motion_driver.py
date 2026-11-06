@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Exercise all simulated Wave hand joints with common motion profiles.
+"""Exercise all real robot Wave hand joints with common motion profiles.
 
-Start zenohd, sharpa_mujoco_simulator, and sharpa_platform with the Wave hand
-plugin configured, then run this script.  Use ``--help`` to select hands,
+Connect to the robot at 192.168.100.100 with zenohd and sharpa_platform running
+and the Wave hand plugin configured. Use ``--help`` to select hands,
 joints, profiles, rates, and amplitudes. Other joint groups stay enabled with
 fixed targets. Spread both shoulders slightly before exercising the fingers;
 all groups return to zero on completion or interruption.
@@ -38,7 +38,23 @@ from torso_motion_driver import ArmClearanceRunner, ARM_CLEARANCE_TOLERANCE_DEG
 HAND_SHOULDER_CLEARANCE_DEG = -20.0
 
 
-class HandMotionRunner(MotionRunner):
+class HandFeedbackRunner(MotionRunner):
+    """Allow an explicit right-J5 feedback exception during data collection."""
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if getattr(self._args, "ignore_right_j5", False) and "right_hand" in self._listeners:
+            print("[Verify] ignoring right_hand J5(thumb_IP) feedback for response/arrival "
+                  "checks; position commands remain enabled")
+
+    def _feedback_axes(self, label):
+        axes = super()._feedback_axes(label)
+        if label == "right_hand" and getattr(self._args, "ignore_right_j5", False):
+            return tuple(axis for axis in axes if axis != 4)
+        return axes
+
+
+class HandMotionRunner(HandFeedbackRunner):
     """Check arm clearance before publishing hand exercise/return targets."""
 
     def __init__(self, arms, **kwargs):
@@ -205,6 +221,12 @@ def parse_args():
         choices=("left", "right", "both"),
         default="both",
         help="Hand to exercise (default: both)",
+    )
+    parser.add_argument(
+        "--ignore-right-j5",
+        action="store_true",
+        help=("Ignore right thumb IP (J5) feedback in response/arrival checks; "
+              "position commands and all other joint checks remain enabled"),
     )
     return parser.parse_args()
 

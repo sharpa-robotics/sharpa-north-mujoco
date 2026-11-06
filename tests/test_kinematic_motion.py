@@ -269,9 +269,42 @@ class MotionPlaybackTest(unittest.TestCase):
                         adjusted = runner._plan_segment("sweep", (axis,))
                         factor = 2.0 if axis in (0, 1) else 1.0
                         self.assertEqual(adjusted.targets, original.targets)
-                        for old_time, new_time in zip(original.times, adjusted.times):
-                            self.assertAlmostEqual(new_time, old_time * factor)
+                        pause = torso.J1_SWEEP_PAUSE_SECONDS if axis == 0 else 0.0
+                        self.assertAlmostEqual(
+                            adjusted.duration,
+                            (original.duration - pause) * factor + pause,
+                        )
                         self.assertEqual(args.rate, 200.0)
+
+    def test_torso_j1_sweep_holds_endpoint_for_one_second_before_return(self):
+        args = self.args(torso, "--axes", "1", "--profiles", "sweep")
+        args.rate = 100.0
+        runner = torso.TorsoMotionRunner(
+            arms=Mock(), session=Mock(), proto=SimpleNamespace(TorsoState=object),
+            channels=(ChannelSpec("torso", "action/torso", "state/torso",
+                                  "TorsoCommand", "TorsoState"),),
+            joint_names=torso.JOINT_NAMES, limits_deg=torso.JOINT_LIMITS_DEG,
+            amplitudes_deg=torso.JOINT_AMPLITUDES_DEG,
+            preferred_directions=torso.PREFERRED_DIRECTIONS, args=args,
+            frame_id="test", smooth_chirp_return=True,
+        )
+        runner._baselines = {"torso": [0.0] * len(torso.JOINT_NAMES)}
+        unpaused = MotionRunner._plan_segment(runner, "sweep", (0,))
+        paused = runner._plan_segment("sweep", (0,))
+        midpoint = len(unpaused.times) // 2
+
+        self.assertEqual(paused.targets[midpoint], paused.targets[midpoint + 1])
+        self.assertAlmostEqual(
+            paused.times[midpoint + 1] - paused.times[midpoint],
+            torso.J1_SWEEP_PAUSE_SECONDS,
+        )
+        self.assertAlmostEqual(
+            paused.duration - unpaused.duration,
+            torso.J1_SWEEP_PAUSE_SECONDS,
+        )
+        self.assertEqual(
+            paused.at(paused.times[midpoint] + 0.5), paused.targets[midpoint]
+        )
 
     def test_torso_chirp_return_uses_requested_speed_without_global_slowdown(self):
         args = self.args(torso, "--scale", "1.5", "--speed", "2")

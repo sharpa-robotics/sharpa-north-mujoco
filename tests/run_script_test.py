@@ -15,7 +15,15 @@ STUB = """#!/usr/bin/env python3
 import json, os, pathlib, sys
 with open(os.environ['LAUNCH_TEST_LOG'], 'a') as log:
     log.write(json.dumps({'exe': str(pathlib.Path(sys.argv[0]).resolve()),
-                          'args': sys.argv[1:], 'cwd': os.getcwd()}) + '\\n')
+                          'args': sys.argv[1:], 'cwd': os.getcwd(),
+                          'renderer': os.environ.get('__GLX_VENDOR_LIBRARY_NAME'),
+                          'software': os.environ.get('LIBGL_ALWAYS_SOFTWARE')}) + '\\n')
+if pathlib.Path(sys.argv[0]).name == 'sharpa_mujoco_simulator':
+    error = os.environ.get('LAUNCH_TEST_GRAPHICS_ERROR', '')
+    if '--no-viewer' in sys.argv or not error:
+        sys.exit(0)
+    print(error, file=sys.stderr)
+    sys.exit(1)
 if pathlib.Path(sys.argv[0]).name == 'sharpa_mujoco_environment':
     sys.exit(int(os.environ.get('LAUNCH_TEST_PREFLIGHT_EXIT', '0')))
 """
@@ -33,7 +41,8 @@ class RunScriptTest(unittest.TestCase):
         self.log = self.root / "launch.jsonl"
         self.env = dict(os.environ, LAUNCH_TEST_LOG=str(self.log))
         for key in ("SHARPA_MUJOCO_CONFIG", "SHARPA_MUJOCO_SIMULATOR",
-                    "SHARPA_MUJOCO_ENVIRONMENT_CHECKER"):
+                    "SHARPA_MUJOCO_ENVIRONMENT_CHECKER", "__GLX_VENDOR_LIBRARY_NAME",
+                    "LIBGL_ALWAYS_SOFTWARE"):
             self.env.pop(key, None)
         for root in (self.project, self.package):
             (root / "scripts").mkdir(parents=True)
@@ -166,6 +175,48 @@ class RunScriptTest(unittest.TestCase):
             with self.subTest(args=args):
                 self.assertEqual(self.launch("source", *args).returncode, 2)
                 self.assertEqual(self.records(), [])
+
+    def test_launch_preserves_graphics_environment(self):
+        for kind, root in (("source", self.project), ("package", self.package)):
+            for extra in ({}, {"__GLX_VENDOR_LIBRARY_NAME": "nvidia", "LIBGL_ALWAYS_SOFTWARE": "0"}):
+                with self.subTest(kind=kind, extra=extra):
+                    result = self.launch(kind, **extra)
+                    self.assert_config(kind, result, root / "sharpa_mujoco.conf")
+                    self.assertEqual(self.records()[1]["renderer"], extra.get("__GLX_VENDOR_LIBRARY_NAME"))
+                    self.assertEqual(self.records()[1]["software"], extra.get("LIBGL_ALWAYS_SOFTWARE"))
+
+    def test_graphics_failure_is_reported_without_retry_or_renderer_override(self):
+        for kind in ("source", "package"):
+            for message, extra in (
+                ("GLX: Failed to create context", {}),
+                ("X11: DISPLAY is missing", {}),
+                ("GLX: Failed to create context", {"__GLX_VENDOR_LIBRARY_NAME": "nvidia"}),
+            ):
+                with self.subTest(kind=kind, message=message, extra=extra):
+                    result = self.launch(kind, LAUNCH_TEST_GRAPHICS_ERROR=message, **extra)
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertEqual(len(self.records()), 2)  # Checker and one simulator invocation.
+                    self.assertEqual(self.records()[1]["renderer"], extra.get("__GLX_VENDOR_LIBRARY_NAME"))
+                    self.assertIsNone(self.records()[1]["software"])
+                    self.assertIn(message, result.stderr)
+
+    def test_headless_launch_does_not_require_graphics(self):
+        for kind, root in (("source", self.project), ("package", self.package)):
+            with self.subTest(kind=kind):
+                result = self.launch(kind, "--no-viewer", LAUNCH_TEST_GRAPHICS_ERROR="X11: DISPLAY is missing")
+                self.assert_config(kind, result, root / "sharpa_mujoco.conf")
+                self.assertIsNone(self.records()[1]["renderer"])
+
+    def test_launcher_also_works_from_scripts_directory(self):
+        self.caller = self.project / "scripts"
+        self.assert_config("source", self.launch("source"), self.project / "sharpa_mujoco.conf")
+
+    def test_missing_default_binary_suggests_default_build_command(self):
+        (self.project / "build-linux/apps/simulator/sharpa_mujoco_simulator").unlink()
+        result = self.launch("source")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("scripts/build.sh", result.stderr)
+        self.assertNotIn(" -B ", result.stderr)
 
 
 if __name__ == "__main__":

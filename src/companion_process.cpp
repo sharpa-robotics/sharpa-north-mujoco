@@ -549,7 +549,9 @@ bool CompanionProcess::start(const std::string& directory, const std::string& re
         check(posix_spawn_file_actions_addopen(&actions, STDIN_FILENO, "/dev/null", O_RDONLY, 0));
         check(posix_spawn_file_actions_adddup2(&actions, log_fd, STDOUT_FILENO));
         check(posix_spawn_file_actions_adddup2(&actions, log_fd, STDERR_FILENO));
-        check(posix_spawn_file_actions_addclose(&actions, log_fd));
+        // Only standard I/O belongs in the child. Inheriting simulator sockets
+        // would keep device ports bound after an unexpected simulator exit.
+        check(posix_spawn_file_actions_addclosefrom_np(&actions, STDERR_FILENO + 1));
         sigset_t mask, defaults;
         sigemptyset(&mask);
         sigemptyset(&defaults);

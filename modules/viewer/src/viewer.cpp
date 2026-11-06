@@ -7,6 +7,7 @@
 
 #include "glfw_adapter.h"
 #include "simulate.h"
+#include "benchmark_recorder.h"
 
 #include <mujoco/mujoco.h>
 
@@ -30,10 +31,12 @@ namespace
 class PacedGlfwAdapter final : public ::mujoco::GlfwAdapter
 {
 public:
-    explicit PacedGlfwAdapter(double rate_hz)
+    explicit PacedGlfwAdapter(double rate_hz,
+        std::shared_ptr<detail::BenchmarkRecorder> benchmark = {})
         : interval_(std::chrono::duration_cast<Clock::duration>(
-              std::chrono::duration<double>(1.0 / rate_hz)))
+              std::chrono::duration<double>(1.0 / rate_hz))), benchmark_(std::move(benchmark))
     {
+        if (benchmark_) benchmark_->prepare();
     }
 
     void SetVSync(bool enabled) override
@@ -46,17 +49,15 @@ public:
     void SwapBuffers() override
     {
         ::mujoco::GlfwAdapter::SwapBuffers();
-        if (vsync_enabled_)
+        if (!vsync_enabled_)
         {
-            return;
+            const auto now = Clock::now();
+            if (next_frame_ == Clock::time_point{} || next_frame_ < now - interval_)
+                next_frame_ = now;
+            next_frame_ += interval_;
+            std::this_thread::sleep_until(next_frame_);
         }
-        const auto now = Clock::now();
-        if (next_frame_ == Clock::time_point{} || next_frame_ < now - interval_)
-        {
-            next_frame_ = now;
-        }
-        next_frame_ += interval_;
-        std::this_thread::sleep_until(next_frame_);
+        if (benchmark_) benchmark_->frame();
     }
 
 private:
@@ -64,6 +65,7 @@ private:
     Clock::duration interval_;
     Clock::time_point next_frame_{};
     bool vsync_enabled_ = true;
+    std::shared_ptr<detail::BenchmarkRecorder> benchmark_;
 };
 
 void disable_section(mjUI& ui, const char* name)
@@ -94,6 +96,77 @@ void make_visual_only(::mujoco::Simulate& simulate)
 }
 
 }  // namespace
+
+bool Viewer::check_environment(std::string* error)
+{
+    const auto fail = [error](const std::string& reason, bool glfw_failure) {
+        const char* detail = nullptr;
+        if (glfw_failure) glfwGetError(&detail);
+        if (error)
+        {
+            *error = "Viewer unavailable: " + reason;
+            if (detail) *error += std::string(" (GLFW: ") + detail + ")";
+            if (glfwGetCurrentContext())
+            {
+                using GetString = const unsigned char* (*)(unsigned int);
+                auto get_string = reinterpret_cast<GetString>(glfwGetProcAddress("glGetString"));
+                if (get_string)
+                {
+                    for (const auto& entry : {std::pair{0x1F00u, "vendor"},
+                                             std::pair{0x1F01u, "renderer"},
+                                             std::pair{0x1F02u, "version"}})
+                    {
+                        const auto* value = get_string(entry.first);
+                        if (value) *error += std::string("\nOpenGL ") + entry.second + ": " +
+                            reinterpret_cast<const char*>(value);
+                    }
+                }
+            }
+            *error += "\nRequired: a Linux graphical desktop and desktop OpenGL 1.5+ "
+                "with compatibility functions, GL_ARB_framebuffer_object and "
+                "GL_ARB_vertex_buffer_object."
+                "\nSee CONFIGURATION.md (Graphics requirements) or "
+                "CONFIGURATION.zh-CN.md (图形环境要求)."
+                "\nCheck the display session and GPU driver. For NVIDIA, run nvidia-smi; "
+                "if it reports Driver/library version mismatch after an update, "
+                "save your work and reboot.";
+        }
+        return false;
+    };
+    // Do not let an unrelated earlier GLFW error replace a capability diagnosis.
+    glfwGetError(nullptr);
+    if (!glfwInit()) return fail("could not initialize GLFW", true);
+    glfwDefaultWindowHints();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 1);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+    glfwWindowHint(GLFW_SAMPLES, 4);
+    GLFWwindow* window = glfwCreateWindow(64, 64, "Sharpa MuJoCo graphics check", nullptr, nullptr);
+    if (!window)
+    {
+        fail("could not create an OpenGL window", true);
+        glfwTerminate();
+        return false;
+    }
+    glfwMakeContextCurrent(window);
+    const int major = glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MAJOR);
+    const int minor = glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MINOR);
+    const char* capability_error = nullptr;
+    if (glfwGetWindowAttrib(window, GLFW_OPENGL_PROFILE) == GLFW_OPENGL_CORE_PROFILE ||
+        glfwGetWindowAttrib(window, GLFW_OPENGL_FORWARD_COMPAT) ||
+        (major == 3 && minor == 1 && !glfwExtensionSupported("GL_ARB_compatibility")))
+        capability_error = "MuJoCo's classic Viewer requires OpenGL compatibility functions";
+    else if (!glfwExtensionSupported("GL_ARB_framebuffer_object"))
+        capability_error = "GL_ARB_framebuffer_object is unavailable";
+    else if (!glfwExtensionSupported("GL_ARB_vertex_buffer_object"))
+        capability_error = "GL_ARB_vertex_buffer_object is unavailable";
+    if (capability_error) fail(capability_error, false);
+    glfwDestroyWindow(window);
+    glfwTerminate();
+    if (capability_error) return false;
+    if (error) error->clear();
+    return true;
+}
 
 class Viewer::Impl
 {
@@ -132,10 +205,13 @@ public:
         mjv_defaultOption(&options_);
         mjv_defaultPerturb(&perturb_);
 
+        std::shared_ptr<detail::BenchmarkRecorder> benchmark;
         try
         {
+            if (!config_.benchmark_report.empty())
+                benchmark = std::make_shared<detail::BenchmarkRecorder>(config_.benchmark_report, runtime);
             simulate_ = std::make_unique<::mujoco::Simulate>(
-                std::make_unique<PacedGlfwAdapter>(config_.sync_rate_hz),
+                std::make_unique<PacedGlfwAdapter>(config_.sync_rate_hz, benchmark),
                 &camera_,
                 &options_,
                 &perturb_,
@@ -147,6 +223,7 @@ public:
                     sync_loop(runtime, keep_running);
                 });
             simulate_->RenderLoop();
+            if (benchmark) benchmark->finish();
         }
         catch (const std::exception& exception)
         {

@@ -36,10 +36,10 @@ This option selects the runtime configuration. The MuJoCo SDK is selected at bui
 | --- | --- |
 | `mujoco_root` | Extracted MuJoCo 3.8.1 SDK directory, containing `include/mujoco`, `lib`, and `simulate`. Set the actual local path, such as `/absolute/path/to/mujoco-3.8.1`. Build and packaging tools read this setting; the simulator does not use it to select a scene. |
 
-An existing CMake `MUJOCO_ROOT` cache entry, or the environment variable of the same
-name at initial configuration, takes precedence over the file value. If a previous
-SDK path persists after switching SDKs, use a new build directory or reconfigure
-with the cleanup option described by `scripts/build.sh --help`.
+`./scripts/build.sh` refreshes the MuJoCo location on every build; the `MUJOCO_ROOT`
+environment variable takes precedence over the file value. Rerun the command after
+changing the path. With direct CMake builds, an existing `MUJOCO_ROOT` cache entry
+takes precedence; use a new build directory after switching SDKs.
 
 ## Simulation and Viewer
 
@@ -47,7 +47,7 @@ with the cleanup option described by `scripts/build.sh --help`.
 
 | Parameter | Current value | Description |
 | --- | --- | --- |
-| `model` | `mjcf/NTH-HA1-MJCF/NTH-HA1-scene.xml` | Main scene MJCF file. |
+| `model` | `mjcf/sharpa-assets/d01/d01-w/ha1.2/mjcf/NTH-HA1-scene-precise-collision.xml` | Main scene MJCF file. |
 | `snapshot_rate_hz` | `500` | Runtime state snapshot frequency in simulation time. Must be positive; the model still determines the physics timestep. |
 
 ### `[viewer]`
@@ -57,6 +57,19 @@ with the cleanup option described by `scripts/build.sh --help`.
 | `enabled` | `true` | Whether to start the Viewer. Disable for headless operation. |
 | `sync_rate_hz` | `60` | Viewer synchronization frequency. Must be positive. |
 | `vsync` | `false` | Whether to enable graphics vertical synchronization. The current configuration disables VSync and uses software pacing at `sync_rate_hz` to avoid background GLX VSync stalls. |
+
+### Graphics requirements
+
+The Viewer requires a Linux graphical desktop, desktop OpenGL 1.5+ compatibility
+functions, `GL_ARB_framebuffer_object`, and `GL_ARB_vertex_buffer_object`.
+Hardware acceleration is recommended.
+
+Validated environment: Ubuntu 22.04 x86_64, RTX 4070 Ti SUPER, NVIDIA drivers
+**570.211.01 and 580.178.04** (OpenGL 4.6). Other combinations have not been validated.
+
+A failed startup check reports the cause and exits without switching renderers.
+If `nvidia-smi` reports `Driver/library version mismatch` after a driver update,
+save your work and reboot.
 
 ## Device enablement and drivers
 
@@ -424,7 +437,7 @@ development details, see the [LiDAR plugin documentation](plugins/lidar/README.m
 | `mount_pos` | `-2.94958e-07,-0.0803,0.11755` | `-0.0126496,0.1171,0.22518` | `0.2685,0,0.12463` |
 | `mount_quat` | `-0.707106781,0,0,0.707106781` | `0.459227,-0.537688,-0.459231,0.537688` | `1,0,0,0` |
 | `calibration_file` | `resources/lidar/calibration/FTX140_angle_calib_file.csv` | `resources/lidar/calibration/FTX140_angle_calib_file.csv` | `resources/lidar/calibration/JT16_sample_angle.csv` |
-| `raycast_exclude_meshes` | `mesh_meshes_torso__torso_FTX_link,mesh_meshes_torso__torso_base_link,mesh_meshes_torso__torso_base_link002,mesh_meshes_torso__torso_base_link003` | `mesh_meshes_torso__torso_FTX_link` | `mesh_root_link` |
+| `raycast_exclude_meshes` | `visual_old_mesh_meshes_torso__torso_FTX_link,visual_old_mesh_meshes_torso__torso_base_link,visual_old_mesh_meshes_torso__torso_base_link002,visual_old_mesh_meshes_torso__torso_base_link003` | `visual_old_mesh_meshes_torso__torso_FTX_link` | `visual_old_mesh_root_link` |
 | `min_range_m` | `0.1` | `0.1` | `0.15` |
 | `max_range_m` | `60` | `60` | `100` |
 | `bind_port` | `45980` | `45981` | `45982` |

@@ -80,7 +80,7 @@ find_package_handle_standard_args(
     MuJoCo
     REQUIRED_VARS MuJoCo_INCLUDE_DIR MuJoCo_LIBRARY
     REASON_FAILURE_MESSAGE
-        "Install the complete MuJoCo Linux release and set mujoco_root in sharpa_mujoco.conf or export MUJOCO_ROOT to its extracted directory. Then rerun scripts/build.sh. To discard stale CMake paths, use scripts/build.sh --clean with a verified build directory, or select a new build directory with -B. For direct CMake builds, configure in a new build directory."
+        "Install the complete MuJoCo Linux release and set mujoco_root in sharpa_mujoco.conf or export MUJOCO_ROOT to its extracted directory. Then rerun ./scripts/build.sh to refresh cached MuJoCo paths automatically. For direct CMake builds, configure in a new build directory after changing the SDK path."
 )
 
 if(MuJoCo_FOUND AND NOT TARGET MuJoCo::mujoco)

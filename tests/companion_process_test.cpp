@@ -4,7 +4,9 @@
 #include "sharpa_mujoco/c_api.h"
 
 #include <sys/stat.h>
+#include <sys/socket.h>
 #include <sys/wait.h>
+#include <netinet/in.h>
 #include <signal.h>
 #include <unistd.h>
 #include <chrono>
@@ -68,7 +70,25 @@ int main(int argc, char** argv)
         require(sharpa_mujoco_companion_status(first.get(), &state, &pid, &code, error, sizeof(error)), "prepared status failed");
         require(state == SHARPA_MUJOCO_COMPANION_STARTING && pid == 0, "prepare launched a child");
         require(!sharpa_mujoco_companion_prepare(second.get(), name.c_str(), root.c_str(), nullptr, error, sizeof(error)), "duplicate prepare accepted");
+        // Model a device socket without CLOEXEC. The companion must never
+        // inherit it and keep its port occupied after the simulator exits.
+        sockaddr_in device_address{};
+        device_address.sin_family = AF_INET;
+        device_address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+        int device_socket = socket(AF_INET, SOCK_STREAM, 0);
+        require(device_socket >= 0, "cannot create device socket fixture");
+        require(bind(device_socket, reinterpret_cast<sockaddr*>(&device_address), sizeof(device_address)) == 0,
+                "cannot bind device socket fixture");
+        socklen_t address_size = sizeof(device_address);
+        require(getsockname(device_socket, reinterpret_cast<sockaddr*>(&device_address), &address_size) == 0,
+                "cannot read fixture port");
         require(sharpa_mujoco_companion_start(first.get(), name.c_str(), root.c_str(), nullptr, error, sizeof(error)), error);
+        close(device_socket);
+        device_socket = socket(AF_INET, SOCK_STREAM, 0);
+        require(device_socket >= 0, "cannot recreate device socket fixture");
+        const bool port_released = bind(device_socket, reinterpret_cast<sockaddr*>(&device_address), sizeof(device_address)) == 0;
+        close(device_socket);
+        require(port_released, "companion inherited a simulator socket and retained its port");
         require(sharpa_mujoco_companion_status(first.get(), &state, &pid, &code, error, sizeof(error)), "status failed");
         require(state == SHARPA_MUJOCO_COMPANION_RUNNING && pid > 0, "not running");
         const int original_pid = pid;

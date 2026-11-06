@@ -116,6 +116,29 @@ bool same_raycast_geometry(const mjModel* model, int first, int second)
 
 void hide_duplicate_visual_geoms(mjModel* model)
 {
+    // Precise robot assets use group 2 for visible surfaces and group 3 for
+    // collision proxies. LiDAR observes surfaces, not convex collision pieces.
+    // This model is a private mj_copyModel; physics and Viewer stay untouched.
+    const int robot = mj_name2id(model, mjOBJ_BODY, "north");
+    bool precise_visuals = false;
+    for (int geom = 0; geom < model->ngeom; ++geom)
+        precise_visuals |= model->geom_group[geom] == 2 &&
+            model->geom_contype[geom] == 0 && model->geom_conaffinity[geom] == 0;
+    if (robot >= 0 && precise_visuals)
+    {
+        for (int geom = 0; geom < model->ngeom; ++geom)
+        {
+            if (model->geom_group[geom] != 3) continue;
+            for (int body = model->geom_bodyid[geom]; body > 0; body = model->body_parentid[body])
+            {
+                if (body == robot)
+                {
+                    model->geom_rgba[geom * 4 + 3] = 0.0F;
+                    break;
+                }
+            }
+        }
+    }
     for (int geom_id = 0; geom_id < model->ngeom; ++geom_id)
     {
         if (model->geom_group[geom_id] != 1)

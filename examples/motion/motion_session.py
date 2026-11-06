@@ -34,7 +34,7 @@ class MotionSession:
         for module, part, sides, runner_type in (
             (torso, "torso", (None,), MotionRunner),
             (arm, "arm", ("left", "right"), arm.ArmMotionRunner),
-            (hand, "hand", ("left", "right"), MotionRunner),
+            (hand, "hand", ("left", "right"), hand.HandFeedbackRunner),
         ):
             channels = []
             for side in sides:

@@ -31,6 +31,30 @@ option(SHARPA_MUJOCO_BUILD_EMBEDDED_SIMULATOR "Embed device simulator support in
 option(SHARPA_MUJOCO_BUILD_VIEWER "Build the MuJoCo 3.8.1 Viewer on Linux" ON)
 option(SHARPA_MUJOCO_PORTABLE_RUNTIME "Use package-relative simulator RPATH" OFF)
 
+# Robot assets are owned by the external submodule. Core-only builds need no model.
+set(SHARPA_MUJOCO_ASSET_ROOT "${PROJECT_SOURCE_DIR}/mjcf/sharpa-assets")
+set(SHARPA_MUJOCO_ROBOT_MODEL "${SHARPA_MUJOCO_ASSET_ROOT}/d01/d01-w/ha1.2/mjcf/NTH-HA1-precise-collision.xml")
+set(SHARPA_MUJOCO_SCENE_MODEL "${SHARPA_MUJOCO_ASSET_ROOT}/d01/d01-w/ha1.2/mjcf/NTH-HA1-scene-precise-collision.xml")
+if(SHARPA_MUJOCO_BUILD_SIMULATOR OR SHARPA_MUJOCO_BUILD_EMBEDDED_SIMULATOR OR SHARPA_MUJOCO_BUILD_TESTS)
+    find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
+    execute_process(
+        COMMAND "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/tools/robot_assets.py" list
+        RESULT_VARIABLE _asset_status OUTPUT_VARIABLE _asset_files ERROR_VARIABLE _asset_error
+        OUTPUT_STRIP_TRAILING_WHITESPACE)
+    if(NOT _asset_status EQUAL 0)
+        message(FATAL_ERROR "${_asset_error}")
+    endif()
+    string(REPLACE "\n" ";" SHARPA_MUJOCO_ASSET_FILES "${_asset_files}")
+endif()
+
+function(sharpa_install_robot_assets destination)
+    foreach(_asset IN LISTS SHARPA_MUJOCO_ASSET_FILES)
+        get_filename_component(_directory "${_asset}" DIRECTORY)
+        install(FILES "${SHARPA_MUJOCO_ASSET_ROOT}/${_asset}"
+            DESTINATION "${destination}/${_directory}" ${ARGN})
+    endforeach()
+endfunction()
+
 list(PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(PlatformRuntime)
 
@@ -338,7 +362,11 @@ install(
     DESTINATION ${CMAKE_INSTALL_DATADIR}/sharpa_mujoco
 )
 
+sharpa_install_robot_assets("${CMAKE_INSTALL_DATADIR}/sharpa_mujoco/mjcf/sharpa-assets")
+
 if(SHARPA_MUJOCO_BUILD_EMBEDDED_SIMULATOR)
+    sharpa_install_robot_assets("${CMAKE_INSTALL_LIBDIR}/sharpa_mujoco/mjcf/sharpa-assets"
+        COMPONENT SharpaMujocoCSDK)
     install(
         FILES sharpa_mujoco.conf
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/sharpa_mujoco

@@ -1,0 +1,8 @@
+[submodule "mjcf/sharpa-assets"]
+	path = mjcf/sharpa-assets
+	url = https://github.com/sharpa-robotics/sharpa-urdf-usd-xml.git
+	branch = main
+[submodule "third_party/north_sdk"]
+	path = third_party/north_sdk
+	url = https://github.com/sharpa-robotics/sharpa-north-sdk.git
+	branch = main

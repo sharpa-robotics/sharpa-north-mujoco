@@ -54,7 +54,11 @@ fi
 
 if [[ ! -x "${SIMULATOR}" ]]; then
     echo "Simulator not found or not executable: ${SIMULATOR}" >&2
-    echo "Build the selected directory with: ${PROJECT_ROOT}/scripts/build.sh -B '${BUILD_DIR}' ${PLATFORM_MODE}" >&2
+    if [[ "$BUILD_DIR_EXPLICIT" == false ]]; then
+        echo "Build it first with: ${PROJECT_ROOT}/scripts/build.sh ${PLATFORM_MODE}" >&2
+    else
+        echo "Build the selected directory with: ${PROJECT_ROOT}/scripts/build.sh -B '${BUILD_DIR}' ${PLATFORM_MODE}" >&2
+    fi
     exit 1
 fi
 

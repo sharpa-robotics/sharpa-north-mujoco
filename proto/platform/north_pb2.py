@@ -21,10 +21,133 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0bnorth.proto\x12\x05proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8d\x01\n\x06Header\x12)\n\x05stamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0b\n\x03key\x18\x02 \x01(\t\x12\x10\n\x08\x66rame_id\x18\x03 \x01(\t\x12,\n\x08sys_time\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0b\n\x03seq\x18\x05 \x01(\r\"(\n\x05Point\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"\x1f\n\x07Vector2\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\"*\n\x07Vector3\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"8\n\nQuaternion\x12\t\n\x01w\x18\x01 \x01(\x02\x12\t\n\x01x\x18\x02 \x01(\x02\x12\t\n\x01y\x18\x03 \x01(\x02\x12\t\n\x01z\x18\x04 \x01(\x02\"N\n\x04Pose\x12\x1e\n\x08position\x18\x01 \x01(\x0b\x32\x0c.proto.Point\x12&\n\x0borientation\x18\x02 \x01(\x0b\x32\x11.proto.Quaternion\"G\n\x0bPoseStamped\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04pose\x18\x02 \x01(\x0b\x32\x0b.proto.Pose\"H\n\x05Twist\x12\x1e\n\x06linear\x18\x01 \x01(\x0b\x32\x0e.proto.Vector3\x12\x1f\n\x07\x61ngular\x18\x02 \x01(\x0b\x32\x0e.proto.Vector3\"J\n\x0cTwistStamped\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x1b\n\x05twist\x18\x02 \x01(\x0b\x32\x0c.proto.Twist\"G\n\x06Wrench\x12\x1d\n\x05\x66orce\x18\x01 \x01(\x0b\x32\x0e.proto.Vector3\x12\x1e\n\x06torque\x18\x02 \x01(\x0b\x32\x0e.proto.Vector3\"M\n\rWrenchStamped\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x1d\n\x06wrench\x18\x02 \x01(\x0b\x32\r.proto.Wrench\"U\n\tTransform\x12#\n\x0btranslation\x18\x01 \x01(\x0b\x32\x0e.proto.Vector3\x12#\n\x08rotation\x18\x02 \x01(\x0b\x32\x11.proto.Quaternion\"n\n\x10TransformStamped\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x16\n\x0e\x63hild_frame_id\x18\x02 \x01(\t\x12#\n\ttransform\x18\x03 \x01(\x0b\x32\x10.proto.Transform\"\xf4\x01\n\x03Imu\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12&\n\x0borientation\x18\x02 \x01(\x0b\x32\x11.proto.Quaternion\x12(\n\x10\x61ngular_velocity\x18\x03 \x01(\x0b\x32\x0e.proto.Vector3\x12+\n\x13linear_acceleration\x18\x04 \x01(\x0b\x32\x0e.proto.Vector3\x12.\n\x13\x61ligned_orientation\x18\x05 \x01(\x0b\x32\x11.proto.Quaternion\x12\x1f\n\x07gravity\x18\x06 \x01(\x0b\x32\x0e.proto.Vector3\"8\n\nImuSamples\x12\x10\n\x08stamp_ns\x18\x01 \x01(\x04\x12\x18\n\x04imus\x18\x02 \x03(\x0b\x32\n.proto.Imu\"\xb0\x01\n\nUltrasonic\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x13\n\x0b\x64istance_mm\x18\x02 \x01(\r\x12\x11\n\traw_value\x18\x03 \x01(\r\x12\x1b\n\x13temperature_celsius\x18\x04 \x01(\x02\x12/\n\x06status\x18\x05 \x01(\x0e\x32\x1f.proto.UltrasonicDistanceStatus\x12\r\n\x05valid\x18\x06 \x01(\x08\"M\n\x11UltrasonicSamples\x12\x10\n\x08stamp_ns\x18\x01 \x01(\x04\x12&\n\x0bultrasonics\x18\x02 \x03(\x0b\x32\x11.proto.Ultrasonic\"P\n\x10TactileSkinPoint\x12\x11\n\tserial_id\x18\x01 \x01(\t\x12\x0b\n\x03row\x18\x02 \x01(\r\x12\x0b\n\x03\x63ol\x18\x03 \x01(\r\x12\x0f\n\x07\x66orce_n\x18\x04 \x01(\x02\"d\n\x0bTactileSkin\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\'\n\x06points\x18\x03 \x03(\x0b\x32\x17.proto.TactileSkinPoint\x12\r\n\x05valid\x18\x04 \x01(\x08\"I\n\x12TactileSkinSamples\x12\x10\n\x08stamp_ns\x18\x01 \x01(\x04\x12!\n\x05skins\x18\x02 \x03(\x0b\x32\x12.proto.TactileSkin\"\x89\x01\n\x05Image\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06height\x18\x02 \x01(\r\x12\r\n\x05width\x18\x03 \x01(\r\x12\x10\n\x08\x65ncoding\x18\x04 \x01(\t\x12\x0c\n\x04step\x18\x05 \x01(\r\x12\x14\n\x0cis_bigendian\x18\x06 \x01(\x08\x12\x0c\n\x04\x64\x61ta\x18\x07 \x01(\x0c\"N\n\x0f\x43ompressedImage\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06\x66ormat\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\"\x86\x02\n\x0b\x43\x61meraFrame\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12!\n\x05mount\x18\x02 \x01(\x0e\x32\x12.proto.CameraMount\x12%\n\x05\x63olor\x18\x03 \x01(\x0b\x32\x16.proto.CompressedImage\x12\x1b\n\x05\x64\x65pth\x18\x04 \x01(\x0b\x32\x0c.proto.Image\x12\x18\n\x02ir\x18\x05 \x01(\x0b\x32\x0c.proto.Image\x12*\n\ncolor_left\x18\x06 \x01(\x0b\x32\x16.proto.CompressedImage\x12+\n\x0b\x63olor_right\x18\x07 \x01(\x0b\x32\x16.proto.CompressedImage\"K\n\nPointField\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\r\x12\x10\n\x08\x64\x61tatype\x18\x03 \x01(\r\x12\r\n\x05\x63ount\x18\x04 \x01(\r\"\xc9\x01\n\nPointCloud\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06height\x18\x02 \x01(\r\x12\r\n\x05width\x18\x03 \x01(\r\x12!\n\x06\x66ields\x18\x04 \x03(\x0b\x32\x11.proto.PointField\x12\x14\n\x0cis_bigendian\x18\x05 \x01(\x08\x12\x12\n\npoint_step\x18\x06 \x01(\r\x12\x10\n\x08row_step\x18\x07 \x01(\r\x12\x0c\n\x04\x64\x61ta\x18\x08 \x01(\x0c\x12\x10\n\x08is_dense\x18\t \x01(\x08\"C\n\nLidarPoint\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\x12\x14\n\x0creflectivity\x18\x04 \x01(\r\"Y\n\tLaserShot\x12\x14\n\x0ctimestamp_ns\x18\x01 \x01(\x04\x12\x13\n\x0b\x61zimuth_rad\x18\x02 \x01(\x02\x12!\n\x06points\x18\x03 \x03(\x0b\x32\x11.proto.LidarPoint\"-\n\nLaserShots\x12\x1f\n\x05shots\x18\x01 \x03(\x0b\x32\x10.proto.LaserShot\"e\n\x07SubArea\x12\x14\n\x0ctimestamp_ns\x18\x01 \x01(\x04\x12\x0e\n\x06row_id\x18\x02 \x01(\r\x12\x11\n\tcolumn_id\x18\x03 \x01(\r\x12!\n\x06points\x18\x04 \x03(\x0b\x32\x11.proto.LidarPoint\",\n\x08SubAreas\x12 \n\x08subareas\x18\x01 \x03(\x0b\x32\x0e.proto.SubArea\"o\n\x10PackedLaserShots\x12\x13\n\x0b\x63ompression\x18\x01 \x01(\t\x12\x12\n\nshot_count\x18\x02 \x01(\r\x12\x13\n\x0bpoint_count\x18\x03 \x01(\r\x12\r\n\x05shots\x18\x04 \x01(\x0c\x12\x0e\n\x06points\x18\x05 \x01(\x0c\"s\n\x0ePackedSubAreas\x12\x13\n\x0b\x63ompression\x18\x01 \x01(\t\x12\x15\n\rsubarea_count\x18\x02 \x01(\r\x12\x13\n\x0bpoint_count\x18\x03 \x01(\r\x12\x10\n\x08subareas\x18\x04 \x01(\x0c\x12\x0e\n\x06points\x18\x05 \x01(\x0c\"\x82\x02\n\nLidarFrame\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08stamp_ns\x18\x02 \x01(\x04\x12\'\n\nlaser_scan\x18\x03 \x01(\x0b\x32\x11.proto.LaserShotsH\x00\x12%\n\nlidar_scan\x18\x04 \x01(\x0b\x32\x0f.proto.SubAreasH\x00\x12\x34\n\x11packed_laser_scan\x18\x05 \x01(\x0b\x32\x17.proto.PackedLaserShotsH\x00\x12\x32\n\x11packed_lidar_scan\x18\x06 \x01(\x0b\x32\x15.proto.PackedSubAreasH\x00\x42\t\n\x07payload\"|\n\nRadarTrack\x12\x10\n\x08track_id\x18\x01 \x01(\r\x12 \n\x08position\x18\x02 \x01(\x0b\x32\x0e.proto.Vector3\x12 \n\x08velocity\x18\x03 \x01(\x0b\x32\x0e.proto.Vector3\x12\x0b\n\x03rcs\x18\x04 \x01(\x02\x12\x0b\n\x03snr\x18\x05 \x01(\x02\"\x80\x01\n\nRadarFrame\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06sensor\x18\x02 \x01(\t\x12!\n\x06tracks\x18\x03 \x03(\x0b\x32\x11.proto.RadarTrack\x12 \n\x05\x63loud\x18\x04 \x01(\x0b\x32\x11.proto.PointCloud\"\x9d\x02\n\x0cTactileFrame\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12$\n\x06\x66inger\x18\x03 \x01(\x0e\x32\x14.proto.TactileFinger\x12\x12\n\nchannel_id\x18\x04 \x01(\r\x12\x1e\n\x07\x66orce6d\x18\x05 \x01(\x0b\x32\r.proto.Wrench\x12#\n\x03raw\x18\x06 \x01(\x0b\x32\x16.proto.CompressedImage\x12&\n\x06\x64\x65\x66orm\x18\x07 \x01(\x0b\x32\x16.proto.CompressedImage\x12,\n\x0e\x63ontact_points\x18\x08 \x01(\x0b\x32\x14.proto.ContactPoints\"S\n\rContactPoints\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x13\n\x0bpoint_count\x18\x02 \x01(\r\x12\x0e\n\x06points\x18\x03 \x03(\x02\"N\n\nJointState\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x10\n\x08position\x18\x02 \x03(\x02\x12\x10\n\x08velocity\x18\x03 \x03(\x02\x12\x0e\n\x06torque\x18\x04 \x03(\x02\"P\n\x0cJointCommand\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x10\n\x08position\x18\x02 \x03(\x02\x12\x10\n\x08velocity\x18\x03 \x03(\x02\x12\x0e\n\x06torque\x18\x04 \x03(\x02\"g\n\x14JointElectricalState\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x1b\n\x13temperature_celsius\x18\x02 \x03(\x02\x12\x0f\n\x07\x63urrent\x18\x03 \x03(\x02\x12\x13\n\x0b\x62us_voltage\x18\x04 \x03(\x02\"\xd7\x01\n\x08\x41rmState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x1e\n\tcartesian\x18\x03 \x01(\x0b\x32\x0b.proto.Pose\x12!\n\x06joints\x18\x04 \x01(\x0b\x32\x11.proto.JointState\x12\x1d\n\x06wrench\x18\x05 \x01(\x0b\x32\r.proto.Wrench\x12/\n\nelectrical\x18\x06 \x01(\x0b\x32\x1b.proto.JointElectricalState\"\xb9\x01\n\nArmCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x1e\n\x04mode\x18\x03 \x01(\x0e\x32\x10.proto.SpaceMode\x12%\n\x06joints\x18\x04 \x01(\x0b\x32\x13.proto.JointCommandH\x00\x12 \n\tcartesian\x18\x05 \x01(\x0b\x32\x0b.proto.PoseH\x00\x42\x08\n\x06target\"\xc3\x01\n\tHandState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12!\n\x06joints\x18\x03 \x01(\x0b\x32\x11.proto.JointState\x12/\n\nelectrical\x18\x04 \x01(\x0b\x32\x1b.proto.JointElectricalState\x12(\n\nforce_info\x18\x05 \x03(\x0b\x32\x14.proto.HandForceInfo\"\x8c\x01\n\x0bHandCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x1e\n\x04mode\x18\x03 \x01(\x0e\x32\x10.proto.SpaceMode\x12#\n\x06joints\x18\x04 \x01(\x0b\x32\x13.proto.JointCommand\"d\n\x08GloveRaw\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12 \n\x04hand\x18\x02 \x01(\x0b\x32\x12.proto.HandCommand\x12\x17\n\x03imu\x18\x03 \x01(\x0b\x32\n.proto.Imu\"\xe9\x01\n\rHandForceInfo\x12\x0e\n\x06online\x18\x01 \x01(\r\x12\x17\n\x0fstrain_sensor_1\x18\x02 \x01(\x05\x12\x17\n\x0fstrain_sensor_2\x18\x03 \x01(\x05\x12\x17\n\x0fstrain_sensor_3\x18\x04 \x01(\x05\x12\x17\n\x0fstrain_sensor_4\x18\x05 \x01(\x05\x12\x10\n\x08torque_x\x18\x06 \x01(\x05\x12\x10\n\x08torque_y\x18\x07 \x01(\x05\x12\x0f\n\x07\x66orce_z\x18\x08 \x01(\x05\x12\x1b\n\x13temperature_celsius\x18\t \x01(\x05\x12\x12\n\nerror_code\x18\n \x01(\x05\"\x7f\n\nTorsoState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12!\n\x06joints\x18\x02 \x01(\x0b\x32\x11.proto.JointState\x12/\n\nelectrical\x18\x03 \x01(\x0b\x32\x1b.proto.JointElectricalState\"~\n\x0cTorsoCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x1e\n\x04mode\x18\x02 \x01(\x0e\x32\x10.proto.SpaceMode\x12%\n\x06joints\x18\x03 \x01(\x0b\x32\x13.proto.JointCommandH\x00\x42\x08\n\x06target\"X\n\x10TorsoModeRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12%\n\x04mode\x18\x02 \x01(\x0e\x32\x17.proto.TorsoControlMode\"\x94\x01\n\x11TorsoModeResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12.\n\rprevious_mode\x18\x02 \x01(\x0e\x32\x17.proto.TorsoControlMode\x12-\n\x0c\x63urrent_mode\x18\x03 \x01(\x0e\x32\x17.proto.TorsoControlMode\x12\x0f\n\x07message\x18\x04 \x01(\t\"\xb5\x01\n\x0c\x43hassisState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x1e\n\x08velocity\x18\x02 \x01(\x0b\x32\x0c.proto.Twist\x12!\n\x06joints\x18\x03 \x01(\x0b\x32\x11.proto.JointState\x12/\n\nelectrical\x18\x04 \x01(\x0b\x32\x1b.proto.JointElectricalState\x12\x12\n\njoint_mode\x18\x05 \x03(\r\"\x8a\x01\n\rChassisTarget\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x1d\n\x15joint_target_position\x18\x02 \x03(\x02\x12\x1d\n\x15joint_target_velocity\x18\x03 \x03(\x02\x12\x1c\n\x14joint_target_current\x18\x04 \x03(\x02\"d\n\x0e\x43hassisCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\n\n\x02vx\x18\x02 \x01(\x02\x12\n\n\x02vy\x18\x03 \x01(\x02\x12\x0e\n\x06vtheta\x18\x04 \x01(\x02\x12\x0b\n\x03v_l\x18\x05 \x01(\x02\"\xa2\x05\n\x11\x43hassisRawCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x17\n\x0fwheelA_position\x18\x02 \x01(\x02\x12\x17\n\x0fwheelA_velocity\x18\x03 \x01(\x02\x12\x1a\n\x12wheelA_feedforward\x18\x04 \x01(\x02\x12\x17\n\x0fwheelB_position\x18\x05 \x01(\x02\x12\x17\n\x0fwheelB_velocity\x18\x06 \x01(\x02\x12\x1a\n\x12wheelB_feedforward\x18\x07 \x01(\x02\x12\x17\n\x0fwheelC_position\x18\x08 \x01(\x02\x12\x17\n\x0fwheelC_velocity\x18\t \x01(\x02\x12\x1a\n\x12wheelC_feedforward\x18\n \x01(\x02\x12\x17\n\x0fwheelD_position\x18\x0b \x01(\x02\x12\x17\n\x0fwheelD_velocity\x18\x0c \x01(\x02\x12\x1a\n\x12wheelD_feedforward\x18\r \x01(\x02\x12\x17\n\x0fsteerA_position\x18\x0e \x01(\x02\x12\x17\n\x0fsteerA_velocity\x18\x0f \x01(\x02\x12\x1a\n\x12steerA_feedforward\x18\x10 \x01(\x02\x12\x17\n\x0fsteerB_position\x18\x11 \x01(\x02\x12\x17\n\x0fsteerB_velocity\x18\x12 \x01(\x02\x12\x1a\n\x12steerB_feedforward\x18\x13 \x01(\x02\x12\x17\n\x0fsteerC_position\x18\x14 \x01(\x02\x12\x17\n\x0fsteerC_velocity\x18\x15 \x01(\x02\x12\x1a\n\x12steerC_feedforward\x18\x16 \x01(\x02\x12\x17\n\x0fsteerD_position\x18\x17 \x01(\x02\x12\x17\n\x0fsteerD_velocity\x18\x18 \x01(\x02\x12\x1a\n\x12steerD_feedforward\x18\x19 \x01(\x02\"\xae\x01\n\x12\x43hassisPoseCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x12\n\ntarget_x_m\x18\x02 \x01(\x02\x12\x12\n\ntarget_y_m\x18\x03 \x01(\x02\x12\x18\n\x10target_theta_rad\x18\x04 \x01(\x02\x12\x11\n\tv_max_mps\x18\x05 \x01(\x02\x12\x15\n\romega_max_rps\x18\x06 \x01(\x02\x12\r\n\x05\x66lags\x18\x07 \x01(\r\"\\\n\x12\x43hassisModeRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\'\n\x04mode\x18\x02 \x01(\x0e\x32\x19.proto.ChassisControlMode\"\x9a\x01\n\x13\x43hassisModeResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x30\n\rprevious_mode\x18\x02 \x01(\x0e\x32\x19.proto.ChassisControlMode\x12/\n\x0c\x63urrent_mode\x18\x03 \x01(\x0e\x32\x19.proto.ChassisControlMode\x12\x0f\n\x07message\x18\x04 \x01(\t\"\xb5\x02\n\x16\x43hassisStrategyRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x34\n\x0c\x63ommand_mode\x18\x02 \x01(\x0e\x32\x19.proto.ChassisCommandModeH\x00\x88\x01\x01\x12/\n\x05steer\x18\x03 \x01(\x0e\x32\x1b.proto.ChassisSteerStrategyH\x01\x88\x01\x01\x12/\n\x05wheel\x18\x04 \x01(\x0e\x32\x1b.proto.ChassisWheelStrategyH\x02\x88\x01\x01\x12\x33\n\x07stretch\x18\x05 \x01(\x0e\x32\x1d.proto.ChassisStretchStrategyH\x03\x88\x01\x01\x42\x0f\n\r_command_modeB\x08\n\x06_steerB\x08\n\x06_wheelB\n\n\x08_stretch\"\xd1\x03\n\x17\x43hassisStrategyResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12/\n\x0c\x63ommand_mode\x18\x02 \x01(\x0e\x32\x19.proto.ChassisCommandMode\x12*\n\x05steer\x18\x03 \x01(\x0e\x32\x1b.proto.ChassisSteerStrategy\x12*\n\x05wheel\x18\x04 \x01(\x0e\x32\x1b.proto.ChassisWheelStrategy\x12.\n\x07stretch\x18\x05 \x01(\x0e\x32\x1d.proto.ChassisStretchStrategy\x12\x38\n\x15previous_command_mode\x18\x06 \x01(\x0e\x32\x19.proto.ChassisCommandMode\x12\x33\n\x0eprevious_steer\x18\x07 \x01(\x0e\x32\x1b.proto.ChassisSteerStrategy\x12\x33\n\x0eprevious_wheel\x18\x08 \x01(\x0e\x32\x1b.proto.ChassisWheelStrategy\x12\x37\n\x10previous_stretch\x18\t \x01(\x0e\x32\x1d.proto.ChassisStretchStrategy\x12\x0f\n\x07message\x18\n \x01(\t\"\xc1\x02\n\x13PowerSampleMetadata\x12\x10\n\x08received\x18\x01 \x01(\x08\x12\x18\n\x10transport_online\x18\x02 \x01(\x08\x12*\n\x0bsource_link\x18\x03 \x01(\x0e\x32\x15.proto.PowerLinkState\x12/\n\x0breceived_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x16\n\x0ereceive_age_ms\x18\x05 \x01(\x04\x12\x16\n\x0esample_time_ns\x18\x06 \x01(\x04\x12\x18\n\x10\x65nvelope_time_ns\x18\x07 \x01(\x04\x12-\n\x0c\x63lock_domain\x18\x08 \x01(\x0e\x32\x17.proto.PowerClockDomain\x12\x14\n\x0c\x65nvelope_seq\x18\t \x01(\r\x12\x12\n\nsample_seq\x18\n \x01(\r\"u\n\x13PowerVoltageReading\x12\x12\n\x05value\x18\x01 \x01(\x02H\x00\x88\x01\x01\x12(\n\x07quality\x18\x02 \x01(\x0e\x32\x17.proto.PowerDataQuality\x12\x16\n\x0esample_time_ns\x18\x03 \x01(\x04\x42\x08\n\x06_value\"u\n\x13PowerCurrentReading\x12\x12\n\x05value\x18\x01 \x01(\x02H\x00\x88\x01\x01\x12(\n\x07quality\x18\x02 \x01(\x0e\x32\x17.proto.PowerDataQuality\x12\x16\n\x0esample_time_ns\x18\x03 \x01(\x04\x42\x08\n\x06_value\"}\n\x17PowerTemperatureReading\x12\x14\n\x07\x63\x65lsius\x18\x01 \x01(\x02H\x00\x88\x01\x01\x12(\n\x07quality\x18\x02 \x01(\x0e\x32\x17.proto.PowerDataQuality\x12\x16\n\x0esample_time_ns\x18\x03 \x01(\x04\x42\n\n\x08_celsius\"t\n\x16PowerPercentageReading\x12\x10\n\x03pct\x18\x01 \x01(\x02H\x00\x88\x01\x01\x12(\n\x07quality\x18\x02 \x01(\x0e\x32\x17.proto.PowerDataQuality\x12\x16\n\x0esample_time_ns\x18\x03 \x01(\x04\x42\x06\n\x04_pct\"s\n\x11PowerPowerReading\x12\x12\n\x05value\x18\x01 \x01(\x02H\x00\x88\x01\x01\x12(\n\x07quality\x18\x02 \x01(\x0e\x32\x17.proto.PowerDataQuality\x12\x16\n\x0esample_time_ns\x18\x03 \x01(\x04\x42\x08\n\x06_value\"\xe5\x02\n\x11\x43hestPowerOutputs\x12\x1d\n\x10thor_24v_enabled\x18\x01 \x01(\x08H\x00\x88\x01\x01\x12!\n\x14left_arm_48v_enabled\x18\x02 \x01(\x08H\x01\x88\x01\x01\x12\"\n\x15right_arm_48v_enabled\x18\x03 \x01(\x08H\x02\x88\x01\x01\x12\x1c\n\x0f\x66tx_12v_enabled\x18\x04 \x01(\x08H\x03\x88\x01\x01\x12!\n\x14mcu_15v_buck_enabled\x18\x05 \x01(\x08H\x04\x88\x01\x01\x12\x1e\n\x11\x61udio_15v_enabled\x18\x06 \x01(\x08H\x05\x88\x01\x01\x42\x13\n\x11_thor_24v_enabledB\x17\n\x15_left_arm_48v_enabledB\x18\n\x16_right_arm_48v_enabledB\x12\n\x10_ftx_12v_enabledB\x17\n\x15_mcu_15v_buck_enabledB\x14\n\x12_audio_15v_enabled\"\xe3\x01\n\x15\x43hestPowerDiagnostics\x12\r\n\x05\x66lags\x18\x01 \x01(\r\x12\x16\n\x0e\x61\x64\x63_update_seq\x18\x02 \x01(\r\x12\x18\n\x10last_adc_channel\x18\x03 \x01(\r\x12\x1b\n\x13sequence_phase_code\x18\x04 \x01(\r\x12\x35\n\x11\x63urrent_channel_6\x18\x05 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x35\n\x11\x63urrent_channel_7\x18\x06 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\"\xb3\x01\n\x17\x43hassisPowerDiagnostics\x12\x34\n\x0creserved_ntc\x18\x01 \x03(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x39\n\x15\x62\x61ttery_switch_inputs\x18\x02 \x03(\x0b\x32\x1a.proto.PowerVoltageReading\x12\'\n\x1freported_battery_switch_voltage\x18\x03 \x03(\x02\"\xb6\n\n\x0f\x43hestPowerState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12*\n\x06sample\x18\x02 \x01(\x0b\x32\x1a.proto.PowerSampleMetadata\x12\x35\n\x11motor_15v_voltage\x18\n \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x34\n\x10thor_24v_voltage\x18\x0b \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x34\n\x10\x62uck_24v_voltage\x18\x0c \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11input_48v_voltage\x18\r \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x34\n\x10left_arm_voltage\x18\x0e \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11right_arm_voltage\x18\x0f \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11\x61udio_15v_voltage\x18\x10 \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x33\n\x0f\x66tx_12v_voltage\x18\x11 \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11input_48v_current\x18\x12 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x33\n\x0f\x62us_24v_current\x18\x13 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x34\n\x10left_arm_current\x18\x14 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x35\n\x11right_arm_current\x18\x15 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x42\n\x1aleft_arm_efuse_temperature\x18\x16 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x43\n\x1bright_arm_efuse_temperature\x18\x17 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12@\n\x18\x62uck_24v_mos_temperature\x18\x18 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12=\n\x15\x65\x66use_24v_temperature\x18\x19 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x43\n\x1b\x62uck_15_36v_mos_temperature\x18\x1a \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12?\n\x17imu_ambient_temperature\x18\x1b \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x38\n\x0foperating_state\x18\x03 \x01(\x0e\x32\x1f.proto.ChestPowerOperatingState\x12)\n\x07outputs\x18\x04 \x01(\x0b\x32\x18.proto.ChestPowerOutputs\x12\x16\n\tswitching\x18\x05 \x01(\x08H\x00\x88\x01\x01\x12\x31\n\x0b\x64iagnostics\x18\x06 \x01(\x0b\x32\x1c.proto.ChestPowerDiagnosticsB\x0c\n\n_switching\"\xa7\n\n\x11\x43hassisPowerState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12*\n\x06sample\x18\x02 \x01(\x0b\x32\x1a.proto.PowerSampleMetadata\x12\x33\n\x0f\x62us_48v_voltage\x18\n \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11precharge_voltage\x18\x0b \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x36\n\x12upper_body_voltage\x18\x0c \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x33\n\x0f\x63hassis_voltage\x18\r \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x36\n\x12lower_body_voltage\x18\x0e \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x33\n\x0f\x63hassis_current\x18\x0f \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x36\n\x12lower_body_current\x18\x10 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x36\n\x12upper_body_current\x18\x11 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12;\n\x17\x62uck_24v_output_current\x18\x12 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x45\n\x1dupper_body_switch_temperature\x18\x13 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x45\n\x1dlower_body_switch_temperature\x18\x14 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x42\n\x1a\x63hassis_switch_temperature\x18\x15 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12?\n\x1bstm32_analog_supply_voltage\x18\x16 \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x36\n\x12stm32_vbat_voltage\x18\x17 \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12=\n\x15stm32_die_temperature\x18\x18 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12:\n\x16peripheral_3v3_voltage\x18\x19 \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11local_12v_voltage\x18\x1a \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x34\n\x10local_5v_voltage\x18\x1b \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11local_3v3_voltage\x18\x1c \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11local_0v9_voltage\x18\x1d \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x33\n\x0b\x64iagnostics\x18\x03 \x01(\x0b\x32\x1e.proto.ChassisPowerDiagnostics\"\xe0\x01\n\x16\x42\x61tteryPackDiagnostics\x12\x17\n\nfault_code\x18\x01 \x01(\rH\x00\x88\x01\x01\x12\x17\n\nalarm_code\x18\x02 \x01(\rH\x01\x88\x01\x01\x12\x1c\n\x0fprotection_code\x18\x03 \x01(\rH\x02\x88\x01\x01\x12&\n\x19reported_capacity_coulomb\x18\x04 \x01(\x02H\x03\x88\x01\x01\x42\r\n\x0b_fault_codeB\r\n\x0b_alarm_codeB\x12\n\x10_protection_codeB\x1c\n\x1a_reported_capacity_coulomb\"\xef\x05\n\x10\x42\x61tteryPackState\x12\x0f\n\x07pack_id\x18\x01 \x01(\r\x12%\n\x06online\x18\x02 \x01(\x0e\x32\x15.proto.PowerLinkState\x12(\n\x07quality\x18\x03 \x01(\x0e\x32\x17.proto.PowerDataQuality\x12\x39\n\x11\x63\x65ll_temperatures\x18\x04 \x03(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x38\n\x10mos_temperatures\x18\x05 \x03(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x32\n\x0b\x64iagnostics\x18\x06 \x01(\x0b\x32\x1d.proto.BatteryPackDiagnostics\x12+\n\x07voltage\x18\n \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12+\n\x07\x63urrent\x18\x0b \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12*\n\x03soc\x18\x0c \x01(\x0b\x32\x1d.proto.PowerPercentageReading\x12*\n\x03soh\x18\r \x01(\x0b\x32\x1d.proto.PowerPercentageReading\x12\x38\n\x14minimum_cell_voltage\x18\x0e \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x38\n\x14maximum_cell_voltage\x18\x0f \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x34\n\x12\x63harge_power_limit\x18\x10 \x01(\x0b\x32\x18.proto.PowerPowerReading\x12\x37\n\x15\x64ischarge_power_limit\x18\x11 \x01(\x0b\x32\x18.proto.PowerPowerReading\x12;\n\x13\x61mbient_temperature\x18\x12 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\"\x87\x01\n\x12\x42\x61tterySystemState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12*\n\x06sample\x18\x02 \x01(\x0b\x32\x1a.proto.PowerSampleMetadata\x12&\n\x05packs\x18\x03 \x03(\x0b\x32\x17.proto.BatteryPackState\"\x8e\x01\n\x0c\x42\x61tteryState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x12\n\nbattery_id\x18\x02 \x01(\r\x12\x0f\n\x07voltage\x18\x03 \x01(\x02\x12\x0f\n\x07\x63urrent\x18\x04 \x01(\x02\x12\x14\n\x0c\x63\x61pacity_pct\x18\x05 \x01(\r\x12\x13\n\x0bstatus_code\x18\x06 \x01(\r\"I\n\nEstopState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\r\n\x05state\x18\x02 \x01(\r\x12\r\n\x05\x63ount\x18\x03 \x01(\r\"\x82\x01\n\x08MosState\x12\x0e\n\x06mos_id\x18\x01 \x01(\r\x12\x0f\n\x07voltage\x18\x02 \x01(\x02\x12\x0f\n\x07\x63urrent\x18\x03 \x01(\x02\x12\x1b\n\x13temperature_celsius\x18\x04 \x01(\x02\x12\x13\n\x0b\x65stop_state\x18\x05 \x01(\r\x12\x12\n\nerror_code\x18\x06 \x01(\r\"A\n\x08\x46\x61nState\x12\x0e\n\x06\x66\x61n_id\x18\x01 \x01(\r\x12\x11\n\tspeed_pct\x18\x02 \x01(\r\x12\x12\n\nerror_code\x18\x03 \x01(\r\"R\n\x0cPowerPgState\x12\x17\n\x0ftotal_pg_status\x18\x01 \x01(\r\x12\x18\n\x10\x63harge_pg_status\x18\x02 \x01(\r\x12\x0f\n\x07pg_pins\x18\x03 \x03(\r\"\xcb\x01\n\x16PowerChannelCmdRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x64st_node\x18\x02 \x01(\r\x12\"\n\x06opcode\x18\x03 \x01(\x0e\x32\x12.proto.PowerOpCode\x12\x12\n\nchannel_id\x18\x04 \x01(\r\x12\x0e\n\x06\x61\x63tion\x18\x05 \x01(\r\x12\x10\n\x08set_mask\x18\x06 \x01(\r\x12\x10\n\x08\x63lr_mask\x18\x07 \x01(\r\x12\x14\n\x0chb_period_ms\x18\x08 \x01(\r\"s\n\x17PowerChannelCmdResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x10\n\x08\x64st_node\x18\x02 \x01(\r\x12\x10\n\x08\x65rr_code\x18\x03 \x01(\r\x12\x12\n\nstate_mask\x18\x04 \x01(\r\x12\x0f\n\x07message\x18\x05 \x01(\t\"e\n\x11PowerEstopRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x64st_node\x18\x02 \x01(\r\x12\x0f\n\x07release\x18\x03 \x01(\x08\x12\x0e\n\x06reason\x18\x04 \x01(\t\"H\n\x12PowerEstopResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x10\n\x08\x64st_node\x18\x02 \x01(\r\x12\x0f\n\x07message\x18\x03 \x01(\t\"W\n\x14PowerShutdownRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x64st_node\x18\x02 \x01(\r\x12\x0e\n\x06reason\x18\x03 \x01(\t\"K\n\x15PowerShutdownResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x10\n\x08\x64st_node\x18\x02 \x01(\r\x12\x0f\n\x07message\x18\x03 \x01(\t\"u\n\x16HeadStereoStreamParams\x12\x16\n\x0e\x64\x65stination_ip\x18\x01 \x01(\t\x12\r\n\x05port0\x18\x02 \x01(\r\x12\r\n\x05port1\x18\x03 \x01(\r\x12\x0b\n\x03\x62ps\x18\x04 \x01(\r\x12\x0b\n\x03\x66ps\x18\x05 \x01(\r\x12\x0b\n\x03gop\x18\x06 \x01(\r\"Q\n\x1cHeadStereoStreamStartRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x12\n\nrequest_id\x18\x02 \x01(\t\"P\n\x1bHeadStereoStreamStopRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x12\n\nrequest_id\x18\x02 \x01(\t\"\xd6\x01\n\x18HeadStereoStreamResponse\x12-\n\x06result\x18\x01 \x01(\x0e\x32\x1d.proto.HeadStereoStreamResult\x12+\n\x05state\x18\x02 \x01(\x0e\x32\x1c.proto.HeadStereoStreamState\x12\x37\n\x10\x65\x66\x66\x65\x63tive_params\x18\x03 \x01(\x0b\x32\x1d.proto.HeadStereoStreamParams\x12\x14\n\x0cremote_error\x18\x04 \x01(\t\x12\x0f\n\x07message\x18\x05 \x01(\t\"5\n\x14RecorderStartRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\"4\n\x13RecorderStopRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\"c\n\x16RecorderSetModeRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12*\n\x04mode\x18\x02 \x01(\x0e\x32\x1c.proto.RecorderRecordingMode\":\n\x19RecorderDeleteLastRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\"i\n\x17RecorderCommandResponse\x12,\n\x06result\x18\x01 \x01(\x0e\x32\x1c.proto.RecorderCommandResult\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x0f\n\x07session\x18\x03 \x01(\t\"?\n\nEstopEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x12\n\nevent_type\x18\x02 \x01(\r\"\x88\x01\n\nFaultEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06source\x18\x02 \x01(\t\x12 \n\x05level\x18\x03 \x01(\x0e\x32\x11.proto.FaultLevel\x12\x12\n\nerror_code\x18\x04 \x01(\r\x12\x15\n\rerror_message\x18\x05 \x01(\t\"X\n\x11\x42\x61tteryAlertEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x13\n\x0b\x61lert_level\x18\x02 \x01(\r\x12\x0f\n\x07message\x18\x03 \x01(\t\"8\n\tMarkEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0c\n\x04mark\x18\x02 \x01(\t\"=\n\x0e\x45rrorMarkEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0c\n\x04mark\x18\x02 \x01(\r\"\x97\x01\n\x0eLifecycleState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12$\n\x05phase\x18\x02 \x01(\x0e\x32\x15.proto.LifecyclePhase\x12(\n\tsub_phase\x18\x03 \x01(\x0e\x32\x15.proto.LifecyclePhase\x12\x16\n\x0eoperation_mode\x18\x04 \x01(\r\"@\n\x0fHeartbeatMetric\x12\x0c\n\x04kind\x18\x01 \x01(\r\x12\x10\n\x08instance\x18\x02 \x01(\r\x12\r\n\x05value\x18\x03 \x01(\x02\"\xcc\x03\n\tHeartbeat\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x11\n\tsubsystem\x18\x02 \x01(\t\x12\x0b\n\x03seq\x18\x03 \x01(\r\x12$\n\x05phase\x18\x04 \x01(\x0e\x32\x15.proto.LifecyclePhase\x12\x10\n\x08severity\x18\x05 \x01(\r\x12(\n\x0c\x63ontrol_mode\x18\x06 \x01(\x0e\x32\x12.proto.ControlMode\x12\x15\n\rexpected_mask\x18\x07 \x01(\r\x12\x13\n\x0bonline_mask\x18\x08 \x01(\r\x12\x12\n\nfault_mask\x18\t \x01(\r\x12\x17\n\x0b\x66\x61ult_codes\x18\n \x03(\rB\x02\x10\x01\x12\x12\n\nerror_code\x18\x0b \x01(\r\x12\x17\n\x0f\x66\x65\x65\x64\x62\x61\x63k_age_ms\x18\x0c \x01(\x02\x12\x14\n\x0c\x63trl_rate_hz\x18\r \x01(\x02\x12\x15\n\rstate_rate_hz\x18\x0e \x01(\x02\x12\x13\n\x0bpub_rate_hz\x18\x0f \x01(\x02\x12\x17\n\x0f\x62us_busload_pct\x18\x10 \x01(\x02\x12\'\n\x07metrics\x18\x11 \x03(\x0b\x32\x16.proto.HeartbeatMetric\x12\x14\n\x0c\x65nabled_mask\x18\x12 \x01(\r\"\xb2\x01\n\x0eHardwareHealth\x12#\n\theartbeat\x18\x01 \x01(\x0b\x32\x10.proto.Heartbeat\x12\x16\n\x0ereceive_age_ms\x18\x02 \x01(\x04\x12-\n\x07verdict\x18\x03 \x01(\x0e\x32\x1c.proto.HardwareHealthVerdict\x12\x34\n\x12health_requirement\x18\x04 \x01(\x0e\x32\x18.proto.HealthRequirement\"6\n\x11SafetyGuardStatus\x12\x10\n\x08guard_id\x18\x01 \x01(\t\x12\x0f\n\x07\x65nabled\x18\x02 \x01(\x08\"p\n\x13HostResourceMetrics\x12\x12\n\ncpu_temp_c\x18\x01 \x01(\x02\x12\x14\n\x0c\x63pu_load_pct\x18\x02 \x01(\x02\x12\x14\n\x0cmem_used_pct\x18\x03 \x01(\x02\x12\x19\n\x11\x63pu_core_load_pct\x18\x04 \x03(\x02\"R\n\x1bWholeBodyCommandChannelRate\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\r\x12\r\n\x05rx_hz\x18\x02 \x01(\x02\x12\x13\n\x0b\x61\x63\x63\x65pted_hz\x18\x03 \x01(\x02\"\xba\x02\n\x14SystemHardwareHealth\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x16\n\x0eworst_severity\x18\x02 \x01(\r\x12)\n\nsubsystems\x18\x03 \x03(\x0b\x32\x15.proto.HardwareHealth\x12*\n\rmaster_status\x18\x04 \x01(\x0b\x32\x13.proto.MasterStatus\x12/\n\rsafety_guards\x18\x05 \x03(\x0b\x32\x18.proto.SafetyGuardStatus\x12(\n\x04host\x18\x06 \x01(\x0b\x32\x1a.proto.HostResourceMetrics\x12\x39\n\rcommand_rates\x18\x07 \x03(\x0b\x32\".proto.WholeBodyCommandChannelRate\")\n\x10StartTaskCommand\x12\x0f\n\x07task_id\x18\x01 \x01(\tJ\x04\x08\x02\x10\x03\"4\n\x0eSetModeCommand\x12\"\n\x04mode\x18\x01 \x01(\x0e\x32\x14.proto.OperationMode\"b\n\x1bSetHealthRequirementCommand\x12\x14\n\x0csubsystem_id\x18\x01 \x01(\t\x12-\n\x0brequirement\x18\x02 \x01(\x0e\x32\x18.proto.HealthRequirement\"A\n\x1cSetSafetyGuardEnabledCommand\x12\x10\n\x08guard_id\x18\x01 \x01(\t\x12\x0f\n\x07\x65nabled\x18\x02 \x01(\x08\"!\n\x0fStopTaskCommand\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x15\n\x13ResetConfirmCommand\"\x11\n\x0f\x45nterOtaCommand\"\x10\n\x0e\x45xitOtaCommand\"\x13\n\x11\x45nterEstopCommand\"\x12\n\x10\x45xitEstopCommand\"\xc2\x04\n\rMasterCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12-\n\nstart_task\x18\x02 \x01(\x0b\x32\x17.proto.StartTaskCommandH\x00\x12+\n\tstop_task\x18\x03 \x01(\x0b\x32\x16.proto.StopTaskCommandH\x00\x12\x33\n\rreset_confirm\x18\x05 \x01(\x0b\x32\x1a.proto.ResetConfirmCommandH\x00\x12)\n\x08set_mode\x18\x06 \x01(\x0b\x32\x15.proto.SetModeCommandH\x00\x12+\n\tenter_ota\x18\x07 \x01(\x0b\x32\x16.proto.EnterOtaCommandH\x00\x12)\n\x08\x65xit_ota\x18\x08 \x01(\x0b\x32\x15.proto.ExitOtaCommandH\x00\x12\x44\n\x16set_health_requirement\x18\t \x01(\x0b\x32\".proto.SetHealthRequirementCommandH\x00\x12G\n\x18set_safety_guard_enabled\x18\n \x01(\x0b\x32#.proto.SetSafetyGuardEnabledCommandH\x00\x12/\n\x0b\x65nter_estop\x18\x0b \x01(\x0b\x32\x18.proto.EnterEstopCommandH\x00\x12-\n\nexit_estop\x18\x0c \x01(\x0b\x32\x17.proto.ExitEstopCommandH\x00\x42\t\n\x07\x63ommandJ\x04\x08\x04\x10\x05\"\xa6\x01\n\x13MasterStateSnapshot\x12!\n\x05phase\x18\x01 \x01(\x0e\x32\x12.proto.MasterPhase\x12\"\n\x04mode\x18\x02 \x01(\x0e\x32\x14.proto.OperationMode\x12\x0f\n\x07task_id\x18\x03 \x01(\t\x12\x37\n\x11task_health_level\x18\x04 \x01(\x0e\x32\x1c.proto.MasterTaskHealthLevel\"\"\n\x0fStartTaskResult\x12\x0f\n\x07task_id\x18\x01 \x01(\t\"1\n\x0eStopTaskResult\x12\x0f\n\x07task_id\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\x05\"=\n\rSetModeResult\x12,\n\x0erequested_mode\x18\x01 \x01(\x0e\x32\x14.proto.OperationMode\"a\n\x1aSetHealthRequirementResult\x12\x14\n\x0csubsystem_id\x18\x01 \x01(\t\x12-\n\x0brequirement\x18\x02 \x01(\x0e\x32\x18.proto.HealthRequirement\"@\n\x1bSetSafetyGuardEnabledResult\x12\x10\n\x08guard_id\x18\x01 \x01(\t\x12\x0f\n\x07\x65nabled\x18\x02 \x01(\x08\"Q\n\x15PhaseTransitionResult\x12\x38\n\toperation\x18\x01 \x01(\x0e\x32%.proto.MasterPhaseTransitionOperation\"\x8f\x04\n\x15MasterCommandResponse\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12*\n\x06result\x18\x02 \x01(\x0e\x32\x1a.proto.MasterCommandResult\x12\x0f\n\x07message\x18\x03 \x01(\t\x12*\n\x06\x62\x65\x66ore\x18\x04 \x01(\x0b\x32\x1a.proto.MasterStateSnapshot\x12)\n\x05\x61\x66ter\x18\x05 \x01(\x0b\x32\x1a.proto.MasterStateSnapshot\x12,\n\nstart_task\x18\n \x01(\x0b\x32\x16.proto.StartTaskResultH\x00\x12*\n\tstop_task\x18\x0b \x01(\x0b\x32\x15.proto.StopTaskResultH\x00\x12(\n\x08set_mode\x18\x0c \x01(\x0b\x32\x14.proto.SetModeResultH\x00\x12?\n\x12health_requirement\x18\r \x01(\x0b\x32!.proto.SetHealthRequirementResultH\x00\x12:\n\x0csafety_guard\x18\x0e \x01(\x0b\x32\".proto.SetSafetyGuardEnabledResultH\x00\x12\x38\n\x10phase_transition\x18\x0f \x01(\x0b\x32\x1c.proto.PhaseTransitionResultH\x00\x42\x08\n\x06\x64\x65tail\"\x1d\n\x1bTeleoperationPrepareRequest\"/\n\x1cTeleoperationPrepareResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"\xbe\x01\n\x0cMasterStatus\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12!\n\x05phase\x18\x02 \x01(\x0e\x32\x12.proto.MasterPhase\x12\"\n\x04mode\x18\x03 \x01(\x0e\x32\x14.proto.OperationMode\x12\x0f\n\x07task_id\x18\x04 \x01(\t\x12\x37\n\x11task_health_level\x18\x05 \x01(\x0e\x32\x1c.proto.MasterTaskHealthLevel\"h\n\x14MasterTaskStartEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x61\x63\x63\x65pted\x18\x02 \x01(\x08\x12\x0f\n\x07task_id\x18\x03 \x01(\t\x12\x0e\n\x06reason\x18\x04 \x01(\t\"w\n\x13MasterTaskStopEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x61\x63\x63\x65pted\x18\x02 \x01(\x08\x12\x0f\n\x07task_id\x18\x03 \x01(\t\x12\x0e\n\x06reason\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\x05\"X\n\x16MasterDegradationEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06\x61\x63tive\x18\x02 \x01(\x08\x12\x0f\n\x07task_id\x18\x03 \x01(\t\"\xc0\x01\n\x11MasterDeviceError\x12\x14\n\x0csubsystem_id\x18\x01 \x01(\t\x12*\n\x08required\x18\x02 \x01(\x0e\x32\x18.proto.HealthRequirement\x12,\n\x06\x61\x63tual\x18\x03 \x01(\x0e\x32\x1c.proto.HardwareHealthVerdict\x12\x12\n\nerror_code\x18\x04 \x01(\r\x12\x12\n\nfault_mask\x18\x05 \x01(\r\x12\x13\n\x0b\x66\x61ult_codes\x18\x06 \x03(\r\"\xa5\x01\n\x10MasterErrorEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0f\n\x07task_id\x18\x03 \x01(\t\x12\x12\n\nerror_code\x18\x05 \x01(\r\x12/\n\rdevice_errors\x18\x06 \x03(\x0b\x32\x18.proto.MasterDeviceError\x12\x10\n\x08guard_id\x18\x07 \x01(\tJ\x04\x08\x02\x10\x03J\x04\x08\x04\x10\x05\"\xe8\x01\n\x0cPluginStatus\x12\x13\n\x0bplugin_name\x18\x01 \x01(\t\x12$\n\x05phase\x18\x02 \x01(\x0e\x32\x15.proto.LifecyclePhase\x12\x10\n\x08is_alive\x18\x03 \x01(\x08\x12\x12\n\nerror_code\x18\x04 \x01(\r\x12\x15\n\rerror_message\x18\x05 \x01(\t\x12\x11\n\tlatency_s\x18\x06 \x01(\x01\x12\x14\n\x0c\x64\x61ta_rate_hz\x18\x07 \x01(\x01\x12\x1b\n\x13online_device_count\x18\x08 \x01(\r\x12\x1a\n\x12total_device_count\x18\t \x01(\r\"y\n\x0cSystemStatus\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12$\n\x05phase\x18\x02 \x01(\x0e\x32\x15.proto.LifecyclePhase\x12$\n\x07plugins\x18\x03 \x03(\x0b\x32\x13.proto.PluginStatus\"B\n\tTopicRate\x12\r\n\x05topic\x18\x01 \x01(\t\x12\x0f\n\x07rate_hz\x18\x02 \x01(\x01\x12\x15\n\rmessage_count\x18\x03 \x01(\x04\"\x85\x01\n\rMonitorReport\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12%\n\x0btopic_rates\x18\x02 \x03(\x0b\x32\x10.proto.TopicRate\x12\x14\n\x0crecord_count\x18\x03 \x01(\r\x12\x18\n\x10record_data_path\x18\x04 \x01(\t\"\xdc\x02\n\x0eWholeBodyState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12!\n\x08\x61rm_left\x18\x02 \x01(\x0b\x32\x0f.proto.ArmState\x12\"\n\tarm_right\x18\x03 \x01(\x0b\x32\x0f.proto.ArmState\x12#\n\thand_left\x18\x04 \x01(\x0b\x32\x10.proto.HandState\x12$\n\nhand_right\x18\x05 \x01(\x0b\x32\x10.proto.HandState\x12$\n\x07tactile\x18\x06 \x03(\x0b\x32\x13.proto.TactileFrame\x12 \n\x05torso\x18\x07 \x01(\x0b\x32\x11.proto.TorsoState\x12$\n\x07\x63hassis\x18\x08 \x01(\x0b\x32\x13.proto.ChassisState\x12+\n\ntransforms\x18\n \x03(\x0b\x32\x17.proto.TransformStamped\"\x97\x02\n\x10WholeBodyCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12#\n\x08\x61rm_left\x18\x02 \x01(\x0b\x32\x11.proto.ArmCommand\x12$\n\tarm_right\x18\x03 \x01(\x0b\x32\x11.proto.ArmCommand\x12%\n\thand_left\x18\x04 \x01(\x0b\x32\x12.proto.HandCommand\x12&\n\nhand_right\x18\x05 \x01(\x0b\x32\x12.proto.HandCommand\x12\"\n\x05torso\x18\x06 \x01(\x0b\x32\x13.proto.TorsoCommand\x12&\n\x07\x63hassis\x18\x07 \x01(\x0b\x32\x15.proto.ChassisCommand\"\x89\x01\n\x0cGamepadState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x19\n\x04pose\x18\x0e \x01(\x0b\x32\x0b.proto.Pose\x12\x10\n\x08is_valid\x18\x0f \x01(\x08\x12\x12\n\nis_tracked\x18\x10 \x01(\x08\"\xf1\x01\n\x0cWholeBodyRaw\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x1e\n\thead_pose\x18\x02 \x01(\x0b\x32\x0b.proto.Pose\x12/\n\x12gamepad_state_left\x18\x03 \x01(\x0b\x32\x13.proto.GamepadState\x12\x30\n\x13gamepad_state_right\x18\x04 \x01(\x0b\x32\x13.proto.GamepadState\x12)\n\x14\x66ull_body_joint_pose\x18\x07 \x03(\x0b\x32\x0b.proto.Pose\x12\x14\n\x0cis_confident\x18\x08 \x01(\x08\">\n\rEnableRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06\x65nable\x18\x02 \x01(\x08\"2\n\x0e\x45nableResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"\xaf\x01\n\x08Waypoint\x12\x16\n\x0eoverride_flags\x18\x01 \x01(\r\x12%\n\x06joints\x18\x02 \x01(\x0b\x32\x13.proto.JointCommandH\x00\x12 \n\tcartesian\x18\x03 \x01(\x0b\x32\x0b.proto.PoseH\x00\x12\x12\n\nvmax_scale\x18\x04 \x01(\x02\x12\x12\n\namax_scale\x18\x05 \x01(\x02\x12\x10\n\x08\x64well_ms\x18\x06 \x01(\rB\x08\n\x06target\"\xb9\x01\n\x0cWaypointTask\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x14\n\x0crepeat_count\x18\x02 \x01(\r\x12\x1a\n\x12\x64\x65\x66\x61ult_vmax_scale\x18\x03 \x01(\x02\x12\x1a\n\x12\x64\x65\x66\x61ult_amax_scale\x18\x04 \x01(\x02\x12\x18\n\x10\x64\x65\x66\x61ult_dwell_ms\x18\x05 \x01(\r\x12\"\n\twaypoints\x18\x06 \x03(\x0b\x32\x0f.proto.Waypoint\"Y\n\x15WaypointSubmitRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12!\n\x04task\x18\x02 \x01(\x0b\x32\x13.proto.WaypointTask\":\n\x16WaypointSubmitResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"6\n\x15WaypointCancelRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\":\n\x16WaypointCancelResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"Q\n\x0e\x41rmModeRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12 \n\x04mode\x18\x02 \x01(\x0e\x32\x12.proto.ControlMode\"^\n\x0f\x41rmModeResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12)\n\rprevious_mode\x18\x02 \x01(\x0e\x32\x12.proto.ControlMode\x12\x0f\n\x07message\x18\x03 \x01(\t\"=\n\x0c\x45stopRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06reason\x18\x02 \x01(\t\"1\n\rEstopResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"-\n\x0cResetRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\"1\n\rResetResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"X\n\x0c\x42rakeRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x0e\n\x06\x61\x63tion\x18\x03 \x01(\r\"1\n\rBrakeResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"^\n\x0fHandModeRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x11\n\thand_mode\x18\x03 \x01(\r\"\xa3\x01\n\x10HandModeResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12(\n\x06result\x18\x03 \x01(\x0e\x32\x18.proto.HandServiceResult\x12\x15\n\rprevious_mode\x18\x04 \x01(\r\x12\x14\n\x0c\x63urrent_mode\x18\x05 \x01(\r\x12\x16\n\x0esdk_error_code\x18\x06 \x01(\x05\"\x86\x01\n\x13\x43\x61libTactileRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x11\x65nable_calib_left\x18\x02 \x01(\x08\x12\x1a\n\x12\x65nable_calib_right\x18\x03 \x01(\x08\x12\x19\n\x04side\x18\x04 \x01(\x0e\x32\x0b.proto.Side\"z\n\x14\x43\x61libTactileResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12(\n\x06result\x18\x03 \x01(\x0e\x32\x18.proto.HandServiceResult\x12\x16\n\x0esdk_error_code\x18\x04 \x01(\x05\"c\n\x0eHandEskinForce\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x66rame_id\x18\x02 \x01(\x05\x12\x0f\n\x07\x63hannel\x18\x03 \x01(\x05\x12\x0f\n\x07\x66orce_n\x18\x04 \x03(\x02\"^\n\x0cHandEskinRaw\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x66rame_id\x18\x02 \x01(\x05\x12\x0f\n\x07\x63hannel\x18\x03 \x01(\x05\x12\x0c\n\x04\x64\x61ta\x18\x04 \x01(\x0c\"M\n\x11\x43\x61libEskinRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\"x\n\x12\x43\x61libEskinResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12(\n\x06result\x18\x03 \x01(\x0e\x32\x18.proto.HandServiceResult\x12\x16\n\x0esdk_error_code\x18\x04 \x01(\x05\"V\n\x1aHandZeroCalibrationRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\"\xcb\x01\n\x1bHandZeroCalibrationResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12(\n\x06result\x18\x02 \x01(\x0e\x32\x18.proto.HandServiceResult\x12.\n\x05state\x18\x03 \x01(\x0e\x32\x1f.proto.HandZeroCalibrationState\x12\x18\n\x10progress_percent\x18\x04 \x01(\r\x12\x16\n\x0esdk_error_code\x18\x05 \x01(\x05\x12\x0f\n\x07message\x18\x06 \x01(\t\"a\n\x17HandSetParameterRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x0c\n\x04json\x18\x03 \x01(\t\"~\n\x18HandSetParameterResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12(\n\x06result\x18\x03 \x01(\x0e\x32\x18.proto.HandServiceResult\x12\x16\n\x0esdk_error_code\x18\x04 \x01(\x05\"G\n\x16TactileSkinZeroRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06\x65nable\x18\x02 \x01(\x08\";\n\x17TactileSkinZeroResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x85\x01\n\x12TorqueCalibRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x13\n\x0bjoint_index\x18\x02 \x01(\rJ\x04\x08\x03\x10\x04J\x04\x08\x04\x10\x05R\x15theoretical_torque_nmR\x18use_gravity_model_torque\"r\n\x13TorqueCalibResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x1a\n\x12measured_torque_nm\x18\x02 \x01(\x02\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x1d\n\x15theoretical_torque_nm\x18\x04 \x01(\x02\"F\n\x10ZeroCalibRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x13\n\x0bjoint_index\x18\x02 \x01(\r\"d\n\x11ZeroCalibResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x11\n\tpersisted\x18\x02 \x01(\x08\x12\x1a\n\x12position_after_deg\x18\x03 \x01(\x02\x12\x0f\n\x07message\x18\x04 \x01(\t\"U\n\x15GenericServiceRequest\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x0b\n\x03\x63md\x18\x02 \x01(\r\x12\x11\n\tdevice_id\x18\x03 \x01(\r\x12\x0f\n\x07payload\x18\x04 \x01(\x0c\"Y\n\x16GenericServiceResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0c\n\x04\x63ode\x18\x02 \x01(\x05\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07payload\x18\x04 \x01(\x0c\")\n\x11\x44\x65viceSetupTarget\x12\x14\n\x0c\x64\x65vice_index\x18\x01 \x03(\r\"\x81\x01\n\x12\x44\x65viceSetupRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x11\n\toperation\x18\x02 \x01(\t\x12(\n\x06target\x18\x03 \x01(\x0b\x32\x18.proto.DeviceSetupTarget\x12\x0f\n\x07payload\x18\x04 \x01(\x0c\"g\n\x13\x44\x65viceSetupResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x1d\n\x15\x61\x66\x66\x65\x63ted_device_index\x18\x03 \x03(\r\x12\x0f\n\x07payload\x18\x04 \x01(\x0c\"A\n\tOtaTarget\x12\x0e\n\x06plugin\x18\x01 \x01(\t\x12\x11\n\tcomponent\x18\x02 \x01(\t\x12\x11\n\tfile_path\x18\x03 \x01(\t\"H\n\x10OtaSubmitRequest\x12\x11\n\taction_id\x18\x01 \x01(\t\x12!\n\x07targets\x18\x02 \x03(\x0b\x32\x10.proto.OtaTarget\"F\n\x11OtaSubmitResponse\x12 \n\x06result\x18\x01 \x01(\x0e\x32\x10.proto.OtaResult\x12\x0f\n\x07message\x18\x02 \x01(\t\"%\n\x10OtaStatusRequest\x12\x11\n\taction_id\x18\x01 \x01(\t\"{\n\x13OtaComponentFailure\x12\x0e\n\x06plugin\x18\x01 \x01(\t\x12\x11\n\tcomponent\x18\x02 \x01(\t\x12\x31\n\x06reason\x18\x03 \x01(\x0e\x32!.proto.OtaPeripheralFailureReason\x12\x0e\n\x06\x64\x65tail\x18\x04 \x01(\t\"@\n\x10OtaFailureReport\x12,\n\x08\x66\x61ilures\x18\x01 \x03(\x0b\x32\x1a.proto.OtaComponentFailure\"\xc0\x01\n\rOtaTaskStatus\x12\"\n\x05state\x18\x01 \x01(\x0e\x32\x13.proto.OtaTaskState\x12\x18\n\x10progress_percent\x18\x02 \x01(\r\x12\x0f\n\x07message\x18\x03 \x01(\t\x12/\n\x0e\x66\x61ilure_report\x18\x04 \x01(\x0b\x32\x17.proto.OtaFailureReport\x12/\n\x0e\x65\x66\x66\x65\x63t_closure\x18\x05 \x01(\x0e\x32\x17.proto.OtaEffectClosure\"l\n\x11OtaStatusResponse\x12 \n\x06result\x18\x01 \x01(\x0e\x32\x10.proto.OtaResult\x12$\n\x06status\x18\x02 \x01(\x0b\x32\x14.proto.OtaTaskStatus\x12\x0f\n\x07message\x18\x03 \x01(\t\"4\n\x0fOtaComponentRef\x12\x0e\n\x06plugin\x18\x01 \x01(\t\x12\x11\n\tcomponent\x18\x02 \x01(\t\"?\n\x11OtaVersionRequest\x12*\n\ncomponents\x18\x01 \x03(\x0b\x32\x16.proto.OtaComponentRef\"\x82\x01\n\x19OtaComponentVersionResult\x12\x0e\n\x06plugin\x18\x01 \x01(\t\x12\x11\n\tcomponent\x18\x02 \x01(\t\x12 \n\x06result\x18\x03 \x01(\x0e\x32\x10.proto.OtaResult\x12\x0f\n\x07version\x18\x04 \x01(\t\x12\x0f\n\x07message\x18\x05 \x01(\t\"\x84\x01\n\x12OtaVersionResponse\x12 \n\x06result\x18\x01 \x01(\x0e\x32\x10.proto.OtaResult\x12;\n\x11\x63omponent_results\x18\x02 \x03(\x0b\x32 .proto.OtaComponentVersionResult\x12\x0f\n\x07message\x18\x03 \x01(\t\"\\\n\x17OtaAgentDownloadRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x17\n\x0frelease_version\x18\x02 \x01(\t\x12\x14\n\x0cproduct_code\x18\x03 \x01(\t\"+\n\x15OtaAgentCancelRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\"\xa2\x01\n\x16OtaAgentCancelResponse\x12+\n\x06result\x18\x01 \x01(\x0e\x32\x1b.proto.OtaAgentCancelResult\x12\x12\n\nrequest_id\x18\x02 \x01(\t\x12\x0f\n\x07task_id\x18\x03 \x01(\t\x12\x36\n\x0fterminal_result\x18\x04 \x01(\x0e\x32\x1d.proto.OtaAgentTerminalResult\"Z\n\x15OtaAgentSubmitRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x17\n\x0frelease_version\x18\x02 \x01(\t\x12\x14\n\x0cproduct_code\x18\x03 \x01(\t\"\xca\x01\n\x16OtaAgentSubmitResponse\x12+\n\x06result\x18\x01 \x01(\x0e\x32\x1b.proto.OtaAgentSubmitResult\x12\x12\n\nrequest_id\x18\x02 \x01(\t\x12\x17\n\x0frelease_version\x18\x03 \x01(\t\x12\x0f\n\x07task_id\x18\x04 \x01(\t\x12\x13\n\x0breason_code\x18\x05 \x01(\t\x12\x1a\n\x12\x64iagnostic_summary\x18\x06 \x01(\t\x12\x14\n\x0cproduct_code\x18\x07 \x01(\t\"+\n\x15OtaAgentStatusRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\"e\n OtaAgentPeripheralFailureSummary\x12\x0e\n\x06plugin\x18\x01 \x01(\t\x12\x31\n\x06reason\x18\x02 \x01(\x0e\x32!.proto.OtaPeripheralFailureReason\"\xcb\x03\n\x16OtaAgentStatusResponse\x12+\n\x06result\x18\x01 \x01(\x0e\x32\x1b.proto.OtaAgentStatusResult\x12\x12\n\nrequest_id\x18\x02 \x01(\t\x12\x17\n\x0frelease_version\x18\x03 \x01(\t\x12\x0f\n\x07task_id\x18\x04 \x01(\t\x12\x36\n\x0fterminal_result\x18\x05 \x01(\x0e\x32\x1d.proto.OtaAgentTerminalResult\x12\x13\n\x0breason_code\x18\x06 \x01(\t\x12\x14\n\x0cproduct_code\x18\x07 \x01(\t\x12\x42\n\x15\x63ompletion_provenance\x18\x08 \x01(\x0e\x32#.proto.OtaAgentCompletionProvenance\x12-\n\rtask_progress\x18\t \x01(\x0b\x32\x16.proto.OtaTaskProgress\x12\x44\n\x13peripheral_failures\x18\n \x03(\x0b\x32\'.proto.OtaAgentPeripheralFailureSummary\x12*\n\ttask_kind\x18\x0b \x01(\x0e\x32\x17.proto.OtaAgentTaskKind\"4\n\x1cOtaAgentSystemVersionRequest\x12\x14\n\x0cproduct_code\x18\x01 \x01(\t\"\x81\x01\n\x1dOtaAgentSystemVersionResponse\x12 \n\x06result\x18\x01 \x01(\x0e\x32\x10.proto.OtaResult\x12\x14\n\x0cproduct_code\x18\x02 \x01(\t\x12\x17\n\x0frelease_version\x18\x03 \x01(\t\x12\x0f\n\x07message\x18\x04 \x01(\t\"K\n\x1dOtaAgentModuleVersionsRequest\x12\x19\n\x0cproduct_code\x18\x01 \x01(\tH\x00\x88\x01\x01\x42\x0f\n\r_product_code\"\xc8\x01\n\x1eOtaAgentModuleVersionsResponse\x12 \n\x06result\x18\x01 \x01(\x0e\x32\x10.proto.OtaResult\x12\x33\n\x06report\x18\x02 \x01(\x0b\x32#.proto.OtaAgentModuleVersionsReport\x12\x12\n\nerror_code\x18\x03 \x01(\t\x12\x0f\n\x07message\x18\x04 \x01(\t\x12\x19\n\x0cproduct_code\x18\x05 \x01(\tH\x00\x88\x01\x01\x42\x0f\n\r_product_code\"\xc4\x02\n\x1cOtaAgentModuleVersionsReport\x12\x19\n\x0cproduct_code\x18\x01 \x01(\tH\x00\x88\x01\x01\x12\x1c\n\x0frelease_version\x18\x02 \x01(\tH\x01\x88\x01\x01\x12G\n\x12\x63onformance_status\x18\x03 \x01(\x0e\x32&.proto.OtaAgentModuleConformanceStatusH\x02\x88\x01\x01\x12\x30\n\ncomponents\x18\x04 \x03(\x0b\x32\x1c.proto.OtaAgentModuleVersion\x12\x34\n\x0b\x64iagnostics\x18\x05 \x03(\x0b\x32\x1f.proto.OtaAgentModuleDiagnosticB\x0f\n\r_product_codeB\x12\n\x10_release_versionB\x15\n\x13_conformance_status\"\xe8\x01\n\x15OtaAgentModuleVersion\x12\x13\n\x0bmodule_code\x18\x01 \x01(\t\x12\x32\n\x06status\x18\x02 \x01(\x0e\x32\".proto.OtaAgentModuleVersionStatus\x12\x1d\n\x10observed_version\x18\x03 \x01(\tH\x00\x88\x01\x01\x12\x1d\n\x10\x65xpected_version\x18\x04 \x01(\tH\x01\x88\x01\x01\x12\x13\n\x06reason\x18\x05 \x01(\tH\x02\x88\x01\x01\x42\x13\n\x11_observed_versionB\x13\n\x11_expected_versionB\t\n\x07_reason\"^\n\x18OtaAgentModuleDiagnostic\x12\x32\n\x06status\x18\x01 \x01(\x0e\x32\".proto.OtaAgentModuleVersionStatus\x12\x0e\n\x06reason\x18\x02 \x01(\t\"4\n\x10OtaStageProgress\x12\x11\n\tcompleted\x18\x01 \x01(\x04\x12\r\n\x05total\x18\x02 \x01(\x04\"\xba\x01\n\x0eOtaPublicStage\x12+\n\toperation\x18\x01 \x01(\x0e\x32\x18.proto.OtaStageOperation\x12%\n\x06target\x18\x02 \x01(\x0e\x32\x15.proto.OtaStageTarget\x12)\n\x05state\x18\x03 \x01(\x0e\x32\x1a.proto.OtaPublicStageState\x12)\n\x08progress\x18\x04 \x01(\x0b\x32\x17.proto.OtaStageProgress\"\x90\x01\n\x0fOtaStageSummary\x12+\n\toperation\x18\x01 \x01(\x0e\x32\x18.proto.OtaStageOperation\x12%\n\x06target\x18\x02 \x01(\x0e\x32\x15.proto.OtaStageTarget\x12)\n\x05state\x18\x03 \x01(\x0e\x32\x1a.proto.OtaPublicStageState\"\xe4\x01\n\x0fOtaTaskProgress\x12(\n\x05state\x18\x01 \x01(\x0e\x32\x19.proto.OtaPublicTaskState\x12\x1b\n\x13\x63urrent_stage_index\x18\x02 \x01(\r\x12\x13\n\x0bstage_count\x18\x03 \x01(\r\x12,\n\rcurrent_stage\x18\x04 \x01(\x0b\x32\x15.proto.OtaPublicStage\x12&\n\x06stages\x18\x05 \x03(\x0b\x32\x16.proto.OtaStageSummary\x12\x1f\n\x17interrupted_stage_index\x18\x06 \x01(\r\"#\n\x11\x43onfigDoubleArray\x12\x0e\n\x06values\x18\x01 \x03(\x01\"$\n\x12\x43onfigIntegerArray\x12\x0e\n\x06values\x18\x01 \x03(\x12\"\xfd\x01\n\x0b\x43onfigValue\x12\x14\n\nbool_value\x18\x01 \x01(\x08H\x00\x12\x13\n\tint_value\x18\x02 \x01(\x12H\x00\x12\x16\n\x0c\x64ouble_value\x18\x03 \x01(\x01H\x00\x12\x16\n\x0cstring_value\x18\x04 \x01(\tH\x00\x12\x18\n\x0eraw_json_value\x18\x05 \x01(\tH\x00\x12\x36\n\x12\x64ouble_array_value\x18\x06 \x01(\x0b\x32\x18.proto.ConfigDoubleArrayH\x00\x12\x38\n\x13integer_array_value\x18\x07 \x01(\x0b\x32\x19.proto.ConfigIntegerArrayH\x00\x42\x07\n\x05value\"/\n\x10\x43onfigEnumOption\x12\r\n\x05value\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\"\xa0\x03\n\x11\x43onfigConstraints\x12\x14\n\x07minimum\x18\x01 \x01(\x01H\x00\x88\x01\x01\x12\x14\n\x07maximum\x18\x02 \x01(\x01H\x01\x88\x01\x01\x12\x19\n\x11minimum_exclusive\x18\x03 \x01(\x08\x12\x19\n\x11maximum_exclusive\x18\x04 \x01(\x08\x12\x1d\n\x10max_string_bytes\x18\x05 \x01(\rH\x02\x88\x01\x01\x12-\n\x0c\x65num_options\x18\x06 \x03(\x0b\x32\x17.proto.ConfigEnumOption\x12\x1c\n\x0finteger_minimum\x18\x07 \x01(\x12H\x03\x88\x01\x01\x12\x1c\n\x0finteger_maximum\x18\x08 \x01(\x12H\x04\x88\x01\x01\x12\x16\n\tmin_items\x18\t \x01(\rH\x05\x88\x01\x01\x12\x16\n\tmax_items\x18\n \x01(\rH\x06\x88\x01\x01\x42\n\n\x08_minimumB\n\n\x08_maximumB\x13\n\x11_max_string_bytesB\x12\n\x10_integer_minimumB\x12\n\x10_integer_maximumB\x0c\n\n_min_itemsB\x0c\n\n_max_items\"\xf8\x01\n\x18\x43onfigElementConstraints\x12\x14\n\x07minimum\x18\x01 \x01(\x01H\x00\x88\x01\x01\x12\x14\n\x07maximum\x18\x02 \x01(\x01H\x01\x88\x01\x01\x12\x19\n\x11minimum_exclusive\x18\x03 \x01(\x08\x12\x19\n\x11maximum_exclusive\x18\x04 \x01(\x08\x12\x1c\n\x0finteger_minimum\x18\x05 \x01(\x12H\x02\x88\x01\x01\x12\x1c\n\x0finteger_maximum\x18\x06 \x01(\x12H\x03\x88\x01\x01\x42\n\n\x08_minimumB\n\n\x08_maximumB\x12\n\x10_integer_minimumB\x12\n\x10_integer_maximum\"\x80\x01\n\x1c\x43onfigArrayElementDescriptor\x12\x12\n\x05index\x18\x01 \x01(\rH\x00\x88\x01\x01\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x34\n\x0b\x63onstraints\x18\x03 \x01(\x0b\x32\x1f.proto.ConfigElementConstraintsB\x08\n\x06_index\"\xf9\x02\n\x15\x43onfigFieldDescriptor\x12\x10\n\x08\x66ield_id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\r\n\x05group\x18\x04 \x01(\t\x12*\n\nvalue_type\x18\x05 \x01(\x0e\x32\x16.proto.ConfigValueType\x12\x0c\n\x04unit\x18\x06 \x01(\t\x12-\n\x0b\x63onstraints\x18\x07 \x01(\x0b\x32\x18.proto.ConfigConstraints\x12.\n\x0c\x61pply_policy\x18\x08 \x01(\x0e\x32\x18.proto.ConfigApplyPolicy\x12\x18\n\x10safety_condition\x18\t \x01(\t\x12,\n\x0c\x65lement_type\x18\n \x01(\x0e\x32\x16.proto.ConfigValueType\x12;\n\x0e\x61rray_elements\x18\x0b \x03(\x0b\x32#.proto.ConfigArrayElementDescriptor\"q\n\x10\x43onfigDiagnostic\x12\x0c\n\x04\x63ode\x18\x01 \x01(\t\x12\x10\n\x08\x66ield_id\x18\x02 \x01(\t\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x1a\n\relement_index\x18\x04 \x01(\rH\x00\x88\x01\x01\x42\x10\n\x0e_element_index\"\xae\x02\n\x0f\x43onfigFieldInfo\x12\x10\n\x08\x66ield_id\x18\x01 \x01(\t\x12\x36\n\x10\x66ield_descriptor\x18\x02 \x01(\x0b\x32\x1c.proto.ConfigFieldDescriptor\x12+\n\x0f\x65\x66\x66\x65\x63tive_value\x18\x03 \x01(\x0b\x32\x12.proto.ConfigValue\x12\x34\n\x0foverride_status\x18\x04 \x01(\x0e\x32\x1b.proto.ConfigOverrideStatus\x12*\n\x0esaved_override\x18\x05 \x01(\x0b\x32\x12.proto.ConfigValue\x12\x14\n\x0cpending_init\x18\x06 \x01(\x08\x12,\n\x0b\x64iagnostics\x18\x07 \x03(\x0b\x32\x17.proto.ConfigDiagnostic\"}\n\x12\x43onfigInstanceInfo\x12\x11\n\tplugin_id\x18\x01 \x01(\t\x12&\n\x06\x66ields\x18\x02 \x03(\x0b\x32\x16.proto.ConfigFieldInfo\x12,\n\x0b\x64iagnostics\x18\x03 \x03(\x0b\x32\x17.proto.ConfigDiagnostic\"%\n\x10\x43onfigGetRequest\x12\x11\n\tplugin_id\x18\x01 \x01(\t\"\x94\x01\n\x11\x43onfigGetResponse\x12#\n\x06result\x18\x01 \x01(\x0e\x32\x13.proto.ConfigResult\x12,\n\tinstances\x18\x02 \x03(\x0b\x32\x19.proto.ConfigInstanceInfo\x12,\n\x0b\x64iagnostics\x18\x03 \x03(\x0b\x32\x17.proto.ConfigDiagnostic\"v\n\x14\x43onfigFieldOperation\x12\x10\n\x08\x66ield_id\x18\x01 \x01(\t\x12)\n\toperation\x18\x02 \x01(\x0e\x32\x16.proto.ConfigOperation\x12!\n\x05value\x18\x03 \x01(\x0b\x32\x12.proto.ConfigValue\"V\n\x10\x43onfigSetRequest\x12\x11\n\tplugin_id\x18\x01 \x01(\t\x12/\n\noperations\x18\x02 \x03(\x0b\x32\x1b.proto.ConfigFieldOperation\"\x93\x01\n\x11\x43onfigSetResponse\x12#\n\x06result\x18\x01 \x01(\x0e\x32\x13.proto.ConfigResult\x12+\n\x08instance\x18\x02 \x01(\x0b\x32\x19.proto.ConfigInstanceInfo\x12,\n\x0b\x64iagnostics\x18\x03 \x03(\x0b\x32\x17.proto.ConfigDiagnostic*;\n\x04Side\x12\x14\n\x10SIDE_UNSPECIFIED\x10\x00\x12\r\n\tSIDE_LEFT\x10\x01\x12\x0e\n\nSIDE_RIGHT\x10\x02*\xb2\x01\n\rTactileFinger\x12\x1e\n\x1aTACTILE_FINGER_UNSPECIFIED\x10\x00\x12\x18\n\x14TACTILE_FINGER_THUMB\x10\x01\x12\x18\n\x14TACTILE_FINGER_INDEX\x10\x02\x12\x19\n\x15TACTILE_FINGER_MIDDLE\x10\x03\x12\x17\n\x13TACTILE_FINGER_RING\x10\x04\x12\x19\n\x15TACTILE_FINGER_LITTLE\x10\x05*\x9f\x01\n\x0b\x43\x61meraMount\x12\x1c\n\x18\x43\x41MERA_MOUNT_UNSPECIFIED\x10\x00\x12\x1a\n\x16\x43\x41MERA_MOUNT_HEAD_LEFT\x10\x01\x12\x1b\n\x17\x43\x41MERA_MOUNT_HEAD_RIGHT\x10\x02\x12\x1b\n\x17\x43\x41MERA_MOUNT_WRIST_LEFT\x10\x03\x12\x1c\n\x18\x43\x41MERA_MOUNT_WRIST_RIGHT\x10\x04*c\n\tSpaceMode\x12\x1a\n\x16SPACE_MODE_UNSPECIFIED\x10\x00\x12\x1a\n\x16SPACE_MODE_JOINT_SPACE\x10\x01\x12\x1e\n\x1aSPACE_MODE_CARTESIAN_SPACE\x10\x02*\xdc\x01\n\x0b\x43ontrolMode\x12\x1f\n\x1b\x43ONTROL_MODE_JOINT_POSITION\x10\x00\x12\x19\n\x15\x43ONTROL_MODE_JOINT_PD\x10\x01\x12\x1d\n\x19\x43ONTROL_MODE_JOINT_TORQUE\x10\x02\x12\x16\n\x12\x43ONTROL_MODE_SPEED\x10\x03\x12\x19\n\x15\x43ONTROL_MODE_FLOATING\x10\x04\x12\x19\n\x15\x43ONTROL_MODE_MOTOR_PD\x10\x05\x12$\n CONTROL_MODE_CARTESIAN_IMPEDANCE\x10\x06*\xbb\x01\n\x0eLifecyclePhase\x12\x1f\n\x1bLIFECYCLE_PHASE_UNSPECIFIED\x10\x00\x12\x18\n\x14LIFECYCLE_PHASE_INIT\x10\x01\x12\x1b\n\x17LIFECYCLE_PHASE_STANDBY\x10\x02\x12\x1b\n\x17LIFECYCLE_PHASE_RUNNING\x10\x03\x12\x19\n\x15LIFECYCLE_PHASE_ERROR\x10\x04\x12\x19\n\x15LIFECYCLE_PHASE_FATAL\x10\x05*\x86\x01\n\nFaultLevel\x12\x1b\n\x17\x46\x41ULT_LEVEL_UNSPECIFIED\x10\x00\x12\x14\n\x10\x46\x41ULT_LEVEL_INFO\x10\x01\x12\x17\n\x13\x46\x41ULT_LEVEL_WARNING\x10\x02\x12\x15\n\x11\x46\x41ULT_LEVEL_ERROR\x10\x03\x12\x15\n\x11\x46\x41ULT_LEVEL_FATAL\x10\x04*\x95\x02\n\x18UltrasonicDistanceStatus\x12*\n&ULTRASONIC_DISTANCE_STATUS_UNSPECIFIED\x10\x00\x12$\n ULTRASONIC_DISTANCE_STATUS_VALID\x10\x01\x12(\n$ULTRASONIC_DISTANCE_STATUS_NO_TARGET\x10\x02\x12+\n\'ULTRASONIC_DISTANCE_STATUS_INTERFERENCE\x10\x03\x12(\n$ULTRASONIC_DISTANCE_STATUS_NOT_READY\x10\x04\x12&\n\"ULTRASONIC_DISTANCE_STATUS_INVALID\x10\x05*O\n\x10TorsoControlMode\x12\x1f\n\x1bTORSO_CONTROL_MODE_POSITION\x10\x00\x12\x1a\n\x16TORSO_CONTROL_MODE_MIT\x10\x01*U\n\x12\x43hassisControlMode\x12\x1f\n\x1b\x43HASSIS_CONTROL_MODE_MOTION\x10\x00\x12\x1e\n\x1a\x43HASSIS_CONTROL_MODE_FORCE\x10\x01*V\n\x12\x43hassisCommandMode\x12\"\n\x1e\x43HASSIS_COMMAND_MODE_KINEMATIC\x10\x00\x12\x1c\n\x18\x43HASSIS_COMMAND_MODE_RAW\x10\x01*u\n\x14\x43hassisSteerStrategy\x12/\n+CHASSIS_STEER_STRATEGY_CLOSED_LOOP_POSITION\x10\x00\x12,\n(CHASSIS_STEER_STRATEGY_FORCE_CURRENT_MIT\x10\x01*r\n\x14\x43hassisWheelStrategy\x12,\n(CHASSIS_WHEEL_STRATEGY_CLOSED_LOOP_SPEED\x10\x00\x12,\n(CHASSIS_WHEEL_STRATEGY_FORCE_CURRENT_MIT\x10\x01*v\n\x16\x43hassisStretchStrategy\x12-\n)CHASSIS_STRETCH_STRATEGY_PROFILE_VELOCITY\x10\x00\x12-\n)CHASSIS_STRETCH_STRATEGY_PROFILE_POSITION\x10\x01*\xee\x01\n\x10PowerDataQuality\x12\x1a\n\x16POWER_DATA_UNSPECIFIED\x10\x00\x12\x14\n\x10POWER_DATA_VALID\x10\x01\x12\x1b\n\x17POWER_DATA_NOT_RECEIVED\x10\x02\x12\x14\n\x10POWER_DATA_STALE\x10\x03\x12\x1d\n\x19POWER_DATA_SOURCE_OFFLINE\x10\x04\x12\x1d\n\x19POWER_DATA_SENSOR_INVALID\x10\x05\x12\x1c\n\x18POWER_DATA_NOT_SUPPORTED\x10\x06\x12\x19\n\x15POWER_DATA_UNVERIFIED\x10\x07*c\n\x10PowerClockDomain\x12\x17\n\x13POWER_CLOCK_UNKNOWN\x10\x00\x12 \n\x1cPOWER_CLOCK_DEVICE_MONOTONIC\x10\x01\x12\x14\n\x10POWER_CLOCK_GPTP\x10\x02*W\n\x0ePowerLinkState\x12\x16\n\x12POWER_LINK_UNKNOWN\x10\x00\x12\x15\n\x11POWER_LINK_ONLINE\x10\x01\x12\x16\n\x12POWER_LINK_OFFLINE\x10\x02*\xb9\x01\n\x18\x43hestPowerOperatingState\x12\x1b\n\x17\x43HEST_POWER_UNSPECIFIED\x10\x00\x12\x1c\n\x18\x43HEST_POWER_MONITOR_ONLY\x10\x01\x12\x19\n\x15\x43HEST_POWER_BOOT_WAIT\x10\x02\x12\x17\n\x13\x43HEST_POWER_STANDBY\x10\x03\x12\x17\n\x13\x43HEST_POWER_RUNNING\x10\x04\x12\x15\n\x11\x43HEST_POWER_FAULT\x10\x05*\xc9\x02\n\x0bPowerOpCode\x12\x10\n\x0cPOWER_OP_NOP\x10\x00\x12\x11\n\rPOWER_OP_PING\x10\x01\x12\x1a\n\x16POWER_OP_GET_PROTO_VER\x10\x02\x12\x18\n\x14POWER_OP_SET_CHANNEL\x10\x10\x12\x15\n\x11POWER_OP_SET_MASK\x10\x11\x12\x17\n\x13POWER_OP_GET_STATUS\x10\x12\x12\x13\n\x0fPOWER_OP_ALL_ON\x10\x13\x12\x14\n\x10POWER_OP_ALL_OFF\x10\x14\x12\x16\n\x12POWER_OP_SYS_SLEEP\x10 \x12\x17\n\x13POWER_OP_SYS_WAKEUP\x10!\x12\x1b\n\x17POWER_OP_SYS_GET_STATUS\x10\"\x12\x16\n\x12POWER_OP_SYS_RESET\x10#\x12\x1e\n\x1aPOWER_OP_SYS_SET_HB_PERIOD\x10$*\x8f\x02\n\x16HeadStereoStreamResult\x12)\n%HEAD_STEREO_STREAM_RESULT_UNSPECIFIED\x10\x00\x12 \n\x1cHEAD_STEREO_STREAM_RESULT_OK\x10\x01\x12-\n)HEAD_STEREO_STREAM_RESULT_INVALID_REQUEST\x10\x02\x12\"\n\x1eHEAD_STEREO_STREAM_RESULT_BUSY\x10\x03\x12)\n%HEAD_STEREO_STREAM_RESULT_UNAVAILABLE\x10\x04\x12*\n&HEAD_STEREO_STREAM_RESULT_REMOTE_ERROR\x10\x05*\x8f\x01\n\x15HeadStereoStreamState\x12(\n$HEAD_STEREO_STREAM_STATE_UNSPECIFIED\x10\x00\x12$\n HEAD_STEREO_STREAM_STATE_STOPPED\x10\x01\x12&\n\"HEAD_STEREO_STREAM_STATE_STREAMING\x10\x02*\x89\x02\n\x15RecorderCommandResult\x12\'\n#RECORDER_COMMAND_RESULT_UNSPECIFIED\x10\x00\x12\x1e\n\x1aRECORDER_COMMAND_RESULT_OK\x10\x01\x12+\n\'RECORDER_COMMAND_RESULT_INVALID_REQUEST\x10\x02\x12$\n RECORDER_COMMAND_RESULT_REJECTED\x10\x03\x12\'\n#RECORDER_COMMAND_RESULT_UNAVAILABLE\x10\x04\x12+\n\'RECORDER_COMMAND_RESULT_OUTCOME_UNKNOWN\x10\x05*\x87\x01\n\x15RecorderRecordingMode\x12\'\n#RECORDER_RECORDING_MODE_UNSPECIFIED\x10\x00\x12!\n\x1dRECORDER_RECORDING_MODE_DEBUG\x10\x01\x12\"\n\x1eRECORDER_RECORDING_MODE_NORMAL\x10\x02*\xd7\x01\n\x13HeartbeatMetricKind\x12%\n!HEARTBEAT_METRIC_KIND_UNSPECIFIED\x10\x00\x12/\n+HEARTBEAT_METRIC_KIND_TACTILE_FRAME_RATE_HZ\x10\x01\x12-\n)HEARTBEAT_METRIC_KIND_LIDAR_FRAME_RATE_HZ\x10\x02\x12\x39\n5HEARTBEAT_METRIC_KIND_WEBRTC_H265_INPUT_FRAME_RATE_HZ\x10\x03*\xa2\x01\n\x15HardwareHealthVerdict\x12\x16\n\x12HARDWARE_HEALTH_OK\x10\x00\x12\x1b\n\x17HARDWARE_HEALTH_WARNING\x10\x01\x12\x19\n\x15HARDWARE_HEALTH_FAULT\x10\x02\x12\x19\n\x15HARDWARE_HEALTH_STALE\x10\x03\x12\x1e\n\x1aHARDWARE_HEALTH_NEVER_SEEN\x10\x04*B\n\x11HealthRequirement\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x0b\n\x07WARNING\x10\x02\x12\x07\n\x03OFF\x10\x03*\xf2\x01\n\x17WholeBodyCommandChannel\x12*\n&WHOLE_BODY_COMMAND_CHANNEL_UNSPECIFIED\x10\x00\x12,\n(WHOLE_BODY_COMMAND_CHANNEL_TELEOPERATION\x10\x01\x12(\n$WHOLE_BODY_COMMAND_CHANNEL_INFERENCE\x10\x02\x12)\n%WHOLE_BODY_COMMAND_CHANNEL_AUTOMATION\x10\x03\x12(\n$WHOLE_BODY_COMMAND_CHANNEL_UNIVERSAL\x10\x04*\x8e\x01\n\rOperationMode\x12\x1e\n\x1aOPERATION_MODE_UNSPECIFIED\x10\x00\x12 \n\x1cOPERATION_MODE_TELEOPERATION\x10\x01\x12\x1c\n\x18OPERATION_MODE_INFERENCE\x10\x02\x12\x1d\n\x19OPERATION_MODE_AUTOMATION\x10\x03*\xbc\x01\n\x0bMasterPhase\x12\x1c\n\x18MASTER_PHASE_UNSPECIFIED\x10\x00\x12\x15\n\x11MASTER_PHASE_INIT\x10\x01\x12\x18\n\x14MASTER_PHASE_STANDBY\x10\x02\x12\x18\n\x14MASTER_PHASE_RUNNING\x10\x03\x12\x16\n\x12MASTER_PHASE_ERROR\x10\x04\x12\x14\n\x10MASTER_PHASE_OTA\x10\x05\x12\x16\n\x12MASTER_PHASE_ESTOP\x10\x06*\xcf\x03\n\x13MasterCommandResult\x12%\n!MASTER_COMMAND_RESULT_UNSPECIFIED\x10\x00\x12\x1c\n\x18MASTER_COMMAND_RESULT_OK\x10\x01\x12)\n%MASTER_COMMAND_RESULT_INVALID_REQUEST\x10\x02\x12\'\n#MASTER_COMMAND_RESULT_INVALID_PHASE\x10\x03\x12(\n$MASTER_COMMAND_RESULT_UNKNOWN_TARGET\x10\x04\x12\x1e\n\x1aMASTER_COMMAND_RESULT_BUSY\x10\x05\x12%\n!MASTER_COMMAND_RESULT_UNAVAILABLE\x10\x06\x12-\n)MASTER_COMMAND_RESULT_HEALTH_CHECK_FAILED\x10\x07\x12*\n&MASTER_COMMAND_RESULT_EXECUTION_FAILED\x10\x08\x12)\n%MASTER_COMMAND_RESULT_OUTCOME_UNKNOWN\x10\t\x12(\n$MASTER_COMMAND_RESULT_INTERNAL_ERROR\x10\n*W\n\x15MasterTaskHealthLevel\x12\x1d\n\x19MASTER_TASK_HEALTH_NORMAL\x10\x00\x12\x1f\n\x1bMASTER_TASK_HEALTH_DEGRADED\x10\x01*\xc6\x02\n\x1eMasterPhaseTransitionOperation\x12\x31\n-MASTER_PHASE_TRANSITION_OPERATION_UNSPECIFIED\x10\x00\x12+\n\'MASTER_PHASE_TRANSITION_OPERATION_RESET\x10\x01\x12/\n+MASTER_PHASE_TRANSITION_OPERATION_ENTER_OTA\x10\x02\x12.\n*MASTER_PHASE_TRANSITION_OPERATION_EXIT_OTA\x10\x03\x12\x31\n-MASTER_PHASE_TRANSITION_OPERATION_ENTER_ESTOP\x10\x04\x12\x30\n,MASTER_PHASE_TRANSITION_OPERATION_EXIT_ESTOP\x10\x05*\xbe\x01\n\x11HandServiceResult\x12\x1a\n\x16HAND_SERVICE_RESULT_OK\x10\x00\x12\'\n#HAND_SERVICE_RESULT_INVALID_REQUEST\x10\x01\x12#\n\x1fHAND_SERVICE_RESULT_UNAVAILABLE\x10\x02\x12\x1c\n\x18HAND_SERVICE_RESULT_BUSY\x10\x03\x12!\n\x1dHAND_SERVICE_RESULT_SDK_ERROR\x10\x04*\xe5\x01\n\x18HandZeroCalibrationState\x12$\n HAND_ZERO_CALIBRATION_STATE_IDLE\x10\x00\x12\'\n#HAND_ZERO_CALIBRATION_STATE_RUNNING\x10\x01\x12)\n%HAND_ZERO_CALIBRATION_STATE_SUCCEEDED\x10\x02\x12&\n\"HAND_ZERO_CALIBRATION_STATE_FAILED\x10\x03\x12\'\n#HAND_ZERO_CALIBRATION_STATE_STOPPED\x10\x04*\xbe\x01\n\tOtaResult\x12\x1a\n\x16OTA_RESULT_UNSPECIFIED\x10\x00\x12\x11\n\rOTA_RESULT_OK\x10\x01\x12\x1e\n\x1aOTA_RESULT_INVALID_REQUEST\x10\x02\x12\x13\n\x0fOTA_RESULT_BUSY\x10\x03\x12\x18\n\x14OTA_RESULT_NOT_FOUND\x10\x04\x12\x17\n\x13OTA_RESULT_CONFLICT\x10\x05\x12\x1a\n\x16OTA_RESULT_UNAVAILABLE\x10\x06*\x9e\x01\n\x0cOtaTaskState\x12\x1e\n\x1aOTA_TASK_STATE_UNSPECIFIED\x10\x00\x12\x19\n\x15OTA_TASK_STATE_QUEUED\x10\x01\x12\x1a\n\x16OTA_TASK_STATE_RUNNING\x10\x02\x12\x1c\n\x18OTA_TASK_STATE_SUCCEEDED\x10\x03\x12\x19\n\x15OTA_TASK_STATE_FAILED\x10\x04*\xe3\x04\n\x1aOtaPeripheralFailureReason\x12-\n)OTA_PERIPHERAL_FAILURE_REASON_UNSPECIFIED\x10\x00\x12\x31\n-OTA_PERIPHERAL_FAILURE_REASON_PACKAGE_INVALID\x10\x01\x12\x34\n0OTA_PERIPHERAL_FAILURE_REASON_TARGET_UNSUPPORTED\x10\x02\x12\x38\n4OTA_PERIPHERAL_FAILURE_REASON_DEPENDENCY_UNAVAILABLE\x10\x03\x12\x35\n1OTA_PERIPHERAL_FAILURE_REASON_PRECONDITION_FAILED\x10\x04\x12\x31\n-OTA_PERIPHERAL_FAILURE_REASON_TRANSFER_FAILED\x10\x05\x12\x33\n/OTA_PERIPHERAL_FAILURE_REASON_ACTIVATION_FAILED\x10\x06\x12\x35\n1OTA_PERIPHERAL_FAILURE_REASON_VERIFICATION_FAILED\x10\x07\x12\x35\n1OTA_PERIPHERAL_FAILURE_REASON_EXECUTION_TIMED_OUT\x10\x08\x12\x32\n.OTA_PERIPHERAL_FAILURE_REASON_PROTOCOL_INVALID\x10\t\x12\x32\n.OTA_PERIPHERAL_FAILURE_REASON_EXECUTION_FAILED\x10\n*\x83\x01\n\x10OtaEffectClosure\x12\"\n\x1eOTA_EFFECT_CLOSURE_UNSPECIFIED\x10\x00\x12\'\n#OTA_EFFECT_CLOSURE_CONFIRMED_CLOSED\x10\x01\x12\"\n\x1eOTA_EFFECT_CLOSURE_UNCONFIRMED\x10\x02*\xbc\x02\n\x14OtaAgentSubmitResult\x12\'\n#OTA_AGENT_SUBMIT_RESULT_UNSPECIFIED\x10\x00\x12#\n\x1fOTA_AGENT_SUBMIT_RESULT_CREATED\x10\x01\x12$\n OTA_AGENT_SUBMIT_RESULT_EXISTING\x10\x02\x12+\n\'OTA_AGENT_SUBMIT_RESULT_INVALID_REQUEST\x10\x03\x12 \n\x1cOTA_AGENT_SUBMIT_RESULT_BUSY\x10\x04\x12\x30\n,OTA_AGENT_SUBMIT_RESULT_IDEMPOTENCY_CONFLICT\x10\x05\x12/\n+OTA_AGENT_SUBMIT_RESULT_SERVICE_UNAVAILABLE\x10\x06*\x90\x02\n\x14OtaAgentStatusResult\x12\'\n#OTA_AGENT_STATUS_RESULT_UNSPECIFIED\x10\x00\x12\x1e\n\x1aOTA_AGENT_STATUS_RESULT_OK\x10\x01\x12%\n!OTA_AGENT_STATUS_RESULT_NOT_FOUND\x10\x02\x12+\n\'OTA_AGENT_STATUS_RESULT_INVALID_REQUEST\x10\x03\x12/\n+OTA_AGENT_STATUS_RESULT_SERVICE_UNAVAILABLE\x10\x04\x12*\n&OTA_AGENT_STATUS_RESULT_NO_ACTIVE_TASK\x10\x05*\xeb\x02\n\x16OtaAgentTerminalResult\x12)\n%OTA_AGENT_TERMINAL_RESULT_UNSPECIFIED\x10\x00\x12&\n\"OTA_AGENT_TERMINAL_RESULT_REJECTED\x10\x01\x12$\n OTA_AGENT_TERMINAL_RESULT_FAILED\x10\x02\x12\'\n#OTA_AGENT_TERMINAL_RESULT_COMMITTED\x10\x03\x12/\n+OTA_AGENT_TERMINAL_RESULT_RESTORED_BASELINE\x10\x04\x12+\n\'OTA_AGENT_TERMINAL_RESULT_NEEDS_SERVICE\x10\x05\x12(\n$OTA_AGENT_TERMINAL_RESULT_DOWNLOADED\x10\x06\x12\'\n#OTA_AGENT_TERMINAL_RESULT_CANCELLED\x10\x07*\xb3\x01\n\x1cOtaAgentCompletionProvenance\x12/\n+OTA_AGENT_COMPLETION_PROVENANCE_UNSPECIFIED\x10\x00\x12+\n\'OTA_AGENT_COMPLETION_PROVENANCE_UPDATED\x10\x01\x12\x35\n1OTA_AGENT_COMPLETION_PROVENANCE_ALREADY_SATISFIED\x10\x02*\x7f\n\x10OtaAgentTaskKind\x12#\n\x1fOTA_AGENT_TASK_KIND_UNSPECIFIED\x10\x00\x12\x1f\n\x1bOTA_AGENT_TASK_KIND_INSTALL\x10\x01\x12%\n!OTA_AGENT_TASK_KIND_DOWNLOAD_ONLY\x10\x02*\xc7\x02\n\x14OtaAgentCancelResult\x12\'\n#OTA_AGENT_CANCEL_RESULT_UNSPECIFIED\x10\x00\x12$\n OTA_AGENT_CANCEL_RESULT_ACCEPTED\x10\x01\x12,\n(OTA_AGENT_CANCEL_RESULT_ALREADY_TERMINAL\x10\x02\x12%\n!OTA_AGENT_CANCEL_RESULT_NOT_FOUND\x10\x03\x12-\n)OTA_AGENT_CANCEL_RESULT_NOT_DOWNLOAD_ONLY\x10\x04\x12+\n\'OTA_AGENT_CANCEL_RESULT_INVALID_REQUEST\x10\x05\x12/\n+OTA_AGENT_CANCEL_RESULT_SERVICE_UNAVAILABLE\x10\x06*\xe6\x02\n\x1bOtaAgentModuleVersionStatus\x12/\n+OTA_AGENT_MODULE_VERSION_STATUS_UNSPECIFIED\x10\x00\x12,\n(OTA_AGENT_MODULE_VERSION_STATUS_OBSERVED\x10\x01\x12+\n\'OTA_AGENT_MODULE_VERSION_STATUS_MATCHED\x10\x02\x12.\n*OTA_AGENT_MODULE_VERSION_STATUS_MISMATCHED\x10\x03\x12/\n+OTA_AGENT_MODULE_VERSION_STATUS_UNAVAILABLE\x10\x04\x12/\n+OTA_AGENT_MODULE_VERSION_STATUS_UNSUPPORTED\x10\x05\x12)\n%OTA_AGENT_MODULE_VERSION_STATUS_ERROR\x10\x06*\xf1\x01\n\x1fOtaAgentModuleConformanceStatus\x12\x33\n/OTA_AGENT_MODULE_CONFORMANCE_STATUS_UNSPECIFIED\x10\x00\x12/\n+OTA_AGENT_MODULE_CONFORMANCE_STATUS_MATCHED\x10\x01\x12\x32\n.OTA_AGENT_MODULE_CONFORMANCE_STATUS_MISMATCHED\x10\x02\x12\x34\n0OTA_AGENT_MODULE_CONFORMANCE_STATUS_INCONCLUSIVE\x10\x03*\xc4\x02\n\x12OtaPublicTaskState\x12%\n!OTA_PUBLIC_TASK_STATE_UNSPECIFIED\x10\x00\x12!\n\x1dOTA_PUBLIC_TASK_STATE_PENDING\x10\x01\x12!\n\x1dOTA_PUBLIC_TASK_STATE_RUNNING\x10\x02\x12$\n OTA_PUBLIC_TASK_STATE_RECOVERING\x10\x03\x12#\n\x1fOTA_PUBLIC_TASK_STATE_SUCCEEDED\x10\x04\x12 \n\x1cOTA_PUBLIC_TASK_STATE_FAILED\x10\x05\x12\'\n#OTA_PUBLIC_TASK_STATE_NEEDS_SERVICE\x10\x06\x12+\n\'OTA_PUBLIC_TASK_STATE_RESTORED_BASELINE\x10\x07*\xf2\x01\n\x13OtaPublicStageState\x12&\n\"OTA_PUBLIC_STAGE_STATE_UNSPECIFIED\x10\x00\x12\"\n\x1eOTA_PUBLIC_STAGE_STATE_PENDING\x10\x01\x12\"\n\x1eOTA_PUBLIC_STAGE_STATE_RUNNING\x10\x02\x12$\n OTA_PUBLIC_STAGE_STATE_SUCCEEDED\x10\x03\x12!\n\x1dOTA_PUBLIC_STAGE_STATE_FAILED\x10\x04\x12\"\n\x1eOTA_PUBLIC_STAGE_STATE_SKIPPED\x10\x05*\x8c\x02\n\x11OtaStageOperation\x12#\n\x1fOTA_STAGE_OPERATION_UNSPECIFIED\x10\x00\x12\x1d\n\x19OTA_STAGE_OPERATION_SETUP\x10\x01\x12$\n OTA_STAGE_OPERATION_TRANSFERRING\x10\x02\x12\"\n\x1eOTA_STAGE_OPERATION_INSTALLING\x10\x03\x12\"\n\x1eOTA_STAGE_OPERATION_RESTARTING\x10\x04\x12!\n\x1dOTA_STAGE_OPERATION_VERIFYING\x10\x05\x12\"\n\x1eOTA_STAGE_OPERATION_RECOVERING\x10\x06*\xc9\x01\n\x0eOtaStageTarget\x12 \n\x1cOTA_STAGE_TARGET_UNSPECIFIED\x10\x00\x12\x19\n\x15OTA_STAGE_TARGET_TASK\x10\x01\x12\x1d\n\x19OTA_STAGE_TARGET_PLATFORM\x10\x02\x12 \n\x1cOTA_STAGE_TARGET_PERIPHERALS\x10\x03\x12\x1a\n\x16OTA_STAGE_TARGET_AGENT\x10\x04\x12\x1d\n\x19OTA_STAGE_TARGET_THOR_BSP\x10\x05*\xc8\x01\n\x0f\x43onfigValueType\x12!\n\x1d\x43ONFIG_VALUE_TYPE_UNSPECIFIED\x10\x00\x12\x1a\n\x16\x43ONFIG_VALUE_TYPE_BOOL\x10\x01\x12\x1d\n\x19\x43ONFIG_VALUE_TYPE_INTEGER\x10\x02\x12\x1c\n\x18\x43ONFIG_VALUE_TYPE_DOUBLE\x10\x03\x12\x1c\n\x18\x43ONFIG_VALUE_TYPE_STRING\x10\x04\x12\x1b\n\x17\x43ONFIG_VALUE_TYPE_ARRAY\x10\x05*\xa2\x01\n\x11\x43onfigApplyPolicy\x12#\n\x1f\x43ONFIG_APPLY_POLICY_UNSPECIFIED\x10\x00\x12!\n\x1d\x43ONFIG_APPLY_POLICY_IMMEDIATE\x10\x01\x12\"\n\x1e\x43ONFIG_APPLY_POLICY_SAFE_STATE\x10\x02\x12!\n\x1d\x43ONFIG_APPLY_POLICY_INIT_ONLY\x10\x03*i\n\x0f\x43onfigOperation\x12 \n\x1c\x43ONFIG_OPERATION_UNSPECIFIED\x10\x00\x12\x18\n\x14\x43ONFIG_OPERATION_SET\x10\x01\x12\x1a\n\x16\x43ONFIG_OPERATION_RESET\x10\x02*\xd4\x01\n\x14\x43onfigOverrideStatus\x12&\n\"CONFIG_OVERRIDE_STATUS_UNSPECIFIED\x10\x00\x12\x1f\n\x1b\x43ONFIG_OVERRIDE_STATUS_NONE\x10\x01\x12\"\n\x1e\x43ONFIG_OVERRIDE_STATUS_APPLIED\x10\x02\x12\'\n#CONFIG_OVERRIDE_STATUS_PENDING_INIT\x10\x03\x12&\n\"CONFIG_OVERRIDE_STATUS_NOT_ADOPTED\x10\x04*\xb7\x03\n\x0c\x43onfigResult\x12\x1d\n\x19\x43ONFIG_RESULT_UNSPECIFIED\x10\x00\x12\x14\n\x10\x43ONFIG_RESULT_OK\x10\x01\x12!\n\x1d\x43ONFIG_RESULT_INVALID_REQUEST\x10\x02\x12&\n\"CONFIG_RESULT_INSTANCE_UNAVAILABLE\x10\x03\x12%\n!CONFIG_RESULT_VALIDATION_REJECTED\x10\x04\x12\x16\n\x12\x43ONFIG_RESULT_BUSY\x10\x05\x12(\n$CONFIG_RESULT_SAFETY_CONDITION_UNMET\x10\x06\x12*\n&CONFIG_RESULT_STORAGE_FAILED_UNCHANGED\x10\x07\x12(\n$CONFIG_RESULT_APPLY_FAILED_UNCHANGED\x10\x08\x12!\n\x1d\x43ONFIG_RESULT_FAILED_RESTORED\x10\t\x12#\n\x1f\x43ONFIG_RESULT_RECOVERY_REQUIRED\x10\n\x12 \n\x1c\x43ONFIG_RESULT_RESOURCE_LIMIT\x10\x0b\x62\x06proto3'
+  serialized_pb=b'\n\x0bnorth.proto\x12\x05proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x13\n\x11\x44\x65viceInfoRequest\"x\n\x12\x44\x65viceInfoResponse\x12\'\n\x06result\x18\x01 \x01(\x0e\x32\x17.proto.DeviceInfoResult\x12\n\n\x02sn\x18\x02 \x01(\t\x12\r\n\x05model\x18\x03 \x01(\t\x12\r\n\x05\x62\x61tch\x18\x04 \x01(\t\x12\x0f\n\x07message\x18\x05 \x01(\t\"\x8d\x01\n\x06Header\x12)\n\x05stamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0b\n\x03key\x18\x02 \x01(\t\x12\x10\n\x08\x66rame_id\x18\x03 \x01(\t\x12,\n\x08sys_time\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0b\n\x03seq\x18\x05 \x01(\r\"(\n\x05Point\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"\x1f\n\x07Vector2\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\"*\n\x07Vector3\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"8\n\nQuaternion\x12\t\n\x01w\x18\x01 \x01(\x02\x12\t\n\x01x\x18\x02 \x01(\x02\x12\t\n\x01y\x18\x03 \x01(\x02\x12\t\n\x01z\x18\x04 \x01(\x02\"N\n\x04Pose\x12\x1e\n\x08position\x18\x01 \x01(\x0b\x32\x0c.proto.Point\x12&\n\x0borientation\x18\x02 \x01(\x0b\x32\x11.proto.Quaternion\"G\n\x0bPoseStamped\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04pose\x18\x02 \x01(\x0b\x32\x0b.proto.Pose\"K\n\x12\x43\x61rtographerMapKey\x12\x0e\n\x06map_id\x18\x01 \x01(\t\x12\x11\n\tmap_frame\x18\x02 \x01(\t\x12\x12\n\nruntime_id\x18\x03 \x01(\t\"z\n\x15\x43\x61rtographerLayerInfo\x12\x13\n\x0blayer_index\x18\x01 \x01(\r\x12\x10\n\x08layer_id\x18\x02 \x01(\t\x12\x12\n\nmin_height\x18\x03 \x01(\x02\x12\x12\n\nmax_height\x18\x04 \x01(\x02\x12\x12\n\nresolution\x18\x05 \x01(\x01\"\x1c\n\x1a\x43\x61rtographerMapInfoRequest\"\x97\x01\n\x13\x43\x61rtographerMapInfo\x12&\n\x03map\x18\x01 \x01(\x0b\x32\x19.proto.CartographerMapKey\x12\x0c\n\x04mode\x18\x02 \x01(\t\x12\x1c\n\x14\x61\x63tive_trajectory_id\x18\x03 \x01(\x05\x12,\n\x06layers\x18\x04 \x03(\x0b\x32\x1c.proto.CartographerLayerInfo\"\xaf\x01\n\x10\x43\x61rtographerPose\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x13\n\x0blocal_frame\x18\x02 \x01(\t\x12\x17\n\x0fpublished_frame\x18\x03 \x01(\t\x12)\n\x14local_from_published\x18\x04 \x01(\x0b\x32\x0b.proto.Pose\x12#\n\x0emap_from_local\x18\x05 \x01(\x0b\x32\x0b.proto.Pose\"d\n CartographerSubmapTextureRequest\x12\x15\n\rtrajectory_id\x18\x01 \x01(\x05\x12\x14\n\x0csubmap_index\x18\x02 \x01(\x05\x12\x13\n\x0blayer_index\x18\x03 \x01(\r\"\x93\x02\n\x19\x43\x61rtographerSubmapTexture\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x15\n\rtrajectory_id\x18\x02 \x01(\x05\x12\x14\n\x0csubmap_index\x18\x03 \x01(\x05\x12\x16\n\x0esubmap_version\x18\x04 \x01(\x05\x12\r\n\x05width\x18\x05 \x01(\r\x12\x0e\n\x06height\x18\x06 \x01(\r\x12\x12\n\nresolution\x18\x07 \x01(\x01\x12\x1f\n\nslice_pose\x18\x08 \x01(\x0b\x32\x0b.proto.Pose\x12\r\n\x05\x63\x65lls\x18\t \x01(\x0c\x12\x15\n\rerror_message\x18\n \x01(\t\x12&\n\x03map\x18\x0b \x01(\x0b\x32\x19.proto.CartographerMapKey\"7\n\x1d\x43\x61rtographerSubmapListRequest\x12\x16\n\x0eselection_mask\x18\x01 \x01(\r\"\xb2\x01\n\x17\x43\x61rtographerSubmapEntry\x12\x15\n\rtrajectory_id\x18\x01 \x01(\x05\x12\x14\n\x0csubmap_index\x18\x02 \x01(\x05\x12\x16\n\x0esubmap_version\x18\x03 \x01(\x05\x12 \n\x0bglobal_pose\x18\x04 \x01(\x0b\x32\x0b.proto.Pose\x12\x30\n\nsubmap_set\x18\x05 \x01(\x0e\x32\x1c.proto.CartographerSubmapSet\"\xb1\x01\n\x16\x43\x61rtographerSubmapList\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x15\n\rerror_message\x18\x02 \x01(\t\x12&\n\x03map\x18\x03 \x01(\x0b\x32\x19.proto.CartographerMapKey\x12\x16\n\x0eselection_mask\x18\x04 \x01(\r\x12/\n\x07submaps\x18\x05 \x03(\x0b\x32\x1e.proto.CartographerSubmapEntry\"I\n\x1c\x43\x61rtographerScanMatchedPoint\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\x13\n\x0blayer_index\x18\x03 \x01(\r\"s\n\x1d\x43\x61rtographerScanMatchedPoints\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x33\n\x06points\x18\x02 \x03(\x0b\x32#.proto.CartographerScanMatchedPoint\"f\n!CartographerRelocalizationRequest\x12&\n\x03map\x18\x01 \x01(\x0b\x32\x19.proto.CartographerMapKey\x12\x19\n\x04pose\x18\x02 \x01(\x0b\x32\x0b.proto.Pose\"e\n\"CartographerRelocalizationResponse\x12\x10\n\x08\x61\x63\x63\x65pted\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x1c\n\x14\x61\x63tive_trajectory_id\x18\x03 \x01(\x05\"\'\n%CartographerLocalizationStatusRequest\"\xac\x01\n\x1e\x43\x61rtographerLocalizationStatus\x12&\n\x03map\x18\x01 \x01(\x0b\x32\x19.proto.CartographerMapKey\x12\x1c\n\x14\x61\x63tive_trajectory_id\x18\x02 \x01(\x05\x12\x33\n\x05state\x18\x03 \x01(\x0e\x32$.proto.CartographerLocalizationState\x12\x0f\n\x07message\x18\x04 \x01(\t\"O\n\x1c\x43\x61rtographerSaveStateRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x66ilename\x18\x02 \x01(\t\"T\n\x1d\x43\x61rtographerSaveStateResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x11\n\tfile_path\x18\x02 \x01(\t\x12\x0f\n\x07message\x18\x03 \x01(\t\"H\n\x05Twist\x12\x1e\n\x06linear\x18\x01 \x01(\x0b\x32\x0e.proto.Vector3\x12\x1f\n\x07\x61ngular\x18\x02 \x01(\x0b\x32\x0e.proto.Vector3\"J\n\x0cTwistStamped\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x1b\n\x05twist\x18\x02 \x01(\x0b\x32\x0c.proto.Twist\"G\n\x06Wrench\x12\x1d\n\x05\x66orce\x18\x01 \x01(\x0b\x32\x0e.proto.Vector3\x12\x1e\n\x06torque\x18\x02 \x01(\x0b\x32\x0e.proto.Vector3\"M\n\rWrenchStamped\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x1d\n\x06wrench\x18\x02 \x01(\x0b\x32\r.proto.Wrench\"U\n\tTransform\x12#\n\x0btranslation\x18\x01 \x01(\x0b\x32\x0e.proto.Vector3\x12#\n\x08rotation\x18\x02 \x01(\x0b\x32\x11.proto.Quaternion\"n\n\x10TransformStamped\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x16\n\x0e\x63hild_frame_id\x18\x02 \x01(\t\x12#\n\ttransform\x18\x03 \x01(\x0b\x32\x10.proto.Transform\"\xf4\x01\n\x03Imu\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12&\n\x0borientation\x18\x02 \x01(\x0b\x32\x11.proto.Quaternion\x12(\n\x10\x61ngular_velocity\x18\x03 \x01(\x0b\x32\x0e.proto.Vector3\x12+\n\x13linear_acceleration\x18\x04 \x01(\x0b\x32\x0e.proto.Vector3\x12.\n\x13\x61ligned_orientation\x18\x05 \x01(\x0b\x32\x11.proto.Quaternion\x12\x1f\n\x07gravity\x18\x06 \x01(\x0b\x32\x0e.proto.Vector3\"8\n\nImuSamples\x12\x10\n\x08stamp_ns\x18\x01 \x01(\x04\x12\x18\n\x04imus\x18\x02 \x03(\x0b\x32\n.proto.Imu\"\xb0\x01\n\nUltrasonic\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x13\n\x0b\x64istance_mm\x18\x02 \x01(\r\x12\x11\n\traw_value\x18\x03 \x01(\r\x12\x1b\n\x13temperature_celsius\x18\x04 \x01(\x02\x12/\n\x06status\x18\x05 \x01(\x0e\x32\x1f.proto.UltrasonicDistanceStatus\x12\r\n\x05valid\x18\x06 \x01(\x08\"M\n\x11UltrasonicSamples\x12\x10\n\x08stamp_ns\x18\x01 \x01(\x04\x12&\n\x0bultrasonics\x18\x02 \x03(\x0b\x32\x11.proto.Ultrasonic\"P\n\x10TactileSkinPoint\x12\x11\n\tserial_id\x18\x01 \x01(\t\x12\x0b\n\x03row\x18\x02 \x01(\r\x12\x0b\n\x03\x63ol\x18\x03 \x01(\r\x12\x0f\n\x07\x66orce_n\x18\x04 \x01(\x02\"d\n\x0bTactileSkin\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\'\n\x06points\x18\x03 \x03(\x0b\x32\x17.proto.TactileSkinPoint\x12\r\n\x05valid\x18\x04 \x01(\x08\"I\n\x12TactileSkinSamples\x12\x10\n\x08stamp_ns\x18\x01 \x01(\x04\x12!\n\x05skins\x18\x02 \x03(\x0b\x32\x12.proto.TactileSkin\"\x89\x01\n\x05Image\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06height\x18\x02 \x01(\r\x12\r\n\x05width\x18\x03 \x01(\r\x12\x10\n\x08\x65ncoding\x18\x04 \x01(\t\x12\x0c\n\x04step\x18\x05 \x01(\r\x12\x14\n\x0cis_bigendian\x18\x06 \x01(\x08\x12\x0c\n\x04\x64\x61ta\x18\x07 \x01(\x0c\"N\n\x0f\x43ompressedImage\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06\x66ormat\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\"\x86\x02\n\x0b\x43\x61meraFrame\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12!\n\x05mount\x18\x02 \x01(\x0e\x32\x12.proto.CameraMount\x12%\n\x05\x63olor\x18\x03 \x01(\x0b\x32\x16.proto.CompressedImage\x12\x1b\n\x05\x64\x65pth\x18\x04 \x01(\x0b\x32\x0c.proto.Image\x12\x18\n\x02ir\x18\x05 \x01(\x0b\x32\x0c.proto.Image\x12*\n\ncolor_left\x18\x06 \x01(\x0b\x32\x16.proto.CompressedImage\x12+\n\x0b\x63olor_right\x18\x07 \x01(\x0b\x32\x16.proto.CompressedImage\"K\n\nPointField\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\r\x12\x10\n\x08\x64\x61tatype\x18\x03 \x01(\r\x12\r\n\x05\x63ount\x18\x04 \x01(\r\"\xc9\x01\n\nPointCloud\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06height\x18\x02 \x01(\r\x12\r\n\x05width\x18\x03 \x01(\r\x12!\n\x06\x66ields\x18\x04 \x03(\x0b\x32\x11.proto.PointField\x12\x14\n\x0cis_bigendian\x18\x05 \x01(\x08\x12\x12\n\npoint_step\x18\x06 \x01(\r\x12\x10\n\x08row_step\x18\x07 \x01(\r\x12\x0c\n\x04\x64\x61ta\x18\x08 \x01(\x0c\x12\x10\n\x08is_dense\x18\t \x01(\x08\"C\n\nLidarPoint\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\x12\x14\n\x0creflectivity\x18\x04 \x01(\r\"Y\n\tLaserShot\x12\x14\n\x0ctimestamp_ns\x18\x01 \x01(\x04\x12\x13\n\x0b\x61zimuth_rad\x18\x02 \x01(\x02\x12!\n\x06points\x18\x03 \x03(\x0b\x32\x11.proto.LidarPoint\"-\n\nLaserShots\x12\x1f\n\x05shots\x18\x01 \x03(\x0b\x32\x10.proto.LaserShot\"e\n\x07SubArea\x12\x14\n\x0ctimestamp_ns\x18\x01 \x01(\x04\x12\x0e\n\x06row_id\x18\x02 \x01(\r\x12\x11\n\tcolumn_id\x18\x03 \x01(\r\x12!\n\x06points\x18\x04 \x03(\x0b\x32\x11.proto.LidarPoint\",\n\x08SubAreas\x12 \n\x08subareas\x18\x01 \x03(\x0b\x32\x0e.proto.SubArea\"o\n\x10PackedLaserShots\x12\x13\n\x0b\x63ompression\x18\x01 \x01(\t\x12\x12\n\nshot_count\x18\x02 \x01(\r\x12\x13\n\x0bpoint_count\x18\x03 \x01(\r\x12\r\n\x05shots\x18\x04 \x01(\x0c\x12\x0e\n\x06points\x18\x05 \x01(\x0c\"s\n\x0ePackedSubAreas\x12\x13\n\x0b\x63ompression\x18\x01 \x01(\t\x12\x15\n\rsubarea_count\x18\x02 \x01(\r\x12\x13\n\x0bpoint_count\x18\x03 \x01(\r\x12\x10\n\x08subareas\x18\x04 \x01(\x0c\x12\x0e\n\x06points\x18\x05 \x01(\x0c\"\x82\x02\n\nLidarFrame\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08stamp_ns\x18\x02 \x01(\x04\x12\'\n\nlaser_scan\x18\x03 \x01(\x0b\x32\x11.proto.LaserShotsH\x00\x12%\n\nlidar_scan\x18\x04 \x01(\x0b\x32\x0f.proto.SubAreasH\x00\x12\x34\n\x11packed_laser_scan\x18\x05 \x01(\x0b\x32\x17.proto.PackedLaserShotsH\x00\x12\x32\n\x11packed_lidar_scan\x18\x06 \x01(\x0b\x32\x15.proto.PackedSubAreasH\x00\x42\t\n\x07payload\"|\n\nRadarTrack\x12\x10\n\x08track_id\x18\x01 \x01(\r\x12 \n\x08position\x18\x02 \x01(\x0b\x32\x0e.proto.Vector3\x12 \n\x08velocity\x18\x03 \x01(\x0b\x32\x0e.proto.Vector3\x12\x0b\n\x03rcs\x18\x04 \x01(\x02\x12\x0b\n\x03snr\x18\x05 \x01(\x02\"\x80\x01\n\nRadarFrame\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06sensor\x18\x02 \x01(\t\x12!\n\x06tracks\x18\x03 \x03(\x0b\x32\x11.proto.RadarTrack\x12 \n\x05\x63loud\x18\x04 \x01(\x0b\x32\x11.proto.PointCloud\"\x9d\x02\n\x0cTactileFrame\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12$\n\x06\x66inger\x18\x03 \x01(\x0e\x32\x14.proto.TactileFinger\x12\x12\n\nchannel_id\x18\x04 \x01(\r\x12\x1e\n\x07\x66orce6d\x18\x05 \x01(\x0b\x32\r.proto.Wrench\x12#\n\x03raw\x18\x06 \x01(\x0b\x32\x16.proto.CompressedImage\x12&\n\x06\x64\x65\x66orm\x18\x07 \x01(\x0b\x32\x16.proto.CompressedImage\x12,\n\x0e\x63ontact_points\x18\x08 \x01(\x0b\x32\x14.proto.ContactPoints\"S\n\rContactPoints\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x13\n\x0bpoint_count\x18\x02 \x01(\r\x12\x0e\n\x06points\x18\x03 \x03(\x02\"\x86\x01\n\nJointState\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x10\n\x08position\x18\x02 \x03(\x02\x12\x10\n\x08velocity\x18\x03 \x03(\x02\x12\x0e\n\x06torque\x18\x04 \x03(\x02\x12\x1a\n\x12low_speed_position\x18\x05 \x03(\x02\x12\x1a\n\x12low_speed_velocity\x18\x06 \x03(\x02\"P\n\x0cJointCommand\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x10\n\x08position\x18\x02 \x03(\x02\x12\x10\n\x08velocity\x18\x03 \x03(\x02\x12\x0e\n\x06torque\x18\x04 \x03(\x02\"g\n\x14JointElectricalState\x12\x0c\n\x04name\x18\x01 \x03(\t\x12\x1b\n\x13temperature_celsius\x18\x02 \x03(\x02\x12\x0f\n\x07\x63urrent\x18\x03 \x03(\x02\x12\x13\n\x0b\x62us_voltage\x18\x04 \x03(\x02\"\xd7\x01\n\x08\x41rmState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x1e\n\tcartesian\x18\x03 \x01(\x0b\x32\x0b.proto.Pose\x12!\n\x06joints\x18\x04 \x01(\x0b\x32\x11.proto.JointState\x12\x1d\n\x06wrench\x18\x05 \x01(\x0b\x32\r.proto.Wrench\x12/\n\nelectrical\x18\x06 \x01(\x0b\x32\x1b.proto.JointElectricalState\"\xb9\x01\n\nArmCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x1e\n\x04mode\x18\x03 \x01(\x0e\x32\x10.proto.SpaceMode\x12%\n\x06joints\x18\x04 \x01(\x0b\x32\x13.proto.JointCommandH\x00\x12 \n\tcartesian\x18\x05 \x01(\x0b\x32\x0b.proto.PoseH\x00\x42\x08\n\x06target\"\xc3\x01\n\tHandState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12!\n\x06joints\x18\x03 \x01(\x0b\x32\x11.proto.JointState\x12/\n\nelectrical\x18\x04 \x01(\x0b\x32\x1b.proto.JointElectricalState\x12(\n\nforce_info\x18\x05 \x03(\x0b\x32\x14.proto.HandForceInfo\"\x8c\x01\n\x0bHandCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x1e\n\x04mode\x18\x03 \x01(\x0e\x32\x10.proto.SpaceMode\x12#\n\x06joints\x18\x04 \x01(\x0b\x32\x13.proto.JointCommand\"d\n\x08GloveRaw\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12 \n\x04hand\x18\x02 \x01(\x0b\x32\x12.proto.HandCommand\x12\x17\n\x03imu\x18\x03 \x01(\x0b\x32\n.proto.Imu\"\xe9\x01\n\rHandForceInfo\x12\x0e\n\x06online\x18\x01 \x01(\r\x12\x17\n\x0fstrain_sensor_1\x18\x02 \x01(\x05\x12\x17\n\x0fstrain_sensor_2\x18\x03 \x01(\x05\x12\x17\n\x0fstrain_sensor_3\x18\x04 \x01(\x05\x12\x17\n\x0fstrain_sensor_4\x18\x05 \x01(\x05\x12\x10\n\x08torque_x\x18\x06 \x01(\x05\x12\x10\n\x08torque_y\x18\x07 \x01(\x05\x12\x0f\n\x07\x66orce_z\x18\x08 \x01(\x05\x12\x1b\n\x13temperature_celsius\x18\t \x01(\x05\x12\x12\n\nerror_code\x18\n \x01(\x05\"\x7f\n\nTorsoState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12!\n\x06joints\x18\x02 \x01(\x0b\x32\x11.proto.JointState\x12/\n\nelectrical\x18\x03 \x01(\x0b\x32\x1b.proto.JointElectricalState\"~\n\x0cTorsoCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x1e\n\x04mode\x18\x02 \x01(\x0e\x32\x10.proto.SpaceMode\x12%\n\x06joints\x18\x03 \x01(\x0b\x32\x13.proto.JointCommandH\x00\x42\x08\n\x06target\"X\n\x10TorsoModeRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12%\n\x04mode\x18\x02 \x01(\x0e\x32\x17.proto.TorsoControlMode\"\x94\x01\n\x11TorsoModeResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12.\n\rprevious_mode\x18\x02 \x01(\x0e\x32\x17.proto.TorsoControlMode\x12-\n\x0c\x63urrent_mode\x18\x03 \x01(\x0e\x32\x17.proto.TorsoControlMode\x12\x0f\n\x07message\x18\x04 \x01(\t\"\xb5\x01\n\x0c\x43hassisState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x1e\n\x08velocity\x18\x02 \x01(\x0b\x32\x0c.proto.Twist\x12!\n\x06joints\x18\x03 \x01(\x0b\x32\x11.proto.JointState\x12/\n\nelectrical\x18\x04 \x01(\x0b\x32\x1b.proto.JointElectricalState\x12\x12\n\njoint_mode\x18\x05 \x03(\r\"\x8a\x01\n\rChassisTarget\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x1d\n\x15joint_target_position\x18\x02 \x03(\x02\x12\x1d\n\x15joint_target_velocity\x18\x03 \x03(\x02\x12\x1c\n\x14joint_target_current\x18\x04 \x03(\x02\"d\n\x0e\x43hassisCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\n\n\x02vx\x18\x02 \x01(\x02\x12\n\n\x02vy\x18\x03 \x01(\x02\x12\x0e\n\x06vtheta\x18\x04 \x01(\x02\x12\x0b\n\x03v_l\x18\x05 \x01(\x02\"\xa2\x05\n\x11\x43hassisRawCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x17\n\x0fwheelA_position\x18\x02 \x01(\x02\x12\x17\n\x0fwheelA_velocity\x18\x03 \x01(\x02\x12\x1a\n\x12wheelA_feedforward\x18\x04 \x01(\x02\x12\x17\n\x0fwheelB_position\x18\x05 \x01(\x02\x12\x17\n\x0fwheelB_velocity\x18\x06 \x01(\x02\x12\x1a\n\x12wheelB_feedforward\x18\x07 \x01(\x02\x12\x17\n\x0fwheelC_position\x18\x08 \x01(\x02\x12\x17\n\x0fwheelC_velocity\x18\t \x01(\x02\x12\x1a\n\x12wheelC_feedforward\x18\n \x01(\x02\x12\x17\n\x0fwheelD_position\x18\x0b \x01(\x02\x12\x17\n\x0fwheelD_velocity\x18\x0c \x01(\x02\x12\x1a\n\x12wheelD_feedforward\x18\r \x01(\x02\x12\x17\n\x0fsteerA_position\x18\x0e \x01(\x02\x12\x17\n\x0fsteerA_velocity\x18\x0f \x01(\x02\x12\x1a\n\x12steerA_feedforward\x18\x10 \x01(\x02\x12\x17\n\x0fsteerB_position\x18\x11 \x01(\x02\x12\x17\n\x0fsteerB_velocity\x18\x12 \x01(\x02\x12\x1a\n\x12steerB_feedforward\x18\x13 \x01(\x02\x12\x17\n\x0fsteerC_position\x18\x14 \x01(\x02\x12\x17\n\x0fsteerC_velocity\x18\x15 \x01(\x02\x12\x1a\n\x12steerC_feedforward\x18\x16 \x01(\x02\x12\x17\n\x0fsteerD_position\x18\x17 \x01(\x02\x12\x17\n\x0fsteerD_velocity\x18\x18 \x01(\x02\x12\x1a\n\x12steerD_feedforward\x18\x19 \x01(\x02\"\xae\x01\n\x12\x43hassisPoseCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x12\n\ntarget_x_m\x18\x02 \x01(\x02\x12\x12\n\ntarget_y_m\x18\x03 \x01(\x02\x12\x18\n\x10target_theta_rad\x18\x04 \x01(\x02\x12\x11\n\tv_max_mps\x18\x05 \x01(\x02\x12\x15\n\romega_max_rps\x18\x06 \x01(\x02\x12\r\n\x05\x66lags\x18\x07 \x01(\r\"\\\n\x12\x43hassisModeRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\'\n\x04mode\x18\x02 \x01(\x0e\x32\x19.proto.ChassisControlMode\"\x9a\x01\n\x13\x43hassisModeResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x30\n\rprevious_mode\x18\x02 \x01(\x0e\x32\x19.proto.ChassisControlMode\x12/\n\x0c\x63urrent_mode\x18\x03 \x01(\x0e\x32\x19.proto.ChassisControlMode\x12\x0f\n\x07message\x18\x04 \x01(\t\"\xb5\x02\n\x16\x43hassisStrategyRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x34\n\x0c\x63ommand_mode\x18\x02 \x01(\x0e\x32\x19.proto.ChassisCommandModeH\x00\x88\x01\x01\x12/\n\x05steer\x18\x03 \x01(\x0e\x32\x1b.proto.ChassisSteerStrategyH\x01\x88\x01\x01\x12/\n\x05wheel\x18\x04 \x01(\x0e\x32\x1b.proto.ChassisWheelStrategyH\x02\x88\x01\x01\x12\x33\n\x07stretch\x18\x05 \x01(\x0e\x32\x1d.proto.ChassisStretchStrategyH\x03\x88\x01\x01\x42\x0f\n\r_command_modeB\x08\n\x06_steerB\x08\n\x06_wheelB\n\n\x08_stretch\"\xd1\x03\n\x17\x43hassisStrategyResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12/\n\x0c\x63ommand_mode\x18\x02 \x01(\x0e\x32\x19.proto.ChassisCommandMode\x12*\n\x05steer\x18\x03 \x01(\x0e\x32\x1b.proto.ChassisSteerStrategy\x12*\n\x05wheel\x18\x04 \x01(\x0e\x32\x1b.proto.ChassisWheelStrategy\x12.\n\x07stretch\x18\x05 \x01(\x0e\x32\x1d.proto.ChassisStretchStrategy\x12\x38\n\x15previous_command_mode\x18\x06 \x01(\x0e\x32\x19.proto.ChassisCommandMode\x12\x33\n\x0eprevious_steer\x18\x07 \x01(\x0e\x32\x1b.proto.ChassisSteerStrategy\x12\x33\n\x0eprevious_wheel\x18\x08 \x01(\x0e\x32\x1b.proto.ChassisWheelStrategy\x12\x37\n\x10previous_stretch\x18\t \x01(\x0e\x32\x1d.proto.ChassisStretchStrategy\x12\x0f\n\x07message\x18\n \x01(\t\"\xc1\x02\n\x13PowerSampleMetadata\x12\x10\n\x08received\x18\x01 \x01(\x08\x12\x18\n\x10transport_online\x18\x02 \x01(\x08\x12*\n\x0bsource_link\x18\x03 \x01(\x0e\x32\x15.proto.PowerLinkState\x12/\n\x0breceived_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x16\n\x0ereceive_age_ms\x18\x05 \x01(\x04\x12\x16\n\x0esample_time_ns\x18\x06 \x01(\x04\x12\x18\n\x10\x65nvelope_time_ns\x18\x07 \x01(\x04\x12-\n\x0c\x63lock_domain\x18\x08 \x01(\x0e\x32\x17.proto.PowerClockDomain\x12\x14\n\x0c\x65nvelope_seq\x18\t \x01(\r\x12\x12\n\nsample_seq\x18\n \x01(\r\"u\n\x13PowerVoltageReading\x12\x12\n\x05value\x18\x01 \x01(\x02H\x00\x88\x01\x01\x12(\n\x07quality\x18\x02 \x01(\x0e\x32\x17.proto.PowerDataQuality\x12\x16\n\x0esample_time_ns\x18\x03 \x01(\x04\x42\x08\n\x06_value\"u\n\x13PowerCurrentReading\x12\x12\n\x05value\x18\x01 \x01(\x02H\x00\x88\x01\x01\x12(\n\x07quality\x18\x02 \x01(\x0e\x32\x17.proto.PowerDataQuality\x12\x16\n\x0esample_time_ns\x18\x03 \x01(\x04\x42\x08\n\x06_value\"}\n\x17PowerTemperatureReading\x12\x14\n\x07\x63\x65lsius\x18\x01 \x01(\x02H\x00\x88\x01\x01\x12(\n\x07quality\x18\x02 \x01(\x0e\x32\x17.proto.PowerDataQuality\x12\x16\n\x0esample_time_ns\x18\x03 \x01(\x04\x42\n\n\x08_celsius\"t\n\x16PowerPercentageReading\x12\x10\n\x03pct\x18\x01 \x01(\x02H\x00\x88\x01\x01\x12(\n\x07quality\x18\x02 \x01(\x0e\x32\x17.proto.PowerDataQuality\x12\x16\n\x0esample_time_ns\x18\x03 \x01(\x04\x42\x06\n\x04_pct\"s\n\x11PowerPowerReading\x12\x12\n\x05value\x18\x01 \x01(\x02H\x00\x88\x01\x01\x12(\n\x07quality\x18\x02 \x01(\x0e\x32\x17.proto.PowerDataQuality\x12\x16\n\x0esample_time_ns\x18\x03 \x01(\x04\x42\x08\n\x06_value\"\xe5\x02\n\x11\x43hestPowerOutputs\x12\x1d\n\x10thor_24v_enabled\x18\x01 \x01(\x08H\x00\x88\x01\x01\x12!\n\x14left_arm_48v_enabled\x18\x02 \x01(\x08H\x01\x88\x01\x01\x12\"\n\x15right_arm_48v_enabled\x18\x03 \x01(\x08H\x02\x88\x01\x01\x12\x1c\n\x0f\x66tx_12v_enabled\x18\x04 \x01(\x08H\x03\x88\x01\x01\x12!\n\x14mcu_15v_buck_enabled\x18\x05 \x01(\x08H\x04\x88\x01\x01\x12\x1e\n\x11\x61udio_15v_enabled\x18\x06 \x01(\x08H\x05\x88\x01\x01\x42\x13\n\x11_thor_24v_enabledB\x17\n\x15_left_arm_48v_enabledB\x18\n\x16_right_arm_48v_enabledB\x12\n\x10_ftx_12v_enabledB\x17\n\x15_mcu_15v_buck_enabledB\x14\n\x12_audio_15v_enabled\"\xe3\x01\n\x15\x43hestPowerDiagnostics\x12\r\n\x05\x66lags\x18\x01 \x01(\r\x12\x16\n\x0e\x61\x64\x63_update_seq\x18\x02 \x01(\r\x12\x18\n\x10last_adc_channel\x18\x03 \x01(\r\x12\x1b\n\x13sequence_phase_code\x18\x04 \x01(\r\x12\x35\n\x11\x63urrent_channel_6\x18\x05 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x35\n\x11\x63urrent_channel_7\x18\x06 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\"\xb3\x01\n\x17\x43hassisPowerDiagnostics\x12\x34\n\x0creserved_ntc\x18\x01 \x03(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x39\n\x15\x62\x61ttery_switch_inputs\x18\x02 \x03(\x0b\x32\x1a.proto.PowerVoltageReading\x12\'\n\x1freported_battery_switch_voltage\x18\x03 \x03(\x02\"\xb6\n\n\x0f\x43hestPowerState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12*\n\x06sample\x18\x02 \x01(\x0b\x32\x1a.proto.PowerSampleMetadata\x12\x35\n\x11motor_15v_voltage\x18\n \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x34\n\x10thor_24v_voltage\x18\x0b \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x34\n\x10\x62uck_24v_voltage\x18\x0c \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11input_48v_voltage\x18\r \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x34\n\x10left_arm_voltage\x18\x0e \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11right_arm_voltage\x18\x0f \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11\x61udio_15v_voltage\x18\x10 \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x33\n\x0f\x66tx_12v_voltage\x18\x11 \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11input_48v_current\x18\x12 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x33\n\x0f\x62us_24v_current\x18\x13 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x34\n\x10left_arm_current\x18\x14 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x35\n\x11right_arm_current\x18\x15 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x42\n\x1aleft_arm_efuse_temperature\x18\x16 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x43\n\x1bright_arm_efuse_temperature\x18\x17 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12@\n\x18\x62uck_24v_mos_temperature\x18\x18 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12=\n\x15\x65\x66use_24v_temperature\x18\x19 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x43\n\x1b\x62uck_15_36v_mos_temperature\x18\x1a \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12?\n\x17imu_ambient_temperature\x18\x1b \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x38\n\x0foperating_state\x18\x03 \x01(\x0e\x32\x1f.proto.ChestPowerOperatingState\x12)\n\x07outputs\x18\x04 \x01(\x0b\x32\x18.proto.ChestPowerOutputs\x12\x16\n\tswitching\x18\x05 \x01(\x08H\x00\x88\x01\x01\x12\x31\n\x0b\x64iagnostics\x18\x06 \x01(\x0b\x32\x1c.proto.ChestPowerDiagnosticsB\x0c\n\n_switching\"\xa7\n\n\x11\x43hassisPowerState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12*\n\x06sample\x18\x02 \x01(\x0b\x32\x1a.proto.PowerSampleMetadata\x12\x33\n\x0f\x62us_48v_voltage\x18\n \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11precharge_voltage\x18\x0b \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x36\n\x12upper_body_voltage\x18\x0c \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x33\n\x0f\x63hassis_voltage\x18\r \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x36\n\x12lower_body_voltage\x18\x0e \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x33\n\x0f\x63hassis_current\x18\x0f \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x36\n\x12lower_body_current\x18\x10 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x36\n\x12upper_body_current\x18\x11 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12;\n\x17\x62uck_24v_output_current\x18\x12 \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12\x45\n\x1dupper_body_switch_temperature\x18\x13 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x45\n\x1dlower_body_switch_temperature\x18\x14 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x42\n\x1a\x63hassis_switch_temperature\x18\x15 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12?\n\x1bstm32_analog_supply_voltage\x18\x16 \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x36\n\x12stm32_vbat_voltage\x18\x17 \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12=\n\x15stm32_die_temperature\x18\x18 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\x12:\n\x16peripheral_3v3_voltage\x18\x19 \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11local_12v_voltage\x18\x1a \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x34\n\x10local_5v_voltage\x18\x1b \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11local_3v3_voltage\x18\x1c \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x35\n\x11local_0v9_voltage\x18\x1d \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x33\n\x0b\x64iagnostics\x18\x03 \x01(\x0b\x32\x1e.proto.ChassisPowerDiagnostics\"\xe0\x01\n\x16\x42\x61tteryPackDiagnostics\x12\x17\n\nfault_code\x18\x01 \x01(\rH\x00\x88\x01\x01\x12\x17\n\nalarm_code\x18\x02 \x01(\rH\x01\x88\x01\x01\x12\x1c\n\x0fprotection_code\x18\x03 \x01(\rH\x02\x88\x01\x01\x12&\n\x19reported_capacity_coulomb\x18\x04 \x01(\x02H\x03\x88\x01\x01\x42\r\n\x0b_fault_codeB\r\n\x0b_alarm_codeB\x12\n\x10_protection_codeB\x1c\n\x1a_reported_capacity_coulomb\"\xef\x05\n\x10\x42\x61tteryPackState\x12\x0f\n\x07pack_id\x18\x01 \x01(\r\x12%\n\x06online\x18\x02 \x01(\x0e\x32\x15.proto.PowerLinkState\x12(\n\x07quality\x18\x03 \x01(\x0e\x32\x17.proto.PowerDataQuality\x12\x39\n\x11\x63\x65ll_temperatures\x18\x04 \x03(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x38\n\x10mos_temperatures\x18\x05 \x03(\x0b\x32\x1e.proto.PowerTemperatureReading\x12\x32\n\x0b\x64iagnostics\x18\x06 \x01(\x0b\x32\x1d.proto.BatteryPackDiagnostics\x12+\n\x07voltage\x18\n \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12+\n\x07\x63urrent\x18\x0b \x01(\x0b\x32\x1a.proto.PowerCurrentReading\x12*\n\x03soc\x18\x0c \x01(\x0b\x32\x1d.proto.PowerPercentageReading\x12*\n\x03soh\x18\r \x01(\x0b\x32\x1d.proto.PowerPercentageReading\x12\x38\n\x14minimum_cell_voltage\x18\x0e \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x38\n\x14maximum_cell_voltage\x18\x0f \x01(\x0b\x32\x1a.proto.PowerVoltageReading\x12\x34\n\x12\x63harge_power_limit\x18\x10 \x01(\x0b\x32\x18.proto.PowerPowerReading\x12\x37\n\x15\x64ischarge_power_limit\x18\x11 \x01(\x0b\x32\x18.proto.PowerPowerReading\x12;\n\x13\x61mbient_temperature\x18\x12 \x01(\x0b\x32\x1e.proto.PowerTemperatureReading\"\x87\x01\n\x12\x42\x61tterySystemState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12*\n\x06sample\x18\x02 \x01(\x0b\x32\x1a.proto.PowerSampleMetadata\x12&\n\x05packs\x18\x03 \x03(\x0b\x32\x17.proto.BatteryPackState\"\x8e\x01\n\x0c\x42\x61tteryState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x12\n\nbattery_id\x18\x02 \x01(\r\x12\x0f\n\x07voltage\x18\x03 \x01(\x02\x12\x0f\n\x07\x63urrent\x18\x04 \x01(\x02\x12\x14\n\x0c\x63\x61pacity_pct\x18\x05 \x01(\r\x12\x13\n\x0bstatus_code\x18\x06 \x01(\r\"I\n\nEstopState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\r\n\x05state\x18\x02 \x01(\r\x12\r\n\x05\x63ount\x18\x03 \x01(\r\"\x82\x01\n\x08MosState\x12\x0e\n\x06mos_id\x18\x01 \x01(\r\x12\x0f\n\x07voltage\x18\x02 \x01(\x02\x12\x0f\n\x07\x63urrent\x18\x03 \x01(\x02\x12\x1b\n\x13temperature_celsius\x18\x04 \x01(\x02\x12\x13\n\x0b\x65stop_state\x18\x05 \x01(\r\x12\x12\n\nerror_code\x18\x06 \x01(\r\"A\n\x08\x46\x61nState\x12\x0e\n\x06\x66\x61n_id\x18\x01 \x01(\r\x12\x11\n\tspeed_pct\x18\x02 \x01(\r\x12\x12\n\nerror_code\x18\x03 \x01(\r\"R\n\x0cPowerPgState\x12\x17\n\x0ftotal_pg_status\x18\x01 \x01(\r\x12\x18\n\x10\x63harge_pg_status\x18\x02 \x01(\r\x12\x0f\n\x07pg_pins\x18\x03 \x03(\r\"\xcb\x01\n\x16PowerChannelCmdRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x64st_node\x18\x02 \x01(\r\x12\"\n\x06opcode\x18\x03 \x01(\x0e\x32\x12.proto.PowerOpCode\x12\x12\n\nchannel_id\x18\x04 \x01(\r\x12\x0e\n\x06\x61\x63tion\x18\x05 \x01(\r\x12\x10\n\x08set_mask\x18\x06 \x01(\r\x12\x10\n\x08\x63lr_mask\x18\x07 \x01(\r\x12\x14\n\x0chb_period_ms\x18\x08 \x01(\r\"s\n\x17PowerChannelCmdResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x10\n\x08\x64st_node\x18\x02 \x01(\r\x12\x10\n\x08\x65rr_code\x18\x03 \x01(\r\x12\x12\n\nstate_mask\x18\x04 \x01(\r\x12\x0f\n\x07message\x18\x05 \x01(\t\"e\n\x11PowerEstopRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x64st_node\x18\x02 \x01(\r\x12\x0f\n\x07release\x18\x03 \x01(\x08\x12\x0e\n\x06reason\x18\x04 \x01(\t\"H\n\x12PowerEstopResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x10\n\x08\x64st_node\x18\x02 \x01(\r\x12\x0f\n\x07message\x18\x03 \x01(\t\"W\n\x14PowerShutdownRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x64st_node\x18\x02 \x01(\r\x12\x0e\n\x06reason\x18\x03 \x01(\t\"K\n\x15PowerShutdownResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x10\n\x08\x64st_node\x18\x02 \x01(\r\x12\x0f\n\x07message\x18\x03 \x01(\t\"u\n\x16HeadStereoStreamParams\x12\x16\n\x0e\x64\x65stination_ip\x18\x01 \x01(\t\x12\r\n\x05port0\x18\x02 \x01(\r\x12\r\n\x05port1\x18\x03 \x01(\r\x12\x0b\n\x03\x62ps\x18\x04 \x01(\r\x12\x0b\n\x03\x66ps\x18\x05 \x01(\r\x12\x0b\n\x03gop\x18\x06 \x01(\r\"Q\n\x1cHeadStereoStreamStartRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x12\n\nrequest_id\x18\x02 \x01(\t\"P\n\x1bHeadStereoStreamStopRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x12\n\nrequest_id\x18\x02 \x01(\t\"\xd6\x01\n\x18HeadStereoStreamResponse\x12-\n\x06result\x18\x01 \x01(\x0e\x32\x1d.proto.HeadStereoStreamResult\x12+\n\x05state\x18\x02 \x01(\x0e\x32\x1c.proto.HeadStereoStreamState\x12\x37\n\x10\x65\x66\x66\x65\x63tive_params\x18\x03 \x01(\x0b\x32\x1d.proto.HeadStereoStreamParams\x12\x14\n\x0cremote_error\x18\x04 \x01(\t\x12\x0f\n\x07message\x18\x05 \x01(\t\"5\n\x14RecorderStartRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\"4\n\x13RecorderStopRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\"c\n\x16RecorderSetModeRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12*\n\x04mode\x18\x02 \x01(\x0e\x32\x1c.proto.RecorderRecordingMode\":\n\x19RecorderDeleteLastRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\"i\n\x17RecorderCommandResponse\x12,\n\x06result\x18\x01 \x01(\x0e\x32\x1c.proto.RecorderCommandResult\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x0f\n\x07session\x18\x03 \x01(\t\"B\n\nFileRecord\x12\x11\n\tfile_name\x18\x01 \x01(\t\x12\x13\n\x0b\x66ile_sha256\x18\x02 \x01(\t\x12\x0c\n\x04\x66ile\x18\x03 \x01(\x0c\"L\n\x14RecorderSessionCount\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x15\n\rsession_count\x18\x02 \x01(\r\";\n\x1aRecorderSessionListRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\"n\n\x1bRecorderSessionListResponse\x12,\n\x06result\x18\x01 \x01(\x0e\x32\x1c.proto.RecorderCommandResult\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x10\n\x08sessions\x18\x03 \x03(\t\"_\n\x1cRecorderSessionDeleteRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08sessions\x18\x02 \x03(\t\x12\x0e\n\x06source\x18\x03 \x01(\t\"M\n\x1aRecorderSessionDeleteEntry\x12\x0f\n\x07session\x18\x01 \x01(\t\x12\x0f\n\x07\x64\x65leted\x18\x02 \x01(\x08\x12\r\n\x05\x65rror\x18\x03 \x01(\t\"\x92\x01\n\x1dRecorderSessionDeleteResponse\x12,\n\x06result\x18\x01 \x01(\x0e\x32\x1c.proto.RecorderCommandResult\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x32\n\x07\x65ntries\x18\x03 \x03(\x0b\x32!.proto.RecorderSessionDeleteEntry\"=\n\x1cRecorderSessionUploadRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\"N\n\x1aRecorderSessionUploadEntry\x12\x0f\n\x07session\x18\x01 \x01(\t\x12\x10\n\x08\x61\x63\x63\x65pted\x18\x02 \x01(\x08\x12\r\n\x05\x65rror\x18\x03 \x01(\t\"\xa2\x01\n\x1dRecorderSessionUploadResponse\x12,\n\x06result\x18\x01 \x01(\x0e\x32\x1c.proto.RecorderCommandResult\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x0e\n\x06job_id\x18\x03 \x01(\x04\x12\x32\n\x07\x65ntries\x18\x04 \x03(\x0b\x32!.proto.RecorderSessionUploadEntry\"S\n\"RecorderSessionUploadStatusRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06job_id\x18\x02 \x01(\x04\"\xfa\x01\n\x1dRecorderSessionUploadProgress\x12\x0f\n\x07session\x18\x01 \x01(\t\x12)\n\x05state\x18\x02 \x01(\x0e\x32\x1a.proto.RecorderUploadState\x12\x13\n\x0b\x66iles_total\x18\x03 \x01(\r\x12\x12\n\nfiles_done\x18\x04 \x01(\r\x12\x14\n\x0c\x66iles_failed\x18\x05 \x01(\r\x12\x13\n\x0b\x62ytes_total\x18\x06 \x01(\x04\x12\x12\n\nbytes_done\x18\x07 \x01(\x04\x12\x13\n\x0bhttp_status\x18\x08 \x01(\r\x12\r\n\x05\x65rror\x18\t \x01(\t\x12\x11\n\tupload_id\x18\n \x01(\t\"\xab\x03\n#RecorderSessionUploadStatusResponse\x12,\n\x06result\x18\x01 \x01(\x0e\x32\x1c.proto.RecorderCommandResult\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x0e\n\x06job_id\x18\x03 \x01(\x04\x12)\n\x05state\x18\x04 \x01(\x0e\x32\x1a.proto.RecorderUploadState\x12\x13\n\x0b\x62ytes_total\x18\x05 \x01(\x04\x12\x12\n\nbytes_done\x18\x06 \x01(\x04\x12\x19\n\x11speed_bytes_per_s\x18\x07 \x01(\x04\x12\x1d\n\x15\x61vg_speed_bytes_per_s\x18\x08 \x01(\x04\x12\r\n\x05\x65ta_s\x18\t \x01(\r\x12\x17\n\x0f\x63urrent_session\x18\n \x01(\t\x12\x14\n\x0c\x63urrent_file\x18\x0b \x01(\t\x12\x17\n\x0fstarted_unix_ms\x18\x0c \x01(\x04\x12\x18\n\x10\x66inished_unix_ms\x18\r \x01(\x04\x12\x36\n\x08sessions\x18\x0e \x03(\x0b\x32$.proto.RecorderSessionUploadProgress\"\xc4\x01\n\x10RecorderFileNode\x12\x0c\n\x04name\x18\x01 \x01(\t\x12%\n\x04type\x18\x02 \x01(\x0e\x32\x17.proto.RecorderFileType\x12\x12\n\nsize_bytes\x18\x03 \x01(\x04\x12\x15\n\rmtime_unix_ms\x18\x04 \x01(\x04\x12\x12\n\nfile_count\x18\x05 \x01(\r\x12)\n\x08\x63hildren\x18\x06 \x03(\x0b\x32\x17.proto.RecorderFileNode\x12\x11\n\trecording\x18\x07 \x01(\x08\"K\n\x1aRecorderSessionTreeRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06source\x18\x02 \x01(\t\"\x87\x01\n\x1bRecorderSessionTreeResponse\x12,\n\x06result\x18\x01 \x01(\x0e\x32\x1c.proto.RecorderCommandResult\x12\x0f\n\x07message\x18\x02 \x01(\t\x12)\n\x08sessions\x18\x03 \x03(\x0b\x32\x17.proto.RecorderFileNode\"?\n\nEstopEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x12\n\nevent_type\x18\x02 \x01(\r\"\x88\x01\n\nFaultEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06source\x18\x02 \x01(\t\x12 \n\x05level\x18\x03 \x01(\x0e\x32\x11.proto.FaultLevel\x12\x12\n\nerror_code\x18\x04 \x01(\r\x12\x15\n\rerror_message\x18\x05 \x01(\t\"X\n\x11\x42\x61tteryAlertEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x13\n\x0b\x61lert_level\x18\x02 \x01(\r\x12\x0f\n\x07message\x18\x03 \x01(\t\"8\n\tMarkEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0c\n\x04mark\x18\x02 \x01(\t\"=\n\x0e\x45rrorMarkEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0c\n\x04mark\x18\x02 \x01(\r\"\x97\x01\n\x0eLifecycleState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12$\n\x05phase\x18\x02 \x01(\x0e\x32\x15.proto.LifecyclePhase\x12(\n\tsub_phase\x18\x03 \x01(\x0e\x32\x15.proto.LifecyclePhase\x12\x16\n\x0eoperation_mode\x18\x04 \x01(\r\"@\n\x0fHeartbeatMetric\x12\x0c\n\x04kind\x18\x01 \x01(\r\x12\x10\n\x08instance\x18\x02 \x01(\r\x12\r\n\x05value\x18\x03 \x01(\x02\"\xcc\x03\n\tHeartbeat\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x11\n\tsubsystem\x18\x02 \x01(\t\x12\x0b\n\x03seq\x18\x03 \x01(\r\x12$\n\x05phase\x18\x04 \x01(\x0e\x32\x15.proto.LifecyclePhase\x12\x10\n\x08severity\x18\x05 \x01(\r\x12(\n\x0c\x63ontrol_mode\x18\x06 \x01(\x0e\x32\x12.proto.ControlMode\x12\x15\n\rexpected_mask\x18\x07 \x01(\r\x12\x13\n\x0bonline_mask\x18\x08 \x01(\r\x12\x12\n\nfault_mask\x18\t \x01(\r\x12\x17\n\x0b\x66\x61ult_codes\x18\n \x03(\rB\x02\x10\x01\x12\x12\n\nerror_code\x18\x0b \x01(\r\x12\x17\n\x0f\x66\x65\x65\x64\x62\x61\x63k_age_ms\x18\x0c \x01(\x02\x12\x14\n\x0c\x63trl_rate_hz\x18\r \x01(\x02\x12\x15\n\rstate_rate_hz\x18\x0e \x01(\x02\x12\x13\n\x0bpub_rate_hz\x18\x0f \x01(\x02\x12\x17\n\x0f\x62us_busload_pct\x18\x10 \x01(\x02\x12\'\n\x07metrics\x18\x11 \x03(\x0b\x32\x16.proto.HeartbeatMetric\x12\x14\n\x0c\x65nabled_mask\x18\x12 \x01(\r\"\xb2\x01\n\x0eHardwareHealth\x12#\n\theartbeat\x18\x01 \x01(\x0b\x32\x10.proto.Heartbeat\x12\x16\n\x0ereceive_age_ms\x18\x02 \x01(\x04\x12-\n\x07verdict\x18\x03 \x01(\x0e\x32\x1c.proto.HardwareHealthVerdict\x12\x34\n\x12health_requirement\x18\x04 \x01(\x0e\x32\x18.proto.HealthRequirement\"6\n\x11SafetyGuardStatus\x12\x10\n\x08guard_id\x18\x01 \x01(\t\x12\x0f\n\x07\x65nabled\x18\x02 \x01(\x08\"P\n\x0f\x46ilesystemUsage\x12\x13\n\x0bmount_point\x18\x01 \x01(\t\x12\x13\n\x0btotal_bytes\x18\x02 \x01(\x04\x12\x13\n\x0b\x61vail_bytes\x18\x03 \x01(\x04\"\x9d\x01\n\x13HostResourceMetrics\x12\x12\n\ncpu_temp_c\x18\x01 \x01(\x02\x12\x14\n\x0c\x63pu_load_pct\x18\x02 \x01(\x02\x12\x14\n\x0cmem_used_pct\x18\x03 \x01(\x02\x12\x19\n\x11\x63pu_core_load_pct\x18\x04 \x03(\x02\x12+\n\x0b\x66ilesystems\x18\x05 \x03(\x0b\x32\x16.proto.FilesystemUsage\"R\n\x1bWholeBodyCommandChannelRate\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\r\x12\r\n\x05rx_hz\x18\x02 \x01(\x02\x12\x13\n\x0b\x61\x63\x63\x65pted_hz\x18\x03 \x01(\x02\"\xba\x02\n\x14SystemHardwareHealth\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x16\n\x0eworst_severity\x18\x02 \x01(\r\x12)\n\nsubsystems\x18\x03 \x03(\x0b\x32\x15.proto.HardwareHealth\x12*\n\rmaster_status\x18\x04 \x01(\x0b\x32\x13.proto.MasterStatus\x12/\n\rsafety_guards\x18\x05 \x03(\x0b\x32\x18.proto.SafetyGuardStatus\x12(\n\x04host\x18\x06 \x01(\x0b\x32\x1a.proto.HostResourceMetrics\x12\x39\n\rcommand_rates\x18\x07 \x03(\x0b\x32\".proto.WholeBodyCommandChannelRate\"A\n\x10StartTaskCommand\x12\x0f\n\x07task_id\x18\x01 \x01(\t\x12\x16\n\x0e\x61rguments_json\x18\x03 \x01(\tJ\x04\x08\x02\x10\x03\"4\n\x0eSetModeCommand\x12\"\n\x04mode\x18\x01 \x01(\x0e\x32\x14.proto.OperationMode\"b\n\x1bSetHealthRequirementCommand\x12\x14\n\x0csubsystem_id\x18\x01 \x01(\t\x12-\n\x0brequirement\x18\x02 \x01(\x0e\x32\x18.proto.HealthRequirement\"A\n\x1cSetSafetyGuardEnabledCommand\x12\x10\n\x08guard_id\x18\x01 \x01(\t\x12\x0f\n\x07\x65nabled\x18\x02 \x01(\x08\"\x1f\n\x0fStopTaskCommandJ\x04\x08\x01\x10\x02R\x06status\"\x15\n\x13ResetConfirmCommand\"\x11\n\x0f\x45nterOtaCommand\"\x10\n\x0e\x45xitOtaCommand\"\x13\n\x11\x45nterEstopCommand\"\x12\n\x10\x45xitEstopCommand\"\xc2\x04\n\rMasterCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12-\n\nstart_task\x18\x02 \x01(\x0b\x32\x17.proto.StartTaskCommandH\x00\x12+\n\tstop_task\x18\x03 \x01(\x0b\x32\x16.proto.StopTaskCommandH\x00\x12\x33\n\rreset_confirm\x18\x05 \x01(\x0b\x32\x1a.proto.ResetConfirmCommandH\x00\x12)\n\x08set_mode\x18\x06 \x01(\x0b\x32\x15.proto.SetModeCommandH\x00\x12+\n\tenter_ota\x18\x07 \x01(\x0b\x32\x16.proto.EnterOtaCommandH\x00\x12)\n\x08\x65xit_ota\x18\x08 \x01(\x0b\x32\x15.proto.ExitOtaCommandH\x00\x12\x44\n\x16set_health_requirement\x18\t \x01(\x0b\x32\".proto.SetHealthRequirementCommandH\x00\x12G\n\x18set_safety_guard_enabled\x18\n \x01(\x0b\x32#.proto.SetSafetyGuardEnabledCommandH\x00\x12/\n\x0b\x65nter_estop\x18\x0b \x01(\x0b\x32\x18.proto.EnterEstopCommandH\x00\x12-\n\nexit_estop\x18\x0c \x01(\x0b\x32\x17.proto.ExitEstopCommandH\x00\x42\t\n\x07\x63ommandJ\x04\x08\x04\x10\x05\"\xa6\x01\n\x13MasterStateSnapshot\x12!\n\x05phase\x18\x01 \x01(\x0e\x32\x12.proto.MasterPhase\x12\"\n\x04mode\x18\x02 \x01(\x0e\x32\x14.proto.OperationMode\x12\x0f\n\x07task_id\x18\x03 \x01(\t\x12\x37\n\x11task_health_level\x18\x04 \x01(\x0e\x32\x1c.proto.MasterTaskHealthLevel\"\"\n\x0fStartTaskResult\x12\x0f\n\x07task_id\x18\x01 \x01(\t\"1\n\x0eStopTaskResult\x12\x0f\n\x07task_id\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\x05\"=\n\rSetModeResult\x12,\n\x0erequested_mode\x18\x01 \x01(\x0e\x32\x14.proto.OperationMode\"a\n\x1aSetHealthRequirementResult\x12\x14\n\x0csubsystem_id\x18\x01 \x01(\t\x12-\n\x0brequirement\x18\x02 \x01(\x0e\x32\x18.proto.HealthRequirement\"@\n\x1bSetSafetyGuardEnabledResult\x12\x10\n\x08guard_id\x18\x01 \x01(\t\x12\x0f\n\x07\x65nabled\x18\x02 \x01(\x08\"Q\n\x15PhaseTransitionResult\x12\x38\n\toperation\x18\x01 \x01(\x0e\x32%.proto.MasterPhaseTransitionOperation\"\x8f\x04\n\x15MasterCommandResponse\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12*\n\x06result\x18\x02 \x01(\x0e\x32\x1a.proto.MasterCommandResult\x12\x0f\n\x07message\x18\x03 \x01(\t\x12*\n\x06\x62\x65\x66ore\x18\x04 \x01(\x0b\x32\x1a.proto.MasterStateSnapshot\x12)\n\x05\x61\x66ter\x18\x05 \x01(\x0b\x32\x1a.proto.MasterStateSnapshot\x12,\n\nstart_task\x18\n \x01(\x0b\x32\x16.proto.StartTaskResultH\x00\x12*\n\tstop_task\x18\x0b \x01(\x0b\x32\x15.proto.StopTaskResultH\x00\x12(\n\x08set_mode\x18\x0c \x01(\x0b\x32\x14.proto.SetModeResultH\x00\x12?\n\x12health_requirement\x18\r \x01(\x0b\x32!.proto.SetHealthRequirementResultH\x00\x12:\n\x0csafety_guard\x18\x0e \x01(\x0b\x32\".proto.SetSafetyGuardEnabledResultH\x00\x12\x38\n\x10phase_transition\x18\x0f \x01(\x0b\x32\x1c.proto.PhaseTransitionResultH\x00\x42\x08\n\x06\x64\x65tail\"\x1d\n\x1bTeleoperationPrepareRequest\"/\n\x1cTeleoperationPrepareResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"\xd2\x01\n\x0cMasterStatus\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12!\n\x05phase\x18\x02 \x01(\x0e\x32\x12.proto.MasterPhase\x12\"\n\x04mode\x18\x03 \x01(\x0e\x32\x14.proto.OperationMode\x12\x0f\n\x07task_id\x18\x04 \x01(\t\x12\x37\n\x11task_health_level\x18\x05 \x01(\x0e\x32\x1c.proto.MasterTaskHealthLevel\x12\x12\n\nerror_code\x18\t \x01(\r\"h\n\x14MasterTaskStartEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x61\x63\x63\x65pted\x18\x02 \x01(\x08\x12\x0f\n\x07task_id\x18\x03 \x01(\t\x12\x0e\n\x06reason\x18\x04 \x01(\t\"w\n\x13MasterTaskStopEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x61\x63\x63\x65pted\x18\x02 \x01(\x08\x12\x0f\n\x07task_id\x18\x03 \x01(\t\x12\x0e\n\x06reason\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\x05\"X\n\x16MasterDegradationEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06\x61\x63tive\x18\x02 \x01(\x08\x12\x0f\n\x07task_id\x18\x03 \x01(\t\"\x8c\x01\n\x0cReplayStatus\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0f\n\x07percent\x18\x02 \x01(\r\x12\x0e\n\x06paused\x18\x03 \x01(\x08\x12\x0c\n\x04loop\x18\x04 \x01(\x08\x12\x11\n\titeration\x18\x05 \x01(\r\x12\r\n\x05speed\x18\x06 \x01(\x01\x12\x0c\n\x04\x66ile\x18\x07 \x01(\t\"7\n\x14ReplayControlCommand\x12\x14\n\nset_paused\x18\x01 \x01(\x08H\x00\x42\t\n\x07\x63ontrol\"T\n\x15ReplayControlResponse\x12*\n\x06result\x18\x01 \x01(\x0e\x32\x1a.proto.MasterCommandResult\x12\x0f\n\x07message\x18\x02 \x01(\t\"\xc0\x01\n\x11MasterDeviceError\x12\x14\n\x0csubsystem_id\x18\x01 \x01(\t\x12*\n\x08required\x18\x02 \x01(\x0e\x32\x18.proto.HealthRequirement\x12,\n\x06\x61\x63tual\x18\x03 \x01(\x0e\x32\x1c.proto.HardwareHealthVerdict\x12\x12\n\nerror_code\x18\x04 \x01(\r\x12\x12\n\nfault_mask\x18\x05 \x01(\r\x12\x13\n\x0b\x66\x61ult_codes\x18\x06 \x03(\r\"\xa5\x01\n\x10MasterErrorEvent\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0f\n\x07task_id\x18\x03 \x01(\t\x12\x12\n\nerror_code\x18\x05 \x01(\r\x12/\n\rdevice_errors\x18\x06 \x03(\x0b\x32\x18.proto.MasterDeviceError\x12\x10\n\x08guard_id\x18\x07 \x01(\tJ\x04\x08\x02\x10\x03J\x04\x08\x04\x10\x05\"\xe8\x01\n\x0cPluginStatus\x12\x13\n\x0bplugin_name\x18\x01 \x01(\t\x12$\n\x05phase\x18\x02 \x01(\x0e\x32\x15.proto.LifecyclePhase\x12\x10\n\x08is_alive\x18\x03 \x01(\x08\x12\x12\n\nerror_code\x18\x04 \x01(\r\x12\x15\n\rerror_message\x18\x05 \x01(\t\x12\x11\n\tlatency_s\x18\x06 \x01(\x01\x12\x14\n\x0c\x64\x61ta_rate_hz\x18\x07 \x01(\x01\x12\x1b\n\x13online_device_count\x18\x08 \x01(\r\x12\x1a\n\x12total_device_count\x18\t \x01(\r\"y\n\x0cSystemStatus\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12$\n\x05phase\x18\x02 \x01(\x0e\x32\x15.proto.LifecyclePhase\x12$\n\x07plugins\x18\x03 \x03(\x0b\x32\x13.proto.PluginStatus\"B\n\tTopicRate\x12\r\n\x05topic\x18\x01 \x01(\t\x12\x0f\n\x07rate_hz\x18\x02 \x01(\x01\x12\x15\n\rmessage_count\x18\x03 \x01(\x04\"\x85\x01\n\rMonitorReport\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12%\n\x0btopic_rates\x18\x02 \x03(\x0b\x32\x10.proto.TopicRate\x12\x14\n\x0crecord_count\x18\x03 \x01(\r\x12\x18\n\x10record_data_path\x18\x04 \x01(\t\"\xdc\x02\n\x0eWholeBodyState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12!\n\x08\x61rm_left\x18\x02 \x01(\x0b\x32\x0f.proto.ArmState\x12\"\n\tarm_right\x18\x03 \x01(\x0b\x32\x0f.proto.ArmState\x12#\n\thand_left\x18\x04 \x01(\x0b\x32\x10.proto.HandState\x12$\n\nhand_right\x18\x05 \x01(\x0b\x32\x10.proto.HandState\x12$\n\x07tactile\x18\x06 \x03(\x0b\x32\x13.proto.TactileFrame\x12 \n\x05torso\x18\x07 \x01(\x0b\x32\x11.proto.TorsoState\x12$\n\x07\x63hassis\x18\x08 \x01(\x0b\x32\x13.proto.ChassisState\x12+\n\ntransforms\x18\n \x03(\x0b\x32\x17.proto.TransformStamped\"\x97\x02\n\x10WholeBodyCommand\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12#\n\x08\x61rm_left\x18\x02 \x01(\x0b\x32\x11.proto.ArmCommand\x12$\n\tarm_right\x18\x03 \x01(\x0b\x32\x11.proto.ArmCommand\x12%\n\thand_left\x18\x04 \x01(\x0b\x32\x12.proto.HandCommand\x12&\n\nhand_right\x18\x05 \x01(\x0b\x32\x12.proto.HandCommand\x12\"\n\x05torso\x18\x06 \x01(\x0b\x32\x13.proto.TorsoCommand\x12&\n\x07\x63hassis\x18\x07 \x01(\x0b\x32\x15.proto.ChassisCommand\"\x89\x01\n\x0cGamepadState\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x19\n\x04pose\x18\x0e \x01(\x0b\x32\x0b.proto.Pose\x12\x10\n\x08is_valid\x18\x0f \x01(\x08\x12\x12\n\nis_tracked\x18\x10 \x01(\x08\"\xf1\x01\n\x0cWholeBodyRaw\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x1e\n\thead_pose\x18\x02 \x01(\x0b\x32\x0b.proto.Pose\x12/\n\x12gamepad_state_left\x18\x03 \x01(\x0b\x32\x13.proto.GamepadState\x12\x30\n\x13gamepad_state_right\x18\x04 \x01(\x0b\x32\x13.proto.GamepadState\x12)\n\x14\x66ull_body_joint_pose\x18\x07 \x03(\x0b\x32\x0b.proto.Pose\x12\x14\n\x0cis_confident\x18\x08 \x01(\x08\">\n\rEnableRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06\x65nable\x18\x02 \x01(\x08\"2\n\x0e\x45nableResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"-\n\x17\x43hassisCalibrateRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\"<\n\x18\x43hassisCalibrateResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"3\n\x1d\x43hassisCalibrateStatusRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\"\x9f\x01\n\x1e\x43hassisCalibrateStatusResponse\x12/\n\x06result\x18\x01 \x01(\x0e\x32\x1f.proto.ChassisCalibStatusResult\x12\x12\n\nrequest_id\x18\x02 \x01(\t\x12\'\n\x05state\x18\x03 \x01(\x0e\x32\x18.proto.ChassisCalibState\x12\x0f\n\x07message\x18\x04 \x01(\t\"\xaf\x01\n\x08Waypoint\x12\x16\n\x0eoverride_flags\x18\x01 \x01(\r\x12%\n\x06joints\x18\x02 \x01(\x0b\x32\x13.proto.JointCommandH\x00\x12 \n\tcartesian\x18\x03 \x01(\x0b\x32\x0b.proto.PoseH\x00\x12\x12\n\nvmax_scale\x18\x04 \x01(\x02\x12\x12\n\namax_scale\x18\x05 \x01(\x02\x12\x10\n\x08\x64well_ms\x18\x06 \x01(\rB\x08\n\x06target\"\xb9\x01\n\x0cWaypointTask\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x14\n\x0crepeat_count\x18\x02 \x01(\r\x12\x1a\n\x12\x64\x65\x66\x61ult_vmax_scale\x18\x03 \x01(\x02\x12\x1a\n\x12\x64\x65\x66\x61ult_amax_scale\x18\x04 \x01(\x02\x12\x18\n\x10\x64\x65\x66\x61ult_dwell_ms\x18\x05 \x01(\r\x12\"\n\twaypoints\x18\x06 \x03(\x0b\x32\x0f.proto.Waypoint\"Y\n\x15WaypointSubmitRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12!\n\x04task\x18\x02 \x01(\x0b\x32\x13.proto.WaypointTask\":\n\x16WaypointSubmitResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"6\n\x15WaypointCancelRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\":\n\x16WaypointCancelResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"Q\n\x0e\x41rmModeRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12 \n\x04mode\x18\x02 \x01(\x0e\x32\x12.proto.ControlMode\"^\n\x0f\x41rmModeResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12)\n\rprevious_mode\x18\x02 \x01(\x0e\x32\x12.proto.ControlMode\x12\x0f\n\x07message\x18\x03 \x01(\t\"8\n\x12\x44\x65viceParameterKey\x12\x14\n\x0c\x64\x65vice_index\x18\x01 \x01(\r\x12\x0c\n\x04name\x18\x02 \x01(\t\"\x8e\x01\n\x14\x44\x65viceParameterValue\x12&\n\x03key\x18\x01 \x01(\x0b\x32\x19.proto.DeviceParameterKey\x12\x14\n\nbool_value\x18\x02 \x01(\x08H\x00\x12\x17\n\rinteger_value\x18\x03 \x01(\x03H\x00\x12\x16\n\x0c\x64ouble_value\x18\x04 \x01(\x01H\x00\x42\x07\n\x05value\"c\n\x19\x44\x65viceParameterGetRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\'\n\x04keys\x18\x02 \x03(\x0b\x32\x19.proto.DeviceParameterKey\"g\n\x19\x44\x65viceParameterSetRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12+\n\x06values\x18\x02 \x03(\x0b\x32\x1b.proto.DeviceParameterValue\"\x82\x01\n\x15\x44\x65viceParameterResult\x12*\n\x05value\x18\x01 \x01(\x0b\x32\x1b.proto.DeviceParameterValue\x12,\n\x06status\x18\x02 \x01(\x0e\x32\x1c.proto.DeviceParameterStatus\x12\x0f\n\x07message\x18\x03 \x01(\t\"\x98\x01\n\x17\x44\x65viceParameterResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12,\n\x06status\x18\x02 \x01(\x0e\x32\x1c.proto.DeviceParameterStatus\x12\x0f\n\x07message\x18\x03 \x01(\t\x12-\n\x07results\x18\x04 \x03(\x0b\x32\x1c.proto.DeviceParameterResult\"=\n\x0c\x45stopRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06reason\x18\x02 \x01(\t\"1\n\rEstopResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"-\n\x0cResetRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\"1\n\rResetResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"X\n\x0c\x42rakeRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x0e\n\x06\x61\x63tion\x18\x03 \x01(\r\"1\n\rBrakeResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"^\n\x0fHandModeRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x11\n\thand_mode\x18\x03 \x01(\r\"\xa3\x01\n\x10HandModeResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12(\n\x06result\x18\x03 \x01(\x0e\x32\x18.proto.HandServiceResult\x12\x15\n\rprevious_mode\x18\x04 \x01(\r\x12\x14\n\x0c\x63urrent_mode\x18\x05 \x01(\r\x12\x16\n\x0esdk_error_code\x18\x06 \x01(\x05\"\x86\x01\n\x13\x43\x61libTactileRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x11\x65nable_calib_left\x18\x02 \x01(\x08\x12\x1a\n\x12\x65nable_calib_right\x18\x03 \x01(\x08\x12\x19\n\x04side\x18\x04 \x01(\x0e\x32\x0b.proto.Side\"z\n\x14\x43\x61libTactileResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12(\n\x06result\x18\x03 \x01(\x0e\x32\x18.proto.HandServiceResult\x12\x16\n\x0esdk_error_code\x18\x04 \x01(\x05\"c\n\x0eHandEskinForce\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x66rame_id\x18\x02 \x01(\x05\x12\x0f\n\x07\x63hannel\x18\x03 \x01(\x05\x12\x0f\n\x07\x66orce_n\x18\x04 \x03(\x02\"^\n\x0cHandEskinRaw\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x10\n\x08\x66rame_id\x18\x02 \x01(\x05\x12\x0f\n\x07\x63hannel\x18\x03 \x01(\x05\x12\x0c\n\x04\x64\x61ta\x18\x04 \x01(\x0c\"M\n\x11\x43\x61libEskinRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\"x\n\x12\x43\x61libEskinResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12(\n\x06result\x18\x03 \x01(\x0e\x32\x18.proto.HandServiceResult\x12\x16\n\x0esdk_error_code\x18\x04 \x01(\x05\"V\n\x1aHandZeroCalibrationRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\"\xcb\x01\n\x1bHandZeroCalibrationResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12(\n\x06result\x18\x02 \x01(\x0e\x32\x18.proto.HandServiceResult\x12.\n\x05state\x18\x03 \x01(\x0e\x32\x1f.proto.HandZeroCalibrationState\x12\x18\n\x10progress_percent\x18\x04 \x01(\r\x12\x16\n\x0esdk_error_code\x18\x05 \x01(\x05\x12\x0f\n\x07message\x18\x06 \x01(\t\"a\n\x17HandSetParameterRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x19\n\x04side\x18\x02 \x01(\x0e\x32\x0b.proto.Side\x12\x0c\n\x04json\x18\x03 \x01(\t\"~\n\x18HandSetParameterResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12(\n\x06result\x18\x03 \x01(\x0e\x32\x18.proto.HandServiceResult\x12\x16\n\x0esdk_error_code\x18\x04 \x01(\x05\"G\n\x16TactileSkinZeroRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x0e\n\x06\x65nable\x18\x02 \x01(\x08\";\n\x17TactileSkinZeroResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x85\x01\n\x12TorqueCalibRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x13\n\x0bjoint_index\x18\x02 \x01(\rJ\x04\x08\x03\x10\x04J\x04\x08\x04\x10\x05R\x15theoretical_torque_nmR\x18use_gravity_model_torque\"r\n\x13TorqueCalibResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x1a\n\x12measured_torque_nm\x18\x02 \x01(\x02\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x1d\n\x15theoretical_torque_nm\x18\x04 \x01(\x02\"F\n\x10ZeroCalibRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x13\n\x0bjoint_index\x18\x02 \x01(\r\"d\n\x11ZeroCalibResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x11\n\tpersisted\x18\x02 \x01(\x08\x12\x1a\n\x12position_after_deg\x18\x03 \x01(\x02\x12\x0f\n\x07message\x18\x04 \x01(\t\"U\n\x15GenericServiceRequest\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x0b\n\x03\x63md\x18\x02 \x01(\r\x12\x11\n\tdevice_id\x18\x03 \x01(\r\x12\x0f\n\x07payload\x18\x04 \x01(\x0c\"Y\n\x16GenericServiceResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0c\n\x04\x63ode\x18\x02 \x01(\x05\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07payload\x18\x04 \x01(\x0c\")\n\x11\x44\x65viceSetupTarget\x12\x14\n\x0c\x64\x65vice_index\x18\x01 \x03(\r\"\x81\x01\n\x12\x44\x65viceSetupRequest\x12\x1d\n\x06header\x18\x01 \x01(\x0b\x32\r.proto.Header\x12\x11\n\toperation\x18\x02 \x01(\t\x12(\n\x06target\x18\x03 \x01(\x0b\x32\x18.proto.DeviceSetupTarget\x12\x0f\n\x07payload\x18\x04 \x01(\x0c\"g\n\x13\x44\x65viceSetupResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x1d\n\x15\x61\x66\x66\x65\x63ted_device_index\x18\x03 \x03(\r\x12\x0f\n\x07payload\x18\x04 \x01(\x0c\"A\n\tOtaTarget\x12\x0e\n\x06plugin\x18\x01 \x01(\t\x12\x11\n\tcomponent\x18\x02 \x01(\t\x12\x11\n\tfile_path\x18\x03 \x01(\t\"H\n\x10OtaSubmitRequest\x12\x11\n\taction_id\x18\x01 \x01(\t\x12!\n\x07targets\x18\x02 \x03(\x0b\x32\x10.proto.OtaTarget\"F\n\x11OtaSubmitResponse\x12 \n\x06result\x18\x01 \x01(\x0e\x32\x10.proto.OtaResult\x12\x0f\n\x07message\x18\x02 \x01(\t\"%\n\x10OtaStatusRequest\x12\x11\n\taction_id\x18\x01 \x01(\t\"{\n\x13OtaComponentFailure\x12\x0e\n\x06plugin\x18\x01 \x01(\t\x12\x11\n\tcomponent\x18\x02 \x01(\t\x12\x31\n\x06reason\x18\x03 \x01(\x0e\x32!.proto.OtaPeripheralFailureReason\x12\x0e\n\x06\x64\x65tail\x18\x04 \x01(\t\"@\n\x10OtaFailureReport\x12,\n\x08\x66\x61ilures\x18\x01 \x03(\x0b\x32\x1a.proto.OtaComponentFailure\"\xc0\x01\n\rOtaTaskStatus\x12\"\n\x05state\x18\x01 \x01(\x0e\x32\x13.proto.OtaTaskState\x12\x18\n\x10progress_percent\x18\x02 \x01(\r\x12\x0f\n\x07message\x18\x03 \x01(\t\x12/\n\x0e\x66\x61ilure_report\x18\x04 \x01(\x0b\x32\x17.proto.OtaFailureReport\x12/\n\x0e\x65\x66\x66\x65\x63t_closure\x18\x05 \x01(\x0e\x32\x17.proto.OtaEffectClosure\"l\n\x11OtaStatusResponse\x12 \n\x06result\x18\x01 \x01(\x0e\x32\x10.proto.OtaResult\x12$\n\x06status\x18\x02 \x01(\x0b\x32\x14.proto.OtaTaskStatus\x12\x0f\n\x07message\x18\x03 \x01(\t\"4\n\x0fOtaComponentRef\x12\x0e\n\x06plugin\x18\x01 \x01(\t\x12\x11\n\tcomponent\x18\x02 \x01(\t\"?\n\x11OtaVersionRequest\x12*\n\ncomponents\x18\x01 \x03(\x0b\x32\x16.proto.OtaComponentRef\"\x82\x01\n\x19OtaComponentVersionResult\x12\x0e\n\x06plugin\x18\x01 \x01(\t\x12\x11\n\tcomponent\x18\x02 \x01(\t\x12 \n\x06result\x18\x03 \x01(\x0e\x32\x10.proto.OtaResult\x12\x0f\n\x07version\x18\x04 \x01(\t\x12\x0f\n\x07message\x18\x05 \x01(\t\"\x84\x01\n\x12OtaVersionResponse\x12 \n\x06result\x18\x01 \x01(\x0e\x32\x10.proto.OtaResult\x12;\n\x11\x63omponent_results\x18\x02 \x03(\x0b\x32 .proto.OtaComponentVersionResult\x12\x0f\n\x07message\x18\x03 \x01(\t\"\\\n\x17OtaAgentDownloadRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x17\n\x0frelease_version\x18\x02 \x01(\t\x12\x14\n\x0cproduct_code\x18\x03 \x01(\t\"+\n\x15OtaAgentCancelRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\"\xa2\x01\n\x16OtaAgentCancelResponse\x12+\n\x06result\x18\x01 \x01(\x0e\x32\x1b.proto.OtaAgentCancelResult\x12\x12\n\nrequest_id\x18\x02 \x01(\t\x12\x0f\n\x07task_id\x18\x03 \x01(\t\x12\x36\n\x0fterminal_result\x18\x04 \x01(\x0e\x32\x1d.proto.OtaAgentTerminalResult\"Z\n\x15OtaAgentSubmitRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x17\n\x0frelease_version\x18\x02 \x01(\t\x12\x14\n\x0cproduct_code\x18\x03 \x01(\t\"\xca\x01\n\x16OtaAgentSubmitResponse\x12+\n\x06result\x18\x01 \x01(\x0e\x32\x1b.proto.OtaAgentSubmitResult\x12\x12\n\nrequest_id\x18\x02 \x01(\t\x12\x17\n\x0frelease_version\x18\x03 \x01(\t\x12\x0f\n\x07task_id\x18\x04 \x01(\t\x12\x13\n\x0breason_code\x18\x05 \x01(\t\x12\x1a\n\x12\x64iagnostic_summary\x18\x06 \x01(\t\x12\x14\n\x0cproduct_code\x18\x07 \x01(\t\"+\n\x15OtaAgentStatusRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\"e\n OtaAgentPeripheralFailureSummary\x12\x0e\n\x06plugin\x18\x01 \x01(\t\x12\x31\n\x06reason\x18\x02 \x01(\x0e\x32!.proto.OtaPeripheralFailureReason\"\xcb\x03\n\x16OtaAgentStatusResponse\x12+\n\x06result\x18\x01 \x01(\x0e\x32\x1b.proto.OtaAgentStatusResult\x12\x12\n\nrequest_id\x18\x02 \x01(\t\x12\x17\n\x0frelease_version\x18\x03 \x01(\t\x12\x0f\n\x07task_id\x18\x04 \x01(\t\x12\x36\n\x0fterminal_result\x18\x05 \x01(\x0e\x32\x1d.proto.OtaAgentTerminalResult\x12\x13\n\x0breason_code\x18\x06 \x01(\t\x12\x14\n\x0cproduct_code\x18\x07 \x01(\t\x12\x42\n\x15\x63ompletion_provenance\x18\x08 \x01(\x0e\x32#.proto.OtaAgentCompletionProvenance\x12-\n\rtask_progress\x18\t \x01(\x0b\x32\x16.proto.OtaTaskProgress\x12\x44\n\x13peripheral_failures\x18\n \x03(\x0b\x32\'.proto.OtaAgentPeripheralFailureSummary\x12*\n\ttask_kind\x18\x0b \x01(\x0e\x32\x17.proto.OtaAgentTaskKind\"4\n\x1cOtaAgentSystemVersionRequest\x12\x14\n\x0cproduct_code\x18\x01 \x01(\t\"\x81\x01\n\x1dOtaAgentSystemVersionResponse\x12 \n\x06result\x18\x01 \x01(\x0e\x32\x10.proto.OtaResult\x12\x14\n\x0cproduct_code\x18\x02 \x01(\t\x12\x17\n\x0frelease_version\x18\x03 \x01(\t\x12\x0f\n\x07message\x18\x04 \x01(\t\"K\n\x1dOtaAgentModuleVersionsRequest\x12\x19\n\x0cproduct_code\x18\x01 \x01(\tH\x00\x88\x01\x01\x42\x0f\n\r_product_code\"\xc8\x01\n\x1eOtaAgentModuleVersionsResponse\x12 \n\x06result\x18\x01 \x01(\x0e\x32\x10.proto.OtaResult\x12\x33\n\x06report\x18\x02 \x01(\x0b\x32#.proto.OtaAgentModuleVersionsReport\x12\x12\n\nerror_code\x18\x03 \x01(\t\x12\x0f\n\x07message\x18\x04 \x01(\t\x12\x19\n\x0cproduct_code\x18\x05 \x01(\tH\x00\x88\x01\x01\x42\x0f\n\r_product_code\"\xc4\x02\n\x1cOtaAgentModuleVersionsReport\x12\x19\n\x0cproduct_code\x18\x01 \x01(\tH\x00\x88\x01\x01\x12\x1c\n\x0frelease_version\x18\x02 \x01(\tH\x01\x88\x01\x01\x12G\n\x12\x63onformance_status\x18\x03 \x01(\x0e\x32&.proto.OtaAgentModuleConformanceStatusH\x02\x88\x01\x01\x12\x30\n\ncomponents\x18\x04 \x03(\x0b\x32\x1c.proto.OtaAgentModuleVersion\x12\x34\n\x0b\x64iagnostics\x18\x05 \x03(\x0b\x32\x1f.proto.OtaAgentModuleDiagnosticB\x0f\n\r_product_codeB\x12\n\x10_release_versionB\x15\n\x13_conformance_status\"\xe8\x01\n\x15OtaAgentModuleVersion\x12\x13\n\x0bmodule_code\x18\x01 \x01(\t\x12\x32\n\x06status\x18\x02 \x01(\x0e\x32\".proto.OtaAgentModuleVersionStatus\x12\x1d\n\x10observed_version\x18\x03 \x01(\tH\x00\x88\x01\x01\x12\x1d\n\x10\x65xpected_version\x18\x04 \x01(\tH\x01\x88\x01\x01\x12\x13\n\x06reason\x18\x05 \x01(\tH\x02\x88\x01\x01\x42\x13\n\x11_observed_versionB\x13\n\x11_expected_versionB\t\n\x07_reason\"^\n\x18OtaAgentModuleDiagnostic\x12\x32\n\x06status\x18\x01 \x01(\x0e\x32\".proto.OtaAgentModuleVersionStatus\x12\x0e\n\x06reason\x18\x02 \x01(\t\"4\n\x10OtaStageProgress\x12\x11\n\tcompleted\x18\x01 \x01(\x04\x12\r\n\x05total\x18\x02 \x01(\x04\"\xba\x01\n\x0eOtaPublicStage\x12+\n\toperation\x18\x01 \x01(\x0e\x32\x18.proto.OtaStageOperation\x12%\n\x06target\x18\x02 \x01(\x0e\x32\x15.proto.OtaStageTarget\x12)\n\x05state\x18\x03 \x01(\x0e\x32\x1a.proto.OtaPublicStageState\x12)\n\x08progress\x18\x04 \x01(\x0b\x32\x17.proto.OtaStageProgress\"\x90\x01\n\x0fOtaStageSummary\x12+\n\toperation\x18\x01 \x01(\x0e\x32\x18.proto.OtaStageOperation\x12%\n\x06target\x18\x02 \x01(\x0e\x32\x15.proto.OtaStageTarget\x12)\n\x05state\x18\x03 \x01(\x0e\x32\x1a.proto.OtaPublicStageState\"\xe4\x01\n\x0fOtaTaskProgress\x12(\n\x05state\x18\x01 \x01(\x0e\x32\x19.proto.OtaPublicTaskState\x12\x1b\n\x13\x63urrent_stage_index\x18\x02 \x01(\r\x12\x13\n\x0bstage_count\x18\x03 \x01(\r\x12,\n\rcurrent_stage\x18\x04 \x01(\x0b\x32\x15.proto.OtaPublicStage\x12&\n\x06stages\x18\x05 \x03(\x0b\x32\x16.proto.OtaStageSummary\x12\x1f\n\x17interrupted_stage_index\x18\x06 \x01(\r\"#\n\x11\x43onfigDoubleArray\x12\x0e\n\x06values\x18\x01 \x03(\x01\"$\n\x12\x43onfigIntegerArray\x12\x0e\n\x06values\x18\x01 \x03(\x12\"\xfd\x01\n\x0b\x43onfigValue\x12\x14\n\nbool_value\x18\x01 \x01(\x08H\x00\x12\x13\n\tint_value\x18\x02 \x01(\x12H\x00\x12\x16\n\x0c\x64ouble_value\x18\x03 \x01(\x01H\x00\x12\x16\n\x0cstring_value\x18\x04 \x01(\tH\x00\x12\x18\n\x0eraw_json_value\x18\x05 \x01(\tH\x00\x12\x36\n\x12\x64ouble_array_value\x18\x06 \x01(\x0b\x32\x18.proto.ConfigDoubleArrayH\x00\x12\x38\n\x13integer_array_value\x18\x07 \x01(\x0b\x32\x19.proto.ConfigIntegerArrayH\x00\x42\x07\n\x05value\"@\n\x10\x43onfigEnumOption\x12\r\n\x05value\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07name_zh\x18\x03 \x01(\t\"\xa0\x03\n\x11\x43onfigConstraints\x12\x14\n\x07minimum\x18\x01 \x01(\x01H\x00\x88\x01\x01\x12\x14\n\x07maximum\x18\x02 \x01(\x01H\x01\x88\x01\x01\x12\x19\n\x11minimum_exclusive\x18\x03 \x01(\x08\x12\x19\n\x11maximum_exclusive\x18\x04 \x01(\x08\x12\x1d\n\x10max_string_bytes\x18\x05 \x01(\rH\x02\x88\x01\x01\x12-\n\x0c\x65num_options\x18\x06 \x03(\x0b\x32\x17.proto.ConfigEnumOption\x12\x1c\n\x0finteger_minimum\x18\x07 \x01(\x12H\x03\x88\x01\x01\x12\x1c\n\x0finteger_maximum\x18\x08 \x01(\x12H\x04\x88\x01\x01\x12\x16\n\tmin_items\x18\t \x01(\rH\x05\x88\x01\x01\x12\x16\n\tmax_items\x18\n \x01(\rH\x06\x88\x01\x01\x42\n\n\x08_minimumB\n\n\x08_maximumB\x13\n\x11_max_string_bytesB\x12\n\x10_integer_minimumB\x12\n\x10_integer_maximumB\x0c\n\n_min_itemsB\x0c\n\n_max_items\"\xf8\x01\n\x18\x43onfigElementConstraints\x12\x14\n\x07minimum\x18\x01 \x01(\x01H\x00\x88\x01\x01\x12\x14\n\x07maximum\x18\x02 \x01(\x01H\x01\x88\x01\x01\x12\x19\n\x11minimum_exclusive\x18\x03 \x01(\x08\x12\x19\n\x11maximum_exclusive\x18\x04 \x01(\x08\x12\x1c\n\x0finteger_minimum\x18\x05 \x01(\x12H\x02\x88\x01\x01\x12\x1c\n\x0finteger_maximum\x18\x06 \x01(\x12H\x03\x88\x01\x01\x42\n\n\x08_minimumB\n\n\x08_maximumB\x12\n\x10_integer_minimumB\x12\n\x10_integer_maximum\"\x91\x01\n\x1c\x43onfigArrayElementDescriptor\x12\x12\n\x05index\x18\x01 \x01(\rH\x00\x88\x01\x01\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x34\n\x0b\x63onstraints\x18\x03 \x01(\x0b\x32\x1f.proto.ConfigElementConstraints\x12\x0f\n\x07name_zh\x18\x04 \x01(\tB\x08\n\x06_index\"\xa2\x03\n\x15\x43onfigFieldDescriptor\x12\x10\n\x08\x66ield_id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\r\n\x05group\x18\x04 \x01(\t\x12*\n\nvalue_type\x18\x05 \x01(\x0e\x32\x16.proto.ConfigValueType\x12\x0c\n\x04unit\x18\x06 \x01(\t\x12-\n\x0b\x63onstraints\x18\x07 \x01(\x0b\x32\x18.proto.ConfigConstraints\x12.\n\x0c\x61pply_policy\x18\x08 \x01(\x0e\x32\x18.proto.ConfigApplyPolicy\x12\x18\n\x10safety_condition\x18\t \x01(\t\x12,\n\x0c\x65lement_type\x18\n \x01(\x0e\x32\x16.proto.ConfigValueType\x12;\n\x0e\x61rray_elements\x18\x0b \x03(\x0b\x32#.proto.ConfigArrayElementDescriptor\x12\x0f\n\x07name_zh\x18\x0c \x01(\t\x12\x16\n\x0e\x64\x65scription_zh\x18\r \x01(\t\"q\n\x10\x43onfigDiagnostic\x12\x0c\n\x04\x63ode\x18\x01 \x01(\t\x12\x10\n\x08\x66ield_id\x18\x02 \x01(\t\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x1a\n\relement_index\x18\x04 \x01(\rH\x00\x88\x01\x01\x42\x10\n\x0e_element_index\"\xae\x02\n\x0f\x43onfigFieldInfo\x12\x10\n\x08\x66ield_id\x18\x01 \x01(\t\x12\x36\n\x10\x66ield_descriptor\x18\x02 \x01(\x0b\x32\x1c.proto.ConfigFieldDescriptor\x12+\n\x0f\x65\x66\x66\x65\x63tive_value\x18\x03 \x01(\x0b\x32\x12.proto.ConfigValue\x12\x34\n\x0foverride_status\x18\x04 \x01(\x0e\x32\x1b.proto.ConfigOverrideStatus\x12*\n\x0esaved_override\x18\x05 \x01(\x0b\x32\x12.proto.ConfigValue\x12\x14\n\x0cpending_init\x18\x06 \x01(\x08\x12,\n\x0b\x64iagnostics\x18\x07 \x03(\x0b\x32\x17.proto.ConfigDiagnostic\"}\n\x12\x43onfigInstanceInfo\x12\x11\n\tplugin_id\x18\x01 \x01(\t\x12&\n\x06\x66ields\x18\x02 \x03(\x0b\x32\x16.proto.ConfigFieldInfo\x12,\n\x0b\x64iagnostics\x18\x03 \x03(\x0b\x32\x17.proto.ConfigDiagnostic\"%\n\x10\x43onfigGetRequest\x12\x11\n\tplugin_id\x18\x01 \x01(\t\"\x94\x01\n\x11\x43onfigGetResponse\x12#\n\x06result\x18\x01 \x01(\x0e\x32\x13.proto.ConfigResult\x12,\n\tinstances\x18\x02 \x03(\x0b\x32\x19.proto.ConfigInstanceInfo\x12,\n\x0b\x64iagnostics\x18\x03 \x03(\x0b\x32\x17.proto.ConfigDiagnostic\"v\n\x14\x43onfigFieldOperation\x12\x10\n\x08\x66ield_id\x18\x01 \x01(\t\x12)\n\toperation\x18\x02 \x01(\x0e\x32\x16.proto.ConfigOperation\x12!\n\x05value\x18\x03 \x01(\x0b\x32\x12.proto.ConfigValue\"V\n\x10\x43onfigSetRequest\x12\x11\n\tplugin_id\x18\x01 \x01(\t\x12/\n\noperations\x18\x02 \x03(\x0b\x32\x1b.proto.ConfigFieldOperation\"\x93\x01\n\x11\x43onfigSetResponse\x12#\n\x06result\x18\x01 \x01(\x0e\x32\x13.proto.ConfigResult\x12+\n\x08instance\x18\x02 \x01(\x0b\x32\x19.proto.ConfigInstanceInfo\x12,\n\x0b\x64iagnostics\x18\x03 \x03(\x0b\x32\x17.proto.ConfigDiagnostic\"O\n\x18\x43\x61meraCalibrationRequest\x12\x33\n\tpositions\x18\x01 \x03(\x0e\x32 .proto.CameraCalibrationPosition\"\xbe\x02\n\x11\x43\x61meraCalibration\x12.\n\x06result\x18\x01 \x01(\x0e\x32\x1e.proto.CameraCalibrationResult\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\r\n\x05width\x18\x03 \x01(\r\x12\x0e\n\x06height\x18\x04 \x01(\r\x12\x19\n\x11intrinsics_matrix\x18\x05 \x03(\x01\x12\x18\n\x10\x64istortion_model\x18\x06 \x01(\t\x12\x1f\n\x17\x64istortion_coefficients\x18\x07 \x03(\x01\x12\x11\n\tbase_link\x18\x08 \x01(\t\x12\x17\n\x0frotation_matrix\x18\t \x03(\x01\x12\x13\n\x0btranslation\x18\n \x03(\x01\x12\x18\n\x10intrinsics_valid\x18\x0b \x01(\x08\x12\x18\n\x10\x65xtrinsics_valid\x18\x0c \x01(\x08\"\x98\x02\n\x19\x43\x61meraCalibrationResponse\x12.\n\x06result\x18\x01 \x01(\x0e\x32\x1e.proto.CameraCalibrationResult\x12\x0f\n\x07message\x18\x02 \x01(\t\x12-\n\x0bstereo_left\x18\x03 \x01(\x0b\x32\x18.proto.CameraCalibration\x12.\n\x0cstereo_right\x18\x04 \x01(\x0b\x32\x18.proto.CameraCalibration\x12,\n\nwrist_left\x18\x05 \x01(\x0b\x32\x18.proto.CameraCalibration\x12-\n\x0bwrist_right\x18\x06 \x01(\x0b\x32\x18.proto.CameraCalibration\"u\n\x15WristIspStatusRequest\x12\x33\n\x06\x63\x61mera\x18\x01 \x01(\x0e\x32#.proto.WristIspStatusRequest.Camera\"\'\n\x06\x43\x61mera\x12\x08\n\x04\x42OTH\x10\x00\x12\x08\n\x04LEFT\x10\x01\x12\t\n\x05RIGHT\x10\x02\"\xe8\x01\n\x13WristIspStatusField\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x31\n\x06result\x18\x02 \x01(\x0e\x32!.proto.WristIspStatusField.Result\x12\x12\n\x05value\x18\x03 \x01(\rH\x00\x88\x01\x01\x12\x17\n\x0fsampled_unix_ms\x18\x04 \x01(\x04\"Y\n\x06Result\x12\x0b\n\x07UNKNOWN\x10\x00\x12\t\n\x05VALID\x10\x01\x12\x0f\n\x0bREAD_FAILED\x10\x02\x12\x0f\n\x0bUNSUPPORTED\x10\x03\x12\x15\n\x11\x44\x45\x41\x44LINE_EXCEEDED\x10\x04\x42\x08\n\x06_value\"\xbf\x01\n\x14WristIspCameraStatus\x12\x0e\n\x06\x63\x61mera\x18\x01 \x01(\t\x12\x32\n\x06result\x18\x02 \x01(\x0e\x32\".proto.WristIspCameraStatus.Result\x12*\n\x06\x66ields\x18\x03 \x03(\x0b\x32\x1a.proto.WristIspStatusField\"7\n\x06Result\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x0b\n\x07PARTIAL\x10\x02\x12\x0b\n\x07OFFLINE\x10\x03\"\xe8\x01\n\x16WristIspStatusResponse\x12\x34\n\x06result\x18\x01 \x01(\x0e\x32$.proto.WristIspStatusResponse.Result\x12\x0e\n\x06\x64\x65tail\x18\x02 \x01(\t\x12,\n\x07\x63\x61meras\x18\x03 \x03(\x0b\x32\x1b.proto.WristIspCameraStatus\"Z\n\x06Result\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x0b\n\x07PARTIAL\x10\x02\x12\x08\n\x04\x42USY\x10\x03\x12\x13\n\x0fINVALID_REQUEST\x10\x04\x12\x0f\n\x0bUNAVAILABLE\x10\x05*\xaf\x02\n\x10\x44\x65viceInfoResult\x12\"\n\x1e\x44\x45VICE_INFO_RESULT_UNSPECIFIED\x10\x00\x12\x19\n\x15\x44\x45VICE_INFO_RESULT_OK\x10\x01\x12&\n\"DEVICE_INFO_RESULT_INVALID_REQUEST\x10\x02\x12 \n\x1c\x44\x45VICE_INFO_RESULT_NOT_FOUND\x10\x03\x12!\n\x1d\x44\x45VICE_INFO_RESULT_UNREADABLE\x10\x04\x12!\n\x1d\x44\x45VICE_INFO_RESULT_INCOMPLETE\x10\x05\x12%\n!DEVICE_INFO_RESULT_INVALID_CONFIG\x10\x06\x12%\n!DEVICE_INFO_RESULT_RESOURCE_LIMIT\x10\x07*\xa7\x01\n\x15\x43\x61rtographerSubmapSet\x12 \n\x1c\x43\x41RTOGRAPHER_SUBMAP_SET_NONE\x10\x00\x12\"\n\x1e\x43\x41RTOGRAPHER_SUBMAP_SET_FROZEN\x10\x01\x12$\n CARTOGRAPHER_SUBMAP_SET_FINISHED\x10\x02\x12\"\n\x1e\x43\x41RTOGRAPHER_SUBMAP_SET_ACTIVE\x10\x04*\x97\x01\n\x1d\x43\x61rtographerLocalizationState\x12%\n!CARTOGRAPHER_LOCALIZATION_WAITING\x10\x00\x12&\n\"CARTOGRAPHER_LOCALIZATION_ALIGNING\x10\x01\x12\'\n#CARTOGRAPHER_LOCALIZATION_LOCALIZED\x10\x02*;\n\x04Side\x12\x14\n\x10SIDE_UNSPECIFIED\x10\x00\x12\r\n\tSIDE_LEFT\x10\x01\x12\x0e\n\nSIDE_RIGHT\x10\x02*\xb2\x01\n\rTactileFinger\x12\x1e\n\x1aTACTILE_FINGER_UNSPECIFIED\x10\x00\x12\x18\n\x14TACTILE_FINGER_THUMB\x10\x01\x12\x18\n\x14TACTILE_FINGER_INDEX\x10\x02\x12\x19\n\x15TACTILE_FINGER_MIDDLE\x10\x03\x12\x17\n\x13TACTILE_FINGER_RING\x10\x04\x12\x19\n\x15TACTILE_FINGER_LITTLE\x10\x05*\x9f\x01\n\x0b\x43\x61meraMount\x12\x1c\n\x18\x43\x41MERA_MOUNT_UNSPECIFIED\x10\x00\x12\x1a\n\x16\x43\x41MERA_MOUNT_HEAD_LEFT\x10\x01\x12\x1b\n\x17\x43\x41MERA_MOUNT_HEAD_RIGHT\x10\x02\x12\x1b\n\x17\x43\x41MERA_MOUNT_WRIST_LEFT\x10\x03\x12\x1c\n\x18\x43\x41MERA_MOUNT_WRIST_RIGHT\x10\x04*c\n\tSpaceMode\x12\x1a\n\x16SPACE_MODE_UNSPECIFIED\x10\x00\x12\x1a\n\x16SPACE_MODE_JOINT_SPACE\x10\x01\x12\x1e\n\x1aSPACE_MODE_CARTESIAN_SPACE\x10\x02*\xdc\x01\n\x0b\x43ontrolMode\x12\x1f\n\x1b\x43ONTROL_MODE_JOINT_POSITION\x10\x00\x12\x19\n\x15\x43ONTROL_MODE_JOINT_PD\x10\x01\x12\x1d\n\x19\x43ONTROL_MODE_JOINT_TORQUE\x10\x02\x12\x16\n\x12\x43ONTROL_MODE_SPEED\x10\x03\x12\x19\n\x15\x43ONTROL_MODE_FLOATING\x10\x04\x12\x19\n\x15\x43ONTROL_MODE_MOTOR_PD\x10\x05\x12$\n CONTROL_MODE_CARTESIAN_IMPEDANCE\x10\x06*\xbb\x01\n\x0eLifecyclePhase\x12\x1f\n\x1bLIFECYCLE_PHASE_UNSPECIFIED\x10\x00\x12\x18\n\x14LIFECYCLE_PHASE_INIT\x10\x01\x12\x1b\n\x17LIFECYCLE_PHASE_STANDBY\x10\x02\x12\x1b\n\x17LIFECYCLE_PHASE_RUNNING\x10\x03\x12\x19\n\x15LIFECYCLE_PHASE_ERROR\x10\x04\x12\x19\n\x15LIFECYCLE_PHASE_FATAL\x10\x05*\x86\x01\n\nFaultLevel\x12\x1b\n\x17\x46\x41ULT_LEVEL_UNSPECIFIED\x10\x00\x12\x14\n\x10\x46\x41ULT_LEVEL_INFO\x10\x01\x12\x17\n\x13\x46\x41ULT_LEVEL_WARNING\x10\x02\x12\x15\n\x11\x46\x41ULT_LEVEL_ERROR\x10\x03\x12\x15\n\x11\x46\x41ULT_LEVEL_FATAL\x10\x04*\x95\x02\n\x18UltrasonicDistanceStatus\x12*\n&ULTRASONIC_DISTANCE_STATUS_UNSPECIFIED\x10\x00\x12$\n ULTRASONIC_DISTANCE_STATUS_VALID\x10\x01\x12(\n$ULTRASONIC_DISTANCE_STATUS_NO_TARGET\x10\x02\x12+\n\'ULTRASONIC_DISTANCE_STATUS_INTERFERENCE\x10\x03\x12(\n$ULTRASONIC_DISTANCE_STATUS_NOT_READY\x10\x04\x12&\n\"ULTRASONIC_DISTANCE_STATUS_INVALID\x10\x05*O\n\x10TorsoControlMode\x12\x1f\n\x1bTORSO_CONTROL_MODE_POSITION\x10\x00\x12\x1a\n\x16TORSO_CONTROL_MODE_MIT\x10\x01*U\n\x12\x43hassisControlMode\x12\x1f\n\x1b\x43HASSIS_CONTROL_MODE_MOTION\x10\x00\x12\x1e\n\x1a\x43HASSIS_CONTROL_MODE_FORCE\x10\x01*V\n\x12\x43hassisCommandMode\x12\"\n\x1e\x43HASSIS_COMMAND_MODE_KINEMATIC\x10\x00\x12\x1c\n\x18\x43HASSIS_COMMAND_MODE_RAW\x10\x01*u\n\x14\x43hassisSteerStrategy\x12/\n+CHASSIS_STEER_STRATEGY_CLOSED_LOOP_POSITION\x10\x00\x12,\n(CHASSIS_STEER_STRATEGY_FORCE_CURRENT_MIT\x10\x01*r\n\x14\x43hassisWheelStrategy\x12,\n(CHASSIS_WHEEL_STRATEGY_CLOSED_LOOP_SPEED\x10\x00\x12,\n(CHASSIS_WHEEL_STRATEGY_FORCE_CURRENT_MIT\x10\x01*v\n\x16\x43hassisStretchStrategy\x12-\n)CHASSIS_STRETCH_STRATEGY_PROFILE_VELOCITY\x10\x00\x12-\n)CHASSIS_STRETCH_STRATEGY_PROFILE_POSITION\x10\x01*\xee\x01\n\x10PowerDataQuality\x12\x1a\n\x16POWER_DATA_UNSPECIFIED\x10\x00\x12\x14\n\x10POWER_DATA_VALID\x10\x01\x12\x1b\n\x17POWER_DATA_NOT_RECEIVED\x10\x02\x12\x14\n\x10POWER_DATA_STALE\x10\x03\x12\x1d\n\x19POWER_DATA_SOURCE_OFFLINE\x10\x04\x12\x1d\n\x19POWER_DATA_SENSOR_INVALID\x10\x05\x12\x1c\n\x18POWER_DATA_NOT_SUPPORTED\x10\x06\x12\x19\n\x15POWER_DATA_UNVERIFIED\x10\x07*c\n\x10PowerClockDomain\x12\x17\n\x13POWER_CLOCK_UNKNOWN\x10\x00\x12 \n\x1cPOWER_CLOCK_DEVICE_MONOTONIC\x10\x01\x12\x14\n\x10POWER_CLOCK_GPTP\x10\x02*W\n\x0ePowerLinkState\x12\x16\n\x12POWER_LINK_UNKNOWN\x10\x00\x12\x15\n\x11POWER_LINK_ONLINE\x10\x01\x12\x16\n\x12POWER_LINK_OFFLINE\x10\x02*\xb9\x01\n\x18\x43hestPowerOperatingState\x12\x1b\n\x17\x43HEST_POWER_UNSPECIFIED\x10\x00\x12\x1c\n\x18\x43HEST_POWER_MONITOR_ONLY\x10\x01\x12\x19\n\x15\x43HEST_POWER_BOOT_WAIT\x10\x02\x12\x17\n\x13\x43HEST_POWER_STANDBY\x10\x03\x12\x17\n\x13\x43HEST_POWER_RUNNING\x10\x04\x12\x15\n\x11\x43HEST_POWER_FAULT\x10\x05*\xc9\x02\n\x0bPowerOpCode\x12\x10\n\x0cPOWER_OP_NOP\x10\x00\x12\x11\n\rPOWER_OP_PING\x10\x01\x12\x1a\n\x16POWER_OP_GET_PROTO_VER\x10\x02\x12\x18\n\x14POWER_OP_SET_CHANNEL\x10\x10\x12\x15\n\x11POWER_OP_SET_MASK\x10\x11\x12\x17\n\x13POWER_OP_GET_STATUS\x10\x12\x12\x13\n\x0fPOWER_OP_ALL_ON\x10\x13\x12\x14\n\x10POWER_OP_ALL_OFF\x10\x14\x12\x16\n\x12POWER_OP_SYS_SLEEP\x10 \x12\x17\n\x13POWER_OP_SYS_WAKEUP\x10!\x12\x1b\n\x17POWER_OP_SYS_GET_STATUS\x10\"\x12\x16\n\x12POWER_OP_SYS_RESET\x10#\x12\x1e\n\x1aPOWER_OP_SYS_SET_HB_PERIOD\x10$*\x8f\x02\n\x16HeadStereoStreamResult\x12)\n%HEAD_STEREO_STREAM_RESULT_UNSPECIFIED\x10\x00\x12 \n\x1cHEAD_STEREO_STREAM_RESULT_OK\x10\x01\x12-\n)HEAD_STEREO_STREAM_RESULT_INVALID_REQUEST\x10\x02\x12\"\n\x1eHEAD_STEREO_STREAM_RESULT_BUSY\x10\x03\x12)\n%HEAD_STEREO_STREAM_RESULT_UNAVAILABLE\x10\x04\x12*\n&HEAD_STEREO_STREAM_RESULT_REMOTE_ERROR\x10\x05*\x8f\x01\n\x15HeadStereoStreamState\x12(\n$HEAD_STEREO_STREAM_STATE_UNSPECIFIED\x10\x00\x12$\n HEAD_STEREO_STREAM_STATE_STOPPED\x10\x01\x12&\n\"HEAD_STEREO_STREAM_STATE_STREAMING\x10\x02*\x89\x02\n\x15RecorderCommandResult\x12\'\n#RECORDER_COMMAND_RESULT_UNSPECIFIED\x10\x00\x12\x1e\n\x1aRECORDER_COMMAND_RESULT_OK\x10\x01\x12+\n\'RECORDER_COMMAND_RESULT_INVALID_REQUEST\x10\x02\x12$\n RECORDER_COMMAND_RESULT_REJECTED\x10\x03\x12\'\n#RECORDER_COMMAND_RESULT_UNAVAILABLE\x10\x04\x12+\n\'RECORDER_COMMAND_RESULT_OUTCOME_UNKNOWN\x10\x05*\x87\x01\n\x15RecorderRecordingMode\x12\'\n#RECORDER_RECORDING_MODE_UNSPECIFIED\x10\x00\x12!\n\x1dRECORDER_RECORDING_MODE_DEBUG\x10\x01\x12\"\n\x1eRECORDER_RECORDING_MODE_NORMAL\x10\x02*\x90\x02\n\x13RecorderUploadState\x12%\n!RECORDER_UPLOAD_STATE_UNSPECIFIED\x10\x00\x12\x1e\n\x1aRECORDER_UPLOAD_STATE_IDLE\x10\x01\x12!\n\x1dRECORDER_UPLOAD_STATE_PENDING\x10\x02\x12#\n\x1fRECORDER_UPLOAD_STATE_UPLOADING\x10\x03\x12#\n\x1fRECORDER_UPLOAD_STATE_SUCCEEDED\x10\x04\x12 \n\x1cRECORDER_UPLOAD_STATE_FAILED\x10\x05\x12#\n\x1fRECORDER_UPLOAD_STATE_CANCELLED\x10\x06*u\n\x10RecorderFileType\x12\"\n\x1eRECORDER_FILE_TYPE_UNSPECIFIED\x10\x00\x12\x1b\n\x17RECORDER_FILE_TYPE_FILE\x10\x01\x12 \n\x1cRECORDER_FILE_TYPE_DIRECTORY\x10\x02*\xd7\x01\n\x13HeartbeatMetricKind\x12%\n!HEARTBEAT_METRIC_KIND_UNSPECIFIED\x10\x00\x12/\n+HEARTBEAT_METRIC_KIND_TACTILE_FRAME_RATE_HZ\x10\x01\x12-\n)HEARTBEAT_METRIC_KIND_LIDAR_FRAME_RATE_HZ\x10\x02\x12\x39\n5HEARTBEAT_METRIC_KIND_WEBRTC_H265_INPUT_FRAME_RATE_HZ\x10\x03*\xa2\x01\n\x15HardwareHealthVerdict\x12\x16\n\x12HARDWARE_HEALTH_OK\x10\x00\x12\x1b\n\x17HARDWARE_HEALTH_WARNING\x10\x01\x12\x19\n\x15HARDWARE_HEALTH_FAULT\x10\x02\x12\x19\n\x15HARDWARE_HEALTH_STALE\x10\x03\x12\x1e\n\x1aHARDWARE_HEALTH_NEVER_SEEN\x10\x04*B\n\x11HealthRequirement\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x06\n\x02OK\x10\x01\x12\x0b\n\x07WARNING\x10\x02\x12\x07\n\x03OFF\x10\x03*\xf2\x01\n\x17WholeBodyCommandChannel\x12*\n&WHOLE_BODY_COMMAND_CHANNEL_UNSPECIFIED\x10\x00\x12,\n(WHOLE_BODY_COMMAND_CHANNEL_TELEOPERATION\x10\x01\x12(\n$WHOLE_BODY_COMMAND_CHANNEL_INFERENCE\x10\x02\x12)\n%WHOLE_BODY_COMMAND_CHANNEL_AUTOMATION\x10\x03\x12(\n$WHOLE_BODY_COMMAND_CHANNEL_UNIVERSAL\x10\x04*\x8e\x01\n\rOperationMode\x12\x1e\n\x1aOPERATION_MODE_UNSPECIFIED\x10\x00\x12 \n\x1cOPERATION_MODE_TELEOPERATION\x10\x01\x12\x1c\n\x18OPERATION_MODE_INFERENCE\x10\x02\x12\x1d\n\x19OPERATION_MODE_AUTOMATION\x10\x03*\xbc\x01\n\x0bMasterPhase\x12\x1c\n\x18MASTER_PHASE_UNSPECIFIED\x10\x00\x12\x15\n\x11MASTER_PHASE_INIT\x10\x01\x12\x18\n\x14MASTER_PHASE_STANDBY\x10\x02\x12\x18\n\x14MASTER_PHASE_RUNNING\x10\x03\x12\x16\n\x12MASTER_PHASE_ERROR\x10\x04\x12\x14\n\x10MASTER_PHASE_OTA\x10\x05\x12\x16\n\x12MASTER_PHASE_ESTOP\x10\x06*\xcf\x03\n\x13MasterCommandResult\x12%\n!MASTER_COMMAND_RESULT_UNSPECIFIED\x10\x00\x12\x1c\n\x18MASTER_COMMAND_RESULT_OK\x10\x01\x12)\n%MASTER_COMMAND_RESULT_INVALID_REQUEST\x10\x02\x12\'\n#MASTER_COMMAND_RESULT_INVALID_PHASE\x10\x03\x12(\n$MASTER_COMMAND_RESULT_UNKNOWN_TARGET\x10\x04\x12\x1e\n\x1aMASTER_COMMAND_RESULT_BUSY\x10\x05\x12%\n!MASTER_COMMAND_RESULT_UNAVAILABLE\x10\x06\x12-\n)MASTER_COMMAND_RESULT_HEALTH_CHECK_FAILED\x10\x07\x12*\n&MASTER_COMMAND_RESULT_EXECUTION_FAILED\x10\x08\x12)\n%MASTER_COMMAND_RESULT_OUTCOME_UNKNOWN\x10\t\x12(\n$MASTER_COMMAND_RESULT_INTERNAL_ERROR\x10\n*W\n\x15MasterTaskHealthLevel\x12\x1d\n\x19MASTER_TASK_HEALTH_NORMAL\x10\x00\x12\x1f\n\x1bMASTER_TASK_HEALTH_DEGRADED\x10\x01*\xc6\x02\n\x1eMasterPhaseTransitionOperation\x12\x31\n-MASTER_PHASE_TRANSITION_OPERATION_UNSPECIFIED\x10\x00\x12+\n\'MASTER_PHASE_TRANSITION_OPERATION_RESET\x10\x01\x12/\n+MASTER_PHASE_TRANSITION_OPERATION_ENTER_OTA\x10\x02\x12.\n*MASTER_PHASE_TRANSITION_OPERATION_EXIT_OTA\x10\x03\x12\x31\n-MASTER_PHASE_TRANSITION_OPERATION_ENTER_ESTOP\x10\x04\x12\x30\n,MASTER_PHASE_TRANSITION_OPERATION_EXIT_ESTOP\x10\x05*\xd4\x01\n\x18\x43hassisCalibStatusResult\x12$\n CHASSIS_CALIB_STATUS_UNSPECIFIED\x10\x00\x12\x1b\n\x17\x43HASSIS_CALIB_STATUS_OK\x10\x01\x12\"\n\x1e\x43HASSIS_CALIB_STATUS_NOT_FOUND\x10\x02\x12(\n$CHASSIS_CALIB_STATUS_INVALID_REQUEST\x10\x03\x12\'\n#CHASSIS_CALIB_STATUS_NO_ACTIVE_TASK\x10\x04*\xa0\x01\n\x11\x43hassisCalibState\x12#\n\x1f\x43HASSIS_CALIB_STATE_UNSPECIFIED\x10\x00\x12#\n\x1f\x43HASSIS_CALIB_STATE_IN_PROGRESS\x10\x01\x12!\n\x1d\x43HASSIS_CALIB_STATE_SUCCEEDED\x10\x02\x12\x1e\n\x1a\x43HASSIS_CALIB_STATE_FAILED\x10\x03*\xa7\x02\n\x15\x44\x65viceParameterStatus\x12\'\n#DEVICE_PARAMETER_STATUS_UNSPECIFIED\x10\x00\x12\x1e\n\x1a\x44\x45VICE_PARAMETER_STATUS_OK\x10\x01\x12+\n\'DEVICE_PARAMETER_STATUS_INVALID_REQUEST\x10\x02\x12 \n\x1c\x44\x45VICE_PARAMETER_STATUS_BUSY\x10\x03\x12\'\n#DEVICE_PARAMETER_STATUS_UNSUPPORTED\x10\x04\x12\'\n#DEVICE_PARAMETER_STATUS_UNAVAILABLE\x10\x05\x12$\n DEVICE_PARAMETER_STATUS_IO_ERROR\x10\x06*\xbe\x01\n\x11HandServiceResult\x12\x1a\n\x16HAND_SERVICE_RESULT_OK\x10\x00\x12\'\n#HAND_SERVICE_RESULT_INVALID_REQUEST\x10\x01\x12#\n\x1fHAND_SERVICE_RESULT_UNAVAILABLE\x10\x02\x12\x1c\n\x18HAND_SERVICE_RESULT_BUSY\x10\x03\x12!\n\x1dHAND_SERVICE_RESULT_SDK_ERROR\x10\x04*\xe5\x01\n\x18HandZeroCalibrationState\x12$\n HAND_ZERO_CALIBRATION_STATE_IDLE\x10\x00\x12\'\n#HAND_ZERO_CALIBRATION_STATE_RUNNING\x10\x01\x12)\n%HAND_ZERO_CALIBRATION_STATE_SUCCEEDED\x10\x02\x12&\n\"HAND_ZERO_CALIBRATION_STATE_FAILED\x10\x03\x12\'\n#HAND_ZERO_CALIBRATION_STATE_STOPPED\x10\x04*\xbe\x01\n\tOtaResult\x12\x1a\n\x16OTA_RESULT_UNSPECIFIED\x10\x00\x12\x11\n\rOTA_RESULT_OK\x10\x01\x12\x1e\n\x1aOTA_RESULT_INVALID_REQUEST\x10\x02\x12\x13\n\x0fOTA_RESULT_BUSY\x10\x03\x12\x18\n\x14OTA_RESULT_NOT_FOUND\x10\x04\x12\x17\n\x13OTA_RESULT_CONFLICT\x10\x05\x12\x1a\n\x16OTA_RESULT_UNAVAILABLE\x10\x06*\x9e\x01\n\x0cOtaTaskState\x12\x1e\n\x1aOTA_TASK_STATE_UNSPECIFIED\x10\x00\x12\x19\n\x15OTA_TASK_STATE_QUEUED\x10\x01\x12\x1a\n\x16OTA_TASK_STATE_RUNNING\x10\x02\x12\x1c\n\x18OTA_TASK_STATE_SUCCEEDED\x10\x03\x12\x19\n\x15OTA_TASK_STATE_FAILED\x10\x04*\xe3\x04\n\x1aOtaPeripheralFailureReason\x12-\n)OTA_PERIPHERAL_FAILURE_REASON_UNSPECIFIED\x10\x00\x12\x31\n-OTA_PERIPHERAL_FAILURE_REASON_PACKAGE_INVALID\x10\x01\x12\x34\n0OTA_PERIPHERAL_FAILURE_REASON_TARGET_UNSUPPORTED\x10\x02\x12\x38\n4OTA_PERIPHERAL_FAILURE_REASON_DEPENDENCY_UNAVAILABLE\x10\x03\x12\x35\n1OTA_PERIPHERAL_FAILURE_REASON_PRECONDITION_FAILED\x10\x04\x12\x31\n-OTA_PERIPHERAL_FAILURE_REASON_TRANSFER_FAILED\x10\x05\x12\x33\n/OTA_PERIPHERAL_FAILURE_REASON_ACTIVATION_FAILED\x10\x06\x12\x35\n1OTA_PERIPHERAL_FAILURE_REASON_VERIFICATION_FAILED\x10\x07\x12\x35\n1OTA_PERIPHERAL_FAILURE_REASON_EXECUTION_TIMED_OUT\x10\x08\x12\x32\n.OTA_PERIPHERAL_FAILURE_REASON_PROTOCOL_INVALID\x10\t\x12\x32\n.OTA_PERIPHERAL_FAILURE_REASON_EXECUTION_FAILED\x10\n*\x83\x01\n\x10OtaEffectClosure\x12\"\n\x1eOTA_EFFECT_CLOSURE_UNSPECIFIED\x10\x00\x12\'\n#OTA_EFFECT_CLOSURE_CONFIRMED_CLOSED\x10\x01\x12\"\n\x1eOTA_EFFECT_CLOSURE_UNCONFIRMED\x10\x02*\xbc\x02\n\x14OtaAgentSubmitResult\x12\'\n#OTA_AGENT_SUBMIT_RESULT_UNSPECIFIED\x10\x00\x12#\n\x1fOTA_AGENT_SUBMIT_RESULT_CREATED\x10\x01\x12$\n OTA_AGENT_SUBMIT_RESULT_EXISTING\x10\x02\x12+\n\'OTA_AGENT_SUBMIT_RESULT_INVALID_REQUEST\x10\x03\x12 \n\x1cOTA_AGENT_SUBMIT_RESULT_BUSY\x10\x04\x12\x30\n,OTA_AGENT_SUBMIT_RESULT_IDEMPOTENCY_CONFLICT\x10\x05\x12/\n+OTA_AGENT_SUBMIT_RESULT_SERVICE_UNAVAILABLE\x10\x06*\x90\x02\n\x14OtaAgentStatusResult\x12\'\n#OTA_AGENT_STATUS_RESULT_UNSPECIFIED\x10\x00\x12\x1e\n\x1aOTA_AGENT_STATUS_RESULT_OK\x10\x01\x12%\n!OTA_AGENT_STATUS_RESULT_NOT_FOUND\x10\x02\x12+\n\'OTA_AGENT_STATUS_RESULT_INVALID_REQUEST\x10\x03\x12/\n+OTA_AGENT_STATUS_RESULT_SERVICE_UNAVAILABLE\x10\x04\x12*\n&OTA_AGENT_STATUS_RESULT_NO_ACTIVE_TASK\x10\x05*\xeb\x02\n\x16OtaAgentTerminalResult\x12)\n%OTA_AGENT_TERMINAL_RESULT_UNSPECIFIED\x10\x00\x12&\n\"OTA_AGENT_TERMINAL_RESULT_REJECTED\x10\x01\x12$\n OTA_AGENT_TERMINAL_RESULT_FAILED\x10\x02\x12\'\n#OTA_AGENT_TERMINAL_RESULT_COMMITTED\x10\x03\x12/\n+OTA_AGENT_TERMINAL_RESULT_RESTORED_BASELINE\x10\x04\x12+\n\'OTA_AGENT_TERMINAL_RESULT_NEEDS_SERVICE\x10\x05\x12(\n$OTA_AGENT_TERMINAL_RESULT_DOWNLOADED\x10\x06\x12\'\n#OTA_AGENT_TERMINAL_RESULT_CANCELLED\x10\x07*\xb3\x01\n\x1cOtaAgentCompletionProvenance\x12/\n+OTA_AGENT_COMPLETION_PROVENANCE_UNSPECIFIED\x10\x00\x12+\n\'OTA_AGENT_COMPLETION_PROVENANCE_UPDATED\x10\x01\x12\x35\n1OTA_AGENT_COMPLETION_PROVENANCE_ALREADY_SATISFIED\x10\x02*\x7f\n\x10OtaAgentTaskKind\x12#\n\x1fOTA_AGENT_TASK_KIND_UNSPECIFIED\x10\x00\x12\x1f\n\x1bOTA_AGENT_TASK_KIND_INSTALL\x10\x01\x12%\n!OTA_AGENT_TASK_KIND_DOWNLOAD_ONLY\x10\x02*\xc7\x02\n\x14OtaAgentCancelResult\x12\'\n#OTA_AGENT_CANCEL_RESULT_UNSPECIFIED\x10\x00\x12$\n OTA_AGENT_CANCEL_RESULT_ACCEPTED\x10\x01\x12,\n(OTA_AGENT_CANCEL_RESULT_ALREADY_TERMINAL\x10\x02\x12%\n!OTA_AGENT_CANCEL_RESULT_NOT_FOUND\x10\x03\x12-\n)OTA_AGENT_CANCEL_RESULT_NOT_DOWNLOAD_ONLY\x10\x04\x12+\n\'OTA_AGENT_CANCEL_RESULT_INVALID_REQUEST\x10\x05\x12/\n+OTA_AGENT_CANCEL_RESULT_SERVICE_UNAVAILABLE\x10\x06*\x94\x03\n\x1bOtaAgentModuleVersionStatus\x12/\n+OTA_AGENT_MODULE_VERSION_STATUS_UNSPECIFIED\x10\x00\x12,\n(OTA_AGENT_MODULE_VERSION_STATUS_OBSERVED\x10\x01\x12+\n\'OTA_AGENT_MODULE_VERSION_STATUS_MATCHED\x10\x02\x12.\n*OTA_AGENT_MODULE_VERSION_STATUS_MISMATCHED\x10\x03\x12/\n+OTA_AGENT_MODULE_VERSION_STATUS_UNAVAILABLE\x10\x04\x12/\n+OTA_AGENT_MODULE_VERSION_STATUS_UNSUPPORTED\x10\x05\x12)\n%OTA_AGENT_MODULE_VERSION_STATUS_ERROR\x10\x06\x12,\n(OTA_AGENT_MODULE_VERSION_STATUS_CONFLICT\x10\x07*\xf1\x01\n\x1fOtaAgentModuleConformanceStatus\x12\x33\n/OTA_AGENT_MODULE_CONFORMANCE_STATUS_UNSPECIFIED\x10\x00\x12/\n+OTA_AGENT_MODULE_CONFORMANCE_STATUS_MATCHED\x10\x01\x12\x32\n.OTA_AGENT_MODULE_CONFORMANCE_STATUS_MISMATCHED\x10\x02\x12\x34\n0OTA_AGENT_MODULE_CONFORMANCE_STATUS_INCONCLUSIVE\x10\x03*\xc4\x02\n\x12OtaPublicTaskState\x12%\n!OTA_PUBLIC_TASK_STATE_UNSPECIFIED\x10\x00\x12!\n\x1dOTA_PUBLIC_TASK_STATE_PENDING\x10\x01\x12!\n\x1dOTA_PUBLIC_TASK_STATE_RUNNING\x10\x02\x12$\n OTA_PUBLIC_TASK_STATE_RECOVERING\x10\x03\x12#\n\x1fOTA_PUBLIC_TASK_STATE_SUCCEEDED\x10\x04\x12 \n\x1cOTA_PUBLIC_TASK_STATE_FAILED\x10\x05\x12\'\n#OTA_PUBLIC_TASK_STATE_NEEDS_SERVICE\x10\x06\x12+\n\'OTA_PUBLIC_TASK_STATE_RESTORED_BASELINE\x10\x07*\xf2\x01\n\x13OtaPublicStageState\x12&\n\"OTA_PUBLIC_STAGE_STATE_UNSPECIFIED\x10\x00\x12\"\n\x1eOTA_PUBLIC_STAGE_STATE_PENDING\x10\x01\x12\"\n\x1eOTA_PUBLIC_STAGE_STATE_RUNNING\x10\x02\x12$\n OTA_PUBLIC_STAGE_STATE_SUCCEEDED\x10\x03\x12!\n\x1dOTA_PUBLIC_STAGE_STATE_FAILED\x10\x04\x12\"\n\x1eOTA_PUBLIC_STAGE_STATE_SKIPPED\x10\x05*\x8c\x02\n\x11OtaStageOperation\x12#\n\x1fOTA_STAGE_OPERATION_UNSPECIFIED\x10\x00\x12\x1d\n\x19OTA_STAGE_OPERATION_SETUP\x10\x01\x12$\n OTA_STAGE_OPERATION_TRANSFERRING\x10\x02\x12\"\n\x1eOTA_STAGE_OPERATION_INSTALLING\x10\x03\x12\"\n\x1eOTA_STAGE_OPERATION_RESTARTING\x10\x04\x12!\n\x1dOTA_STAGE_OPERATION_VERIFYING\x10\x05\x12\"\n\x1eOTA_STAGE_OPERATION_RECOVERING\x10\x06*\xc9\x01\n\x0eOtaStageTarget\x12 \n\x1cOTA_STAGE_TARGET_UNSPECIFIED\x10\x00\x12\x19\n\x15OTA_STAGE_TARGET_TASK\x10\x01\x12\x1d\n\x19OTA_STAGE_TARGET_PLATFORM\x10\x02\x12 \n\x1cOTA_STAGE_TARGET_PERIPHERALS\x10\x03\x12\x1a\n\x16OTA_STAGE_TARGET_AGENT\x10\x04\x12\x1d\n\x19OTA_STAGE_TARGET_THOR_BSP\x10\x05*\xc8\x01\n\x0f\x43onfigValueType\x12!\n\x1d\x43ONFIG_VALUE_TYPE_UNSPECIFIED\x10\x00\x12\x1a\n\x16\x43ONFIG_VALUE_TYPE_BOOL\x10\x01\x12\x1d\n\x19\x43ONFIG_VALUE_TYPE_INTEGER\x10\x02\x12\x1c\n\x18\x43ONFIG_VALUE_TYPE_DOUBLE\x10\x03\x12\x1c\n\x18\x43ONFIG_VALUE_TYPE_STRING\x10\x04\x12\x1b\n\x17\x43ONFIG_VALUE_TYPE_ARRAY\x10\x05*\xa2\x01\n\x11\x43onfigApplyPolicy\x12#\n\x1f\x43ONFIG_APPLY_POLICY_UNSPECIFIED\x10\x00\x12!\n\x1d\x43ONFIG_APPLY_POLICY_IMMEDIATE\x10\x01\x12\"\n\x1e\x43ONFIG_APPLY_POLICY_SAFE_STATE\x10\x02\x12!\n\x1d\x43ONFIG_APPLY_POLICY_INIT_ONLY\x10\x03*i\n\x0f\x43onfigOperation\x12 \n\x1c\x43ONFIG_OPERATION_UNSPECIFIED\x10\x00\x12\x18\n\x14\x43ONFIG_OPERATION_SET\x10\x01\x12\x1a\n\x16\x43ONFIG_OPERATION_RESET\x10\x02*\xd4\x01\n\x14\x43onfigOverrideStatus\x12&\n\"CONFIG_OVERRIDE_STATUS_UNSPECIFIED\x10\x00\x12\x1f\n\x1b\x43ONFIG_OVERRIDE_STATUS_NONE\x10\x01\x12\"\n\x1e\x43ONFIG_OVERRIDE_STATUS_APPLIED\x10\x02\x12\'\n#CONFIG_OVERRIDE_STATUS_PENDING_INIT\x10\x03\x12&\n\"CONFIG_OVERRIDE_STATUS_NOT_ADOPTED\x10\x04*\xb7\x03\n\x0c\x43onfigResult\x12\x1d\n\x19\x43ONFIG_RESULT_UNSPECIFIED\x10\x00\x12\x14\n\x10\x43ONFIG_RESULT_OK\x10\x01\x12!\n\x1d\x43ONFIG_RESULT_INVALID_REQUEST\x10\x02\x12&\n\"CONFIG_RESULT_INSTANCE_UNAVAILABLE\x10\x03\x12%\n!CONFIG_RESULT_VALIDATION_REJECTED\x10\x04\x12\x16\n\x12\x43ONFIG_RESULT_BUSY\x10\x05\x12(\n$CONFIG_RESULT_SAFETY_CONDITION_UNMET\x10\x06\x12*\n&CONFIG_RESULT_STORAGE_FAILED_UNCHANGED\x10\x07\x12(\n$CONFIG_RESULT_APPLY_FAILED_UNCHANGED\x10\x08\x12!\n\x1d\x43ONFIG_RESULT_FAILED_RESTORED\x10\t\x12#\n\x1f\x43ONFIG_RESULT_RECOVERY_REQUIRED\x10\n\x12 \n\x1c\x43ONFIG_RESULT_RESOURCE_LIMIT\x10\x0b*\xfc\x01\n\x19\x43\x61meraCalibrationPosition\x12+\n\'CAMERA_CALIBRATION_POSITION_UNSPECIFIED\x10\x00\x12+\n\'CAMERA_CALIBRATION_POSITION_STEREO_LEFT\x10\x01\x12,\n(CAMERA_CALIBRATION_POSITION_STEREO_RIGHT\x10\x02\x12*\n&CAMERA_CALIBRATION_POSITION_WRIST_LEFT\x10\x03\x12+\n\'CAMERA_CALIBRATION_POSITION_WRIST_RIGHT\x10\x04*\xe7\x01\n\x17\x43\x61meraCalibrationResult\x12)\n%CAMERA_CALIBRATION_RESULT_UNSPECIFIED\x10\x00\x12 \n\x1c\x43\x41MERA_CALIBRATION_RESULT_OK\x10\x01\x12%\n!CAMERA_CALIBRATION_RESULT_PARTIAL\x10\x02\x12)\n%CAMERA_CALIBRATION_RESULT_UNAVAILABLE\x10\x03\x12-\n)CAMERA_CALIBRATION_RESULT_INVALID_REQUEST\x10\x04\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
+_DEVICEINFORESULT = _descriptor.EnumDescriptor(
+  name='DeviceInfoResult',
+  full_name='proto.DeviceInfoResult',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_INFO_RESULT_UNSPECIFIED', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_INFO_RESULT_OK', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_INFO_RESULT_INVALID_REQUEST', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_INFO_RESULT_NOT_FOUND', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_INFO_RESULT_UNREADABLE', index=4, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_INFO_RESULT_INCOMPLETE', index=5, number=5,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_INFO_RESULT_INVALID_CONFIG', index=6, number=6,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_INFO_RESULT_RESOURCE_LIMIT', index=7, number=7,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=40225,
+  serialized_end=40528,
+)
+_sym_db.RegisterEnumDescriptor(_DEVICEINFORESULT)
+
+DeviceInfoResult = enum_type_wrapper.EnumTypeWrapper(_DEVICEINFORESULT)
+_CARTOGRAPHERSUBMAPSET = _descriptor.EnumDescriptor(
+  name='CartographerSubmapSet',
+  full_name='proto.CartographerSubmapSet',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='CARTOGRAPHER_SUBMAP_SET_NONE', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CARTOGRAPHER_SUBMAP_SET_FROZEN', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CARTOGRAPHER_SUBMAP_SET_FINISHED', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CARTOGRAPHER_SUBMAP_SET_ACTIVE', index=3, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=40531,
+  serialized_end=40698,
+)
+_sym_db.RegisterEnumDescriptor(_CARTOGRAPHERSUBMAPSET)
+
+CartographerSubmapSet = enum_type_wrapper.EnumTypeWrapper(_CARTOGRAPHERSUBMAPSET)
+_CARTOGRAPHERLOCALIZATIONSTATE = _descriptor.EnumDescriptor(
+  name='CartographerLocalizationState',
+  full_name='proto.CartographerLocalizationState',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='CARTOGRAPHER_LOCALIZATION_WAITING', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CARTOGRAPHER_LOCALIZATION_ALIGNING', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CARTOGRAPHER_LOCALIZATION_LOCALIZED', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=40701,
+  serialized_end=40852,
+)
+_sym_db.RegisterEnumDescriptor(_CARTOGRAPHERLOCALIZATIONSTATE)
+
+CartographerLocalizationState = enum_type_wrapper.EnumTypeWrapper(_CARTOGRAPHERLOCALIZATIONSTATE)
 _SIDE = _descriptor.EnumDescriptor(
   name='Side',
   full_name='proto.Side',
@@ -50,8 +173,8 @@ _SIDE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=32727,
-  serialized_end=32786,
+  serialized_start=40854,
+  serialized_end=40913,
 )
 _sym_db.RegisterEnumDescriptor(_SIDE)
 
@@ -96,8 +219,8 @@ _TACTILEFINGER = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=32789,
-  serialized_end=32967,
+  serialized_start=40916,
+  serialized_end=41094,
 )
 _sym_db.RegisterEnumDescriptor(_TACTILEFINGER)
 
@@ -137,8 +260,8 @@ _CAMERAMOUNT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=32970,
-  serialized_end=33129,
+  serialized_start=41097,
+  serialized_end=41256,
 )
 _sym_db.RegisterEnumDescriptor(_CAMERAMOUNT)
 
@@ -168,8 +291,8 @@ _SPACEMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=33131,
-  serialized_end=33230,
+  serialized_start=41258,
+  serialized_end=41357,
 )
 _sym_db.RegisterEnumDescriptor(_SPACEMODE)
 
@@ -219,8 +342,8 @@ _CONTROLMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=33233,
-  serialized_end=33453,
+  serialized_start=41360,
+  serialized_end=41580,
 )
 _sym_db.RegisterEnumDescriptor(_CONTROLMODE)
 
@@ -265,8 +388,8 @@ _LIFECYCLEPHASE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=33456,
-  serialized_end=33643,
+  serialized_start=41583,
+  serialized_end=41770,
 )
 _sym_db.RegisterEnumDescriptor(_LIFECYCLEPHASE)
 
@@ -306,8 +429,8 @@ _FAULTLEVEL = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=33646,
-  serialized_end=33780,
+  serialized_start=41773,
+  serialized_end=41907,
 )
 _sym_db.RegisterEnumDescriptor(_FAULTLEVEL)
 
@@ -352,8 +475,8 @@ _ULTRASONICDISTANCESTATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=33783,
-  serialized_end=34060,
+  serialized_start=41910,
+  serialized_end=42187,
 )
 _sym_db.RegisterEnumDescriptor(_ULTRASONICDISTANCESTATUS)
 
@@ -378,8 +501,8 @@ _TORSOCONTROLMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=34062,
-  serialized_end=34141,
+  serialized_start=42189,
+  serialized_end=42268,
 )
 _sym_db.RegisterEnumDescriptor(_TORSOCONTROLMODE)
 
@@ -404,8 +527,8 @@ _CHASSISCONTROLMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=34143,
-  serialized_end=34228,
+  serialized_start=42270,
+  serialized_end=42355,
 )
 _sym_db.RegisterEnumDescriptor(_CHASSISCONTROLMODE)
 
@@ -430,8 +553,8 @@ _CHASSISCOMMANDMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=34230,
-  serialized_end=34316,
+  serialized_start=42357,
+  serialized_end=42443,
 )
 _sym_db.RegisterEnumDescriptor(_CHASSISCOMMANDMODE)
 
@@ -456,8 +579,8 @@ _CHASSISSTEERSTRATEGY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=34318,
-  serialized_end=34435,
+  serialized_start=42445,
+  serialized_end=42562,
 )
 _sym_db.RegisterEnumDescriptor(_CHASSISSTEERSTRATEGY)
 
@@ -482,8 +605,8 @@ _CHASSISWHEELSTRATEGY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=34437,
-  serialized_end=34551,
+  serialized_start=42564,
+  serialized_end=42678,
 )
 _sym_db.RegisterEnumDescriptor(_CHASSISWHEELSTRATEGY)
 
@@ -508,8 +631,8 @@ _CHASSISSTRETCHSTRATEGY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=34553,
-  serialized_end=34671,
+  serialized_start=42680,
+  serialized_end=42798,
 )
 _sym_db.RegisterEnumDescriptor(_CHASSISSTRETCHSTRATEGY)
 
@@ -564,8 +687,8 @@ _POWERDATAQUALITY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=34674,
-  serialized_end=34912,
+  serialized_start=42801,
+  serialized_end=43039,
 )
 _sym_db.RegisterEnumDescriptor(_POWERDATAQUALITY)
 
@@ -595,8 +718,8 @@ _POWERCLOCKDOMAIN = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=34914,
-  serialized_end=35013,
+  serialized_start=43041,
+  serialized_end=43140,
 )
 _sym_db.RegisterEnumDescriptor(_POWERCLOCKDOMAIN)
 
@@ -626,8 +749,8 @@ _POWERLINKSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=35015,
-  serialized_end=35102,
+  serialized_start=43142,
+  serialized_end=43229,
 )
 _sym_db.RegisterEnumDescriptor(_POWERLINKSTATE)
 
@@ -672,8 +795,8 @@ _CHESTPOWEROPERATINGSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=35105,
-  serialized_end=35290,
+  serialized_start=43232,
+  serialized_end=43417,
 )
 _sym_db.RegisterEnumDescriptor(_CHESTPOWEROPERATINGSTATE)
 
@@ -753,8 +876,8 @@ _POWEROPCODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=35293,
-  serialized_end=35622,
+  serialized_start=43420,
+  serialized_end=43749,
 )
 _sym_db.RegisterEnumDescriptor(_POWEROPCODE)
 
@@ -799,8 +922,8 @@ _HEADSTEREOSTREAMRESULT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=35625,
-  serialized_end=35896,
+  serialized_start=43752,
+  serialized_end=44023,
 )
 _sym_db.RegisterEnumDescriptor(_HEADSTEREOSTREAMRESULT)
 
@@ -830,8 +953,8 @@ _HEADSTEREOSTREAMSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=35899,
-  serialized_end=36042,
+  serialized_start=44026,
+  serialized_end=44169,
 )
 _sym_db.RegisterEnumDescriptor(_HEADSTEREOSTREAMSTATE)
 
@@ -876,8 +999,8 @@ _RECORDERCOMMANDRESULT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=36045,
-  serialized_end=36310,
+  serialized_start=44172,
+  serialized_end=44437,
 )
 _sym_db.RegisterEnumDescriptor(_RECORDERCOMMANDRESULT)
 
@@ -907,12 +1030,94 @@ _RECORDERRECORDINGMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=36313,
-  serialized_end=36448,
+  serialized_start=44440,
+  serialized_end=44575,
 )
 _sym_db.RegisterEnumDescriptor(_RECORDERRECORDINGMODE)
 
 RecorderRecordingMode = enum_type_wrapper.EnumTypeWrapper(_RECORDERRECORDINGMODE)
+_RECORDERUPLOADSTATE = _descriptor.EnumDescriptor(
+  name='RecorderUploadState',
+  full_name='proto.RecorderUploadState',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='RECORDER_UPLOAD_STATE_UNSPECIFIED', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='RECORDER_UPLOAD_STATE_IDLE', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='RECORDER_UPLOAD_STATE_PENDING', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='RECORDER_UPLOAD_STATE_UPLOADING', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='RECORDER_UPLOAD_STATE_SUCCEEDED', index=4, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='RECORDER_UPLOAD_STATE_FAILED', index=5, number=5,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='RECORDER_UPLOAD_STATE_CANCELLED', index=6, number=6,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=44578,
+  serialized_end=44850,
+)
+_sym_db.RegisterEnumDescriptor(_RECORDERUPLOADSTATE)
+
+RecorderUploadState = enum_type_wrapper.EnumTypeWrapper(_RECORDERUPLOADSTATE)
+_RECORDERFILETYPE = _descriptor.EnumDescriptor(
+  name='RecorderFileType',
+  full_name='proto.RecorderFileType',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='RECORDER_FILE_TYPE_UNSPECIFIED', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='RECORDER_FILE_TYPE_FILE', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='RECORDER_FILE_TYPE_DIRECTORY', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=44852,
+  serialized_end=44969,
+)
+_sym_db.RegisterEnumDescriptor(_RECORDERFILETYPE)
+
+RecorderFileType = enum_type_wrapper.EnumTypeWrapper(_RECORDERFILETYPE)
 _HEARTBEATMETRICKIND = _descriptor.EnumDescriptor(
   name='HeartbeatMetricKind',
   full_name='proto.HeartbeatMetricKind',
@@ -943,8 +1148,8 @@ _HEARTBEATMETRICKIND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=36451,
-  serialized_end=36666,
+  serialized_start=44972,
+  serialized_end=45187,
 )
 _sym_db.RegisterEnumDescriptor(_HEARTBEATMETRICKIND)
 
@@ -984,8 +1189,8 @@ _HARDWAREHEALTHVERDICT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=36669,
-  serialized_end=36831,
+  serialized_start=45190,
+  serialized_end=45352,
 )
 _sym_db.RegisterEnumDescriptor(_HARDWAREHEALTHVERDICT)
 
@@ -1020,8 +1225,8 @@ _HEALTHREQUIREMENT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=36833,
-  serialized_end=36899,
+  serialized_start=45354,
+  serialized_end=45420,
 )
 _sym_db.RegisterEnumDescriptor(_HEALTHREQUIREMENT)
 
@@ -1061,8 +1266,8 @@ _WHOLEBODYCOMMANDCHANNEL = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=36902,
-  serialized_end=37144,
+  serialized_start=45423,
+  serialized_end=45665,
 )
 _sym_db.RegisterEnumDescriptor(_WHOLEBODYCOMMANDCHANNEL)
 
@@ -1097,8 +1302,8 @@ _OPERATIONMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=37147,
-  serialized_end=37289,
+  serialized_start=45668,
+  serialized_end=45810,
 )
 _sym_db.RegisterEnumDescriptor(_OPERATIONMODE)
 
@@ -1148,8 +1353,8 @@ _MASTERPHASE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=37292,
-  serialized_end=37480,
+  serialized_start=45813,
+  serialized_end=46001,
 )
 _sym_db.RegisterEnumDescriptor(_MASTERPHASE)
 
@@ -1219,8 +1424,8 @@ _MASTERCOMMANDRESULT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=37483,
-  serialized_end=37946,
+  serialized_start=46004,
+  serialized_end=46467,
 )
 _sym_db.RegisterEnumDescriptor(_MASTERCOMMANDRESULT)
 
@@ -1245,8 +1450,8 @@ _MASTERTASKHEALTHLEVEL = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=37948,
-  serialized_end=38035,
+  serialized_start=46469,
+  serialized_end=46556,
 )
 _sym_db.RegisterEnumDescriptor(_MASTERTASKHEALTHLEVEL)
 
@@ -1291,12 +1496,140 @@ _MASTERPHASETRANSITIONOPERATION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=38038,
-  serialized_end=38364,
+  serialized_start=46559,
+  serialized_end=46885,
 )
 _sym_db.RegisterEnumDescriptor(_MASTERPHASETRANSITIONOPERATION)
 
 MasterPhaseTransitionOperation = enum_type_wrapper.EnumTypeWrapper(_MASTERPHASETRANSITIONOPERATION)
+_CHASSISCALIBSTATUSRESULT = _descriptor.EnumDescriptor(
+  name='ChassisCalibStatusResult',
+  full_name='proto.ChassisCalibStatusResult',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='CHASSIS_CALIB_STATUS_UNSPECIFIED', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CHASSIS_CALIB_STATUS_OK', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CHASSIS_CALIB_STATUS_NOT_FOUND', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CHASSIS_CALIB_STATUS_INVALID_REQUEST', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CHASSIS_CALIB_STATUS_NO_ACTIVE_TASK', index=4, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=46888,
+  serialized_end=47100,
+)
+_sym_db.RegisterEnumDescriptor(_CHASSISCALIBSTATUSRESULT)
+
+ChassisCalibStatusResult = enum_type_wrapper.EnumTypeWrapper(_CHASSISCALIBSTATUSRESULT)
+_CHASSISCALIBSTATE = _descriptor.EnumDescriptor(
+  name='ChassisCalibState',
+  full_name='proto.ChassisCalibState',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='CHASSIS_CALIB_STATE_UNSPECIFIED', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CHASSIS_CALIB_STATE_IN_PROGRESS', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CHASSIS_CALIB_STATE_SUCCEEDED', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CHASSIS_CALIB_STATE_FAILED', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=47103,
+  serialized_end=47263,
+)
+_sym_db.RegisterEnumDescriptor(_CHASSISCALIBSTATE)
+
+ChassisCalibState = enum_type_wrapper.EnumTypeWrapper(_CHASSISCALIBSTATE)
+_DEVICEPARAMETERSTATUS = _descriptor.EnumDescriptor(
+  name='DeviceParameterStatus',
+  full_name='proto.DeviceParameterStatus',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_PARAMETER_STATUS_UNSPECIFIED', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_PARAMETER_STATUS_OK', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_PARAMETER_STATUS_INVALID_REQUEST', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_PARAMETER_STATUS_BUSY', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_PARAMETER_STATUS_UNSUPPORTED', index=4, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_PARAMETER_STATUS_UNAVAILABLE', index=5, number=5,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEVICE_PARAMETER_STATUS_IO_ERROR', index=6, number=6,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=47266,
+  serialized_end=47561,
+)
+_sym_db.RegisterEnumDescriptor(_DEVICEPARAMETERSTATUS)
+
+DeviceParameterStatus = enum_type_wrapper.EnumTypeWrapper(_DEVICEPARAMETERSTATUS)
 _HANDSERVICERESULT = _descriptor.EnumDescriptor(
   name='HandServiceResult',
   full_name='proto.HandServiceResult',
@@ -1332,8 +1665,8 @@ _HANDSERVICERESULT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=38367,
-  serialized_end=38557,
+  serialized_start=47564,
+  serialized_end=47754,
 )
 _sym_db.RegisterEnumDescriptor(_HANDSERVICERESULT)
 
@@ -1373,8 +1706,8 @@ _HANDZEROCALIBRATIONSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=38560,
-  serialized_end=38789,
+  serialized_start=47757,
+  serialized_end=47986,
 )
 _sym_db.RegisterEnumDescriptor(_HANDZEROCALIBRATIONSTATE)
 
@@ -1424,8 +1757,8 @@ _OTARESULT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=38792,
-  serialized_end=38982,
+  serialized_start=47989,
+  serialized_end=48179,
 )
 _sym_db.RegisterEnumDescriptor(_OTARESULT)
 
@@ -1465,8 +1798,8 @@ _OTATASKSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=38985,
-  serialized_end=39143,
+  serialized_start=48182,
+  serialized_end=48340,
 )
 _sym_db.RegisterEnumDescriptor(_OTATASKSTATE)
 
@@ -1536,8 +1869,8 @@ _OTAPERIPHERALFAILUREREASON = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=39146,
-  serialized_end=39757,
+  serialized_start=48343,
+  serialized_end=48954,
 )
 _sym_db.RegisterEnumDescriptor(_OTAPERIPHERALFAILUREREASON)
 
@@ -1567,8 +1900,8 @@ _OTAEFFECTCLOSURE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=39760,
-  serialized_end=39891,
+  serialized_start=48957,
+  serialized_end=49088,
 )
 _sym_db.RegisterEnumDescriptor(_OTAEFFECTCLOSURE)
 
@@ -1618,8 +1951,8 @@ _OTAAGENTSUBMITRESULT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=39894,
-  serialized_end=40210,
+  serialized_start=49091,
+  serialized_end=49407,
 )
 _sym_db.RegisterEnumDescriptor(_OTAAGENTSUBMITRESULT)
 
@@ -1664,8 +1997,8 @@ _OTAAGENTSTATUSRESULT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=40213,
-  serialized_end=40485,
+  serialized_start=49410,
+  serialized_end=49682,
 )
 _sym_db.RegisterEnumDescriptor(_OTAAGENTSTATUSRESULT)
 
@@ -1720,8 +2053,8 @@ _OTAAGENTTERMINALRESULT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=40488,
-  serialized_end=40851,
+  serialized_start=49685,
+  serialized_end=50048,
 )
 _sym_db.RegisterEnumDescriptor(_OTAAGENTTERMINALRESULT)
 
@@ -1751,8 +2084,8 @@ _OTAAGENTCOMPLETIONPROVENANCE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=40854,
-  serialized_end=41033,
+  serialized_start=50051,
+  serialized_end=50230,
 )
 _sym_db.RegisterEnumDescriptor(_OTAAGENTCOMPLETIONPROVENANCE)
 
@@ -1782,8 +2115,8 @@ _OTAAGENTTASKKIND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=41035,
-  serialized_end=41162,
+  serialized_start=50232,
+  serialized_end=50359,
 )
 _sym_db.RegisterEnumDescriptor(_OTAAGENTTASKKIND)
 
@@ -1833,8 +2166,8 @@ _OTAAGENTCANCELRESULT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=41165,
-  serialized_end=41492,
+  serialized_start=50362,
+  serialized_end=50689,
 )
 _sym_db.RegisterEnumDescriptor(_OTAAGENTCANCELRESULT)
 
@@ -1881,11 +2214,16 @@ _OTAAGENTMODULEVERSIONSTATUS = _descriptor.EnumDescriptor(
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='OTA_AGENT_MODULE_VERSION_STATUS_CONFLICT', index=7, number=7,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=41495,
-  serialized_end=41853,
+  serialized_start=50692,
+  serialized_end=51096,
 )
 _sym_db.RegisterEnumDescriptor(_OTAAGENTMODULEVERSIONSTATUS)
 
@@ -1920,8 +2258,8 @@ _OTAAGENTMODULECONFORMANCESTATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=41856,
-  serialized_end=42097,
+  serialized_start=51099,
+  serialized_end=51340,
 )
 _sym_db.RegisterEnumDescriptor(_OTAAGENTMODULECONFORMANCESTATUS)
 
@@ -1976,8 +2314,8 @@ _OTAPUBLICTASKSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=42100,
-  serialized_end=42424,
+  serialized_start=51343,
+  serialized_end=51667,
 )
 _sym_db.RegisterEnumDescriptor(_OTAPUBLICTASKSTATE)
 
@@ -2022,8 +2360,8 @@ _OTAPUBLICSTAGESTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=42427,
-  serialized_end=42669,
+  serialized_start=51670,
+  serialized_end=51912,
 )
 _sym_db.RegisterEnumDescriptor(_OTAPUBLICSTAGESTATE)
 
@@ -2073,8 +2411,8 @@ _OTASTAGEOPERATION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=42672,
-  serialized_end=42940,
+  serialized_start=51915,
+  serialized_end=52183,
 )
 _sym_db.RegisterEnumDescriptor(_OTASTAGEOPERATION)
 
@@ -2119,8 +2457,8 @@ _OTASTAGETARGET = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=42943,
-  serialized_end=43144,
+  serialized_start=52186,
+  serialized_end=52387,
 )
 _sym_db.RegisterEnumDescriptor(_OTASTAGETARGET)
 
@@ -2165,8 +2503,8 @@ _CONFIGVALUETYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=43147,
-  serialized_end=43347,
+  serialized_start=52390,
+  serialized_end=52590,
 )
 _sym_db.RegisterEnumDescriptor(_CONFIGVALUETYPE)
 
@@ -2201,8 +2539,8 @@ _CONFIGAPPLYPOLICY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=43350,
-  serialized_end=43512,
+  serialized_start=52593,
+  serialized_end=52755,
 )
 _sym_db.RegisterEnumDescriptor(_CONFIGAPPLYPOLICY)
 
@@ -2232,8 +2570,8 @@ _CONFIGOPERATION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=43514,
-  serialized_end=43619,
+  serialized_start=52757,
+  serialized_end=52862,
 )
 _sym_db.RegisterEnumDescriptor(_CONFIGOPERATION)
 
@@ -2273,8 +2611,8 @@ _CONFIGOVERRIDESTATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=43622,
-  serialized_end=43834,
+  serialized_start=52865,
+  serialized_end=53077,
 )
 _sym_db.RegisterEnumDescriptor(_CONFIGOVERRIDESTATUS)
 
@@ -2349,12 +2687,109 @@ _CONFIGRESULT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=43837,
-  serialized_end=44276,
+  serialized_start=53080,
+  serialized_end=53519,
 )
 _sym_db.RegisterEnumDescriptor(_CONFIGRESULT)
 
 ConfigResult = enum_type_wrapper.EnumTypeWrapper(_CONFIGRESULT)
+_CAMERACALIBRATIONPOSITION = _descriptor.EnumDescriptor(
+  name='CameraCalibrationPosition',
+  full_name='proto.CameraCalibrationPosition',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='CAMERA_CALIBRATION_POSITION_UNSPECIFIED', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CAMERA_CALIBRATION_POSITION_STEREO_LEFT', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CAMERA_CALIBRATION_POSITION_STEREO_RIGHT', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CAMERA_CALIBRATION_POSITION_WRIST_LEFT', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CAMERA_CALIBRATION_POSITION_WRIST_RIGHT', index=4, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=53522,
+  serialized_end=53774,
+)
+_sym_db.RegisterEnumDescriptor(_CAMERACALIBRATIONPOSITION)
+
+CameraCalibrationPosition = enum_type_wrapper.EnumTypeWrapper(_CAMERACALIBRATIONPOSITION)
+_CAMERACALIBRATIONRESULT = _descriptor.EnumDescriptor(
+  name='CameraCalibrationResult',
+  full_name='proto.CameraCalibrationResult',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='CAMERA_CALIBRATION_RESULT_UNSPECIFIED', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CAMERA_CALIBRATION_RESULT_OK', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CAMERA_CALIBRATION_RESULT_PARTIAL', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CAMERA_CALIBRATION_RESULT_UNAVAILABLE', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='CAMERA_CALIBRATION_RESULT_INVALID_REQUEST', index=4, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=53777,
+  serialized_end=54008,
+)
+_sym_db.RegisterEnumDescriptor(_CAMERACALIBRATIONRESULT)
+
+CameraCalibrationResult = enum_type_wrapper.EnumTypeWrapper(_CAMERACALIBRATIONRESULT)
+DEVICE_INFO_RESULT_UNSPECIFIED = 0
+DEVICE_INFO_RESULT_OK = 1
+DEVICE_INFO_RESULT_INVALID_REQUEST = 2
+DEVICE_INFO_RESULT_NOT_FOUND = 3
+DEVICE_INFO_RESULT_UNREADABLE = 4
+DEVICE_INFO_RESULT_INCOMPLETE = 5
+DEVICE_INFO_RESULT_INVALID_CONFIG = 6
+DEVICE_INFO_RESULT_RESOURCE_LIMIT = 7
+CARTOGRAPHER_SUBMAP_SET_NONE = 0
+CARTOGRAPHER_SUBMAP_SET_FROZEN = 1
+CARTOGRAPHER_SUBMAP_SET_FINISHED = 2
+CARTOGRAPHER_SUBMAP_SET_ACTIVE = 4
+CARTOGRAPHER_LOCALIZATION_WAITING = 0
+CARTOGRAPHER_LOCALIZATION_ALIGNING = 1
+CARTOGRAPHER_LOCALIZATION_LOCALIZED = 2
 SIDE_UNSPECIFIED = 0
 SIDE_LEFT = 1
 SIDE_RIGHT = 2
@@ -2459,6 +2894,16 @@ RECORDER_COMMAND_RESULT_OUTCOME_UNKNOWN = 5
 RECORDER_RECORDING_MODE_UNSPECIFIED = 0
 RECORDER_RECORDING_MODE_DEBUG = 1
 RECORDER_RECORDING_MODE_NORMAL = 2
+RECORDER_UPLOAD_STATE_UNSPECIFIED = 0
+RECORDER_UPLOAD_STATE_IDLE = 1
+RECORDER_UPLOAD_STATE_PENDING = 2
+RECORDER_UPLOAD_STATE_UPLOADING = 3
+RECORDER_UPLOAD_STATE_SUCCEEDED = 4
+RECORDER_UPLOAD_STATE_FAILED = 5
+RECORDER_UPLOAD_STATE_CANCELLED = 6
+RECORDER_FILE_TYPE_UNSPECIFIED = 0
+RECORDER_FILE_TYPE_FILE = 1
+RECORDER_FILE_TYPE_DIRECTORY = 2
 HEARTBEAT_METRIC_KIND_UNSPECIFIED = 0
 HEARTBEAT_METRIC_KIND_TACTILE_FRAME_RATE_HZ = 1
 HEARTBEAT_METRIC_KIND_LIDAR_FRAME_RATE_HZ = 2
@@ -2507,6 +2952,22 @@ MASTER_PHASE_TRANSITION_OPERATION_ENTER_OTA = 2
 MASTER_PHASE_TRANSITION_OPERATION_EXIT_OTA = 3
 MASTER_PHASE_TRANSITION_OPERATION_ENTER_ESTOP = 4
 MASTER_PHASE_TRANSITION_OPERATION_EXIT_ESTOP = 5
+CHASSIS_CALIB_STATUS_UNSPECIFIED = 0
+CHASSIS_CALIB_STATUS_OK = 1
+CHASSIS_CALIB_STATUS_NOT_FOUND = 2
+CHASSIS_CALIB_STATUS_INVALID_REQUEST = 3
+CHASSIS_CALIB_STATUS_NO_ACTIVE_TASK = 4
+CHASSIS_CALIB_STATE_UNSPECIFIED = 0
+CHASSIS_CALIB_STATE_IN_PROGRESS = 1
+CHASSIS_CALIB_STATE_SUCCEEDED = 2
+CHASSIS_CALIB_STATE_FAILED = 3
+DEVICE_PARAMETER_STATUS_UNSPECIFIED = 0
+DEVICE_PARAMETER_STATUS_OK = 1
+DEVICE_PARAMETER_STATUS_INVALID_REQUEST = 2
+DEVICE_PARAMETER_STATUS_BUSY = 3
+DEVICE_PARAMETER_STATUS_UNSUPPORTED = 4
+DEVICE_PARAMETER_STATUS_UNAVAILABLE = 5
+DEVICE_PARAMETER_STATUS_IO_ERROR = 6
 HAND_SERVICE_RESULT_OK = 0
 HAND_SERVICE_RESULT_INVALID_REQUEST = 1
 HAND_SERVICE_RESULT_UNAVAILABLE = 2
@@ -2584,6 +3045,7 @@ OTA_AGENT_MODULE_VERSION_STATUS_MISMATCHED = 3
 OTA_AGENT_MODULE_VERSION_STATUS_UNAVAILABLE = 4
 OTA_AGENT_MODULE_VERSION_STATUS_UNSUPPORTED = 5
 OTA_AGENT_MODULE_VERSION_STATUS_ERROR = 6
+OTA_AGENT_MODULE_VERSION_STATUS_CONFLICT = 7
 OTA_AGENT_MODULE_CONFORMANCE_STATUS_UNSPECIFIED = 0
 OTA_AGENT_MODULE_CONFORMANCE_STATUS_MATCHED = 1
 OTA_AGENT_MODULE_CONFORMANCE_STATUS_MISMATCHED = 2
@@ -2645,7 +3107,252 @@ CONFIG_RESULT_APPLY_FAILED_UNCHANGED = 8
 CONFIG_RESULT_FAILED_RESTORED = 9
 CONFIG_RESULT_RECOVERY_REQUIRED = 10
 CONFIG_RESULT_RESOURCE_LIMIT = 11
+CAMERA_CALIBRATION_POSITION_UNSPECIFIED = 0
+CAMERA_CALIBRATION_POSITION_STEREO_LEFT = 1
+CAMERA_CALIBRATION_POSITION_STEREO_RIGHT = 2
+CAMERA_CALIBRATION_POSITION_WRIST_LEFT = 3
+CAMERA_CALIBRATION_POSITION_WRIST_RIGHT = 4
+CAMERA_CALIBRATION_RESULT_UNSPECIFIED = 0
+CAMERA_CALIBRATION_RESULT_OK = 1
+CAMERA_CALIBRATION_RESULT_PARTIAL = 2
+CAMERA_CALIBRATION_RESULT_UNAVAILABLE = 3
+CAMERA_CALIBRATION_RESULT_INVALID_REQUEST = 4
 
+
+_WRISTISPSTATUSREQUEST_CAMERA = _descriptor.EnumDescriptor(
+  name='Camera',
+  full_name='proto.WristIspStatusRequest.Camera',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='BOTH', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='LEFT', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='RIGHT', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=39519,
+  serialized_end=39558,
+)
+_sym_db.RegisterEnumDescriptor(_WRISTISPSTATUSREQUEST_CAMERA)
+
+_WRISTISPSTATUSFIELD_RESULT = _descriptor.EnumDescriptor(
+  name='Result',
+  full_name='proto.WristIspStatusField.Result',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='UNKNOWN', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='VALID', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='READ_FAILED', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='UNSUPPORTED', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='DEADLINE_EXCEEDED', index=4, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=39694,
+  serialized_end=39783,
+)
+_sym_db.RegisterEnumDescriptor(_WRISTISPSTATUSFIELD_RESULT)
+
+_WRISTISPCAMERASTATUS_RESULT = _descriptor.EnumDescriptor(
+  name='Result',
+  full_name='proto.WristIspCameraStatus.Result',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='UNKNOWN', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='OK', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='PARTIAL', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='OFFLINE', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=39932,
+  serialized_end=39987,
+)
+_sym_db.RegisterEnumDescriptor(_WRISTISPCAMERASTATUS_RESULT)
+
+_WRISTISPSTATUSRESPONSE_RESULT = _descriptor.EnumDescriptor(
+  name='Result',
+  full_name='proto.WristIspStatusResponse.Result',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='UNKNOWN', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='OK', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='PARTIAL', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='BUSY', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='INVALID_REQUEST', index=4, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='UNAVAILABLE', index=5, number=5,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=40132,
+  serialized_end=40222,
+)
+_sym_db.RegisterEnumDescriptor(_WRISTISPSTATUSRESPONSE_RESULT)
+
+
+_DEVICEINFOREQUEST = _descriptor.Descriptor(
+  name='DeviceInfoRequest',
+  full_name='proto.DeviceInfoRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=55,
+  serialized_end=74,
+)
+
+
+_DEVICEINFORESPONSE = _descriptor.Descriptor(
+  name='DeviceInfoResponse',
+  full_name='proto.DeviceInfoResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='proto.DeviceInfoResponse.result', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='sn', full_name='proto.DeviceInfoResponse.sn', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='model', full_name='proto.DeviceInfoResponse.model', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='batch', full_name='proto.DeviceInfoResponse.batch', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.DeviceInfoResponse.message', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=76,
+  serialized_end=196,
+)
 
 
 _HEADER = _descriptor.Descriptor(
@@ -2703,8 +3410,8 @@ _HEADER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=56,
-  serialized_end=197,
+  serialized_start=199,
+  serialized_end=340,
 )
 
 
@@ -2749,8 +3456,8 @@ _POINT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=199,
-  serialized_end=239,
+  serialized_start=342,
+  serialized_end=382,
 )
 
 
@@ -2788,8 +3495,8 @@ _VECTOR2 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=241,
-  serialized_end=272,
+  serialized_start=384,
+  serialized_end=415,
 )
 
 
@@ -2834,8 +3541,8 @@ _VECTOR3 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=274,
-  serialized_end=316,
+  serialized_start=417,
+  serialized_end=459,
 )
 
 
@@ -2887,8 +3594,8 @@ _QUATERNION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=318,
-  serialized_end=374,
+  serialized_start=461,
+  serialized_end=517,
 )
 
 
@@ -2926,8 +3633,8 @@ _POSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=376,
-  serialized_end=454,
+  serialized_start=519,
+  serialized_end=597,
 )
 
 
@@ -2965,8 +3672,885 @@ _POSESTAMPED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=456,
-  serialized_end=527,
+  serialized_start=599,
+  serialized_end=670,
+)
+
+
+_CARTOGRAPHERMAPKEY = _descriptor.Descriptor(
+  name='CartographerMapKey',
+  full_name='proto.CartographerMapKey',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='map_id', full_name='proto.CartographerMapKey.map_id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='map_frame', full_name='proto.CartographerMapKey.map_frame', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='runtime_id', full_name='proto.CartographerMapKey.runtime_id', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=672,
+  serialized_end=747,
+)
+
+
+_CARTOGRAPHERLAYERINFO = _descriptor.Descriptor(
+  name='CartographerLayerInfo',
+  full_name='proto.CartographerLayerInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='layer_index', full_name='proto.CartographerLayerInfo.layer_index', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='layer_id', full_name='proto.CartographerLayerInfo.layer_id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='min_height', full_name='proto.CartographerLayerInfo.min_height', index=2,
+      number=3, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='max_height', full_name='proto.CartographerLayerInfo.max_height', index=3,
+      number=4, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='resolution', full_name='proto.CartographerLayerInfo.resolution', index=4,
+      number=5, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=749,
+  serialized_end=871,
+)
+
+
+_CARTOGRAPHERMAPINFOREQUEST = _descriptor.Descriptor(
+  name='CartographerMapInfoRequest',
+  full_name='proto.CartographerMapInfoRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=873,
+  serialized_end=901,
+)
+
+
+_CARTOGRAPHERMAPINFO = _descriptor.Descriptor(
+  name='CartographerMapInfo',
+  full_name='proto.CartographerMapInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='map', full_name='proto.CartographerMapInfo.map', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='mode', full_name='proto.CartographerMapInfo.mode', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='active_trajectory_id', full_name='proto.CartographerMapInfo.active_trajectory_id', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='layers', full_name='proto.CartographerMapInfo.layers', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=904,
+  serialized_end=1055,
+)
+
+
+_CARTOGRAPHERPOSE = _descriptor.Descriptor(
+  name='CartographerPose',
+  full_name='proto.CartographerPose',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='header', full_name='proto.CartographerPose.header', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='local_frame', full_name='proto.CartographerPose.local_frame', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='published_frame', full_name='proto.CartographerPose.published_frame', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='local_from_published', full_name='proto.CartographerPose.local_from_published', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='map_from_local', full_name='proto.CartographerPose.map_from_local', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1058,
+  serialized_end=1233,
+)
+
+
+_CARTOGRAPHERSUBMAPTEXTUREREQUEST = _descriptor.Descriptor(
+  name='CartographerSubmapTextureRequest',
+  full_name='proto.CartographerSubmapTextureRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='trajectory_id', full_name='proto.CartographerSubmapTextureRequest.trajectory_id', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='submap_index', full_name='proto.CartographerSubmapTextureRequest.submap_index', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='layer_index', full_name='proto.CartographerSubmapTextureRequest.layer_index', index=2,
+      number=3, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1235,
+  serialized_end=1335,
+)
+
+
+_CARTOGRAPHERSUBMAPTEXTURE = _descriptor.Descriptor(
+  name='CartographerSubmapTexture',
+  full_name='proto.CartographerSubmapTexture',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='success', full_name='proto.CartographerSubmapTexture.success', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='trajectory_id', full_name='proto.CartographerSubmapTexture.trajectory_id', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='submap_index', full_name='proto.CartographerSubmapTexture.submap_index', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='submap_version', full_name='proto.CartographerSubmapTexture.submap_version', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='width', full_name='proto.CartographerSubmapTexture.width', index=4,
+      number=5, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='height', full_name='proto.CartographerSubmapTexture.height', index=5,
+      number=6, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='resolution', full_name='proto.CartographerSubmapTexture.resolution', index=6,
+      number=7, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='slice_pose', full_name='proto.CartographerSubmapTexture.slice_pose', index=7,
+      number=8, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='cells', full_name='proto.CartographerSubmapTexture.cells', index=8,
+      number=9, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='error_message', full_name='proto.CartographerSubmapTexture.error_message', index=9,
+      number=10, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='map', full_name='proto.CartographerSubmapTexture.map', index=10,
+      number=11, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1338,
+  serialized_end=1613,
+)
+
+
+_CARTOGRAPHERSUBMAPLISTREQUEST = _descriptor.Descriptor(
+  name='CartographerSubmapListRequest',
+  full_name='proto.CartographerSubmapListRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='selection_mask', full_name='proto.CartographerSubmapListRequest.selection_mask', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1615,
+  serialized_end=1670,
+)
+
+
+_CARTOGRAPHERSUBMAPENTRY = _descriptor.Descriptor(
+  name='CartographerSubmapEntry',
+  full_name='proto.CartographerSubmapEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='trajectory_id', full_name='proto.CartographerSubmapEntry.trajectory_id', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='submap_index', full_name='proto.CartographerSubmapEntry.submap_index', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='submap_version', full_name='proto.CartographerSubmapEntry.submap_version', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='global_pose', full_name='proto.CartographerSubmapEntry.global_pose', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='submap_set', full_name='proto.CartographerSubmapEntry.submap_set', index=4,
+      number=5, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1673,
+  serialized_end=1851,
+)
+
+
+_CARTOGRAPHERSUBMAPLIST = _descriptor.Descriptor(
+  name='CartographerSubmapList',
+  full_name='proto.CartographerSubmapList',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='success', full_name='proto.CartographerSubmapList.success', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='error_message', full_name='proto.CartographerSubmapList.error_message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='map', full_name='proto.CartographerSubmapList.map', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='selection_mask', full_name='proto.CartographerSubmapList.selection_mask', index=3,
+      number=4, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='submaps', full_name='proto.CartographerSubmapList.submaps', index=4,
+      number=5, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1854,
+  serialized_end=2031,
+)
+
+
+_CARTOGRAPHERSCANMATCHEDPOINT = _descriptor.Descriptor(
+  name='CartographerScanMatchedPoint',
+  full_name='proto.CartographerScanMatchedPoint',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='x', full_name='proto.CartographerScanMatchedPoint.x', index=0,
+      number=1, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='y', full_name='proto.CartographerScanMatchedPoint.y', index=1,
+      number=2, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='layer_index', full_name='proto.CartographerScanMatchedPoint.layer_index', index=2,
+      number=3, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2033,
+  serialized_end=2106,
+)
+
+
+_CARTOGRAPHERSCANMATCHEDPOINTS = _descriptor.Descriptor(
+  name='CartographerScanMatchedPoints',
+  full_name='proto.CartographerScanMatchedPoints',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='header', full_name='proto.CartographerScanMatchedPoints.header', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='points', full_name='proto.CartographerScanMatchedPoints.points', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2108,
+  serialized_end=2223,
+)
+
+
+_CARTOGRAPHERRELOCALIZATIONREQUEST = _descriptor.Descriptor(
+  name='CartographerRelocalizationRequest',
+  full_name='proto.CartographerRelocalizationRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='map', full_name='proto.CartographerRelocalizationRequest.map', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pose', full_name='proto.CartographerRelocalizationRequest.pose', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2225,
+  serialized_end=2327,
+)
+
+
+_CARTOGRAPHERRELOCALIZATIONRESPONSE = _descriptor.Descriptor(
+  name='CartographerRelocalizationResponse',
+  full_name='proto.CartographerRelocalizationResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='accepted', full_name='proto.CartographerRelocalizationResponse.accepted', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.CartographerRelocalizationResponse.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='active_trajectory_id', full_name='proto.CartographerRelocalizationResponse.active_trajectory_id', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2329,
+  serialized_end=2430,
+)
+
+
+_CARTOGRAPHERLOCALIZATIONSTATUSREQUEST = _descriptor.Descriptor(
+  name='CartographerLocalizationStatusRequest',
+  full_name='proto.CartographerLocalizationStatusRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2432,
+  serialized_end=2471,
+)
+
+
+_CARTOGRAPHERLOCALIZATIONSTATUS = _descriptor.Descriptor(
+  name='CartographerLocalizationStatus',
+  full_name='proto.CartographerLocalizationStatus',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='map', full_name='proto.CartographerLocalizationStatus.map', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='active_trajectory_id', full_name='proto.CartographerLocalizationStatus.active_trajectory_id', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='proto.CartographerLocalizationStatus.state', index=2,
+      number=3, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.CartographerLocalizationStatus.message', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2474,
+  serialized_end=2646,
+)
+
+
+_CARTOGRAPHERSAVESTATEREQUEST = _descriptor.Descriptor(
+  name='CartographerSaveStateRequest',
+  full_name='proto.CartographerSaveStateRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='header', full_name='proto.CartographerSaveStateRequest.header', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='filename', full_name='proto.CartographerSaveStateRequest.filename', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2648,
+  serialized_end=2727,
+)
+
+
+_CARTOGRAPHERSAVESTATERESPONSE = _descriptor.Descriptor(
+  name='CartographerSaveStateResponse',
+  full_name='proto.CartographerSaveStateResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='success', full_name='proto.CartographerSaveStateResponse.success', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='file_path', full_name='proto.CartographerSaveStateResponse.file_path', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.CartographerSaveStateResponse.message', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2729,
+  serialized_end=2813,
 )
 
 
@@ -3004,8 +4588,8 @@ _TWIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=529,
-  serialized_end=601,
+  serialized_start=2815,
+  serialized_end=2887,
 )
 
 
@@ -3043,8 +4627,8 @@ _TWISTSTAMPED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=603,
-  serialized_end=677,
+  serialized_start=2889,
+  serialized_end=2963,
 )
 
 
@@ -3082,8 +4666,8 @@ _WRENCH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=679,
-  serialized_end=750,
+  serialized_start=2965,
+  serialized_end=3036,
 )
 
 
@@ -3121,8 +4705,8 @@ _WRENCHSTAMPED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=752,
-  serialized_end=829,
+  serialized_start=3038,
+  serialized_end=3115,
 )
 
 
@@ -3160,8 +4744,8 @@ _TRANSFORM = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=831,
-  serialized_end=916,
+  serialized_start=3117,
+  serialized_end=3202,
 )
 
 
@@ -3206,8 +4790,8 @@ _TRANSFORMSTAMPED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=918,
-  serialized_end=1028,
+  serialized_start=3204,
+  serialized_end=3314,
 )
 
 
@@ -3273,8 +4857,8 @@ _IMU = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1031,
-  serialized_end=1275,
+  serialized_start=3317,
+  serialized_end=3561,
 )
 
 
@@ -3312,8 +4896,8 @@ _IMUSAMPLES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1277,
-  serialized_end=1333,
+  serialized_start=3563,
+  serialized_end=3619,
 )
 
 
@@ -3379,8 +4963,8 @@ _ULTRASONIC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1336,
-  serialized_end=1512,
+  serialized_start=3622,
+  serialized_end=3798,
 )
 
 
@@ -3418,8 +5002,8 @@ _ULTRASONICSAMPLES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1514,
-  serialized_end=1591,
+  serialized_start=3800,
+  serialized_end=3877,
 )
 
 
@@ -3471,8 +5055,8 @@ _TACTILESKINPOINT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1593,
-  serialized_end=1673,
+  serialized_start=3879,
+  serialized_end=3959,
 )
 
 
@@ -3517,8 +5101,8 @@ _TACTILESKIN = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1675,
-  serialized_end=1775,
+  serialized_start=3961,
+  serialized_end=4061,
 )
 
 
@@ -3556,8 +5140,8 @@ _TACTILESKINSAMPLES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1777,
-  serialized_end=1850,
+  serialized_start=4063,
+  serialized_end=4136,
 )
 
 
@@ -3630,8 +5214,8 @@ _IMAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1853,
-  serialized_end=1990,
+  serialized_start=4139,
+  serialized_end=4276,
 )
 
 
@@ -3676,8 +5260,8 @@ _COMPRESSEDIMAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1992,
-  serialized_end=2070,
+  serialized_start=4278,
+  serialized_end=4356,
 )
 
 
@@ -3750,8 +5334,8 @@ _CAMERAFRAME = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2073,
-  serialized_end=2335,
+  serialized_start=4359,
+  serialized_end=4621,
 )
 
 
@@ -3803,8 +5387,8 @@ _POINTFIELD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2337,
-  serialized_end=2412,
+  serialized_start=4623,
+  serialized_end=4698,
 )
 
 
@@ -3891,8 +5475,8 @@ _POINTCLOUD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2415,
-  serialized_end=2616,
+  serialized_start=4701,
+  serialized_end=4902,
 )
 
 
@@ -3944,8 +5528,8 @@ _LIDARPOINT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2618,
-  serialized_end=2685,
+  serialized_start=4904,
+  serialized_end=4971,
 )
 
 
@@ -3990,8 +5574,8 @@ _LASERSHOT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2687,
-  serialized_end=2776,
+  serialized_start=4973,
+  serialized_end=5062,
 )
 
 
@@ -4022,8 +5606,8 @@ _LASERSHOTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2778,
-  serialized_end=2823,
+  serialized_start=5064,
+  serialized_end=5109,
 )
 
 
@@ -4075,8 +5659,8 @@ _SUBAREA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2825,
-  serialized_end=2926,
+  serialized_start=5111,
+  serialized_end=5212,
 )
 
 
@@ -4107,8 +5691,8 @@ _SUBAREAS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2928,
-  serialized_end=2972,
+  serialized_start=5214,
+  serialized_end=5258,
 )
 
 
@@ -4167,8 +5751,8 @@ _PACKEDLASERSHOTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2974,
-  serialized_end=3085,
+  serialized_start=5260,
+  serialized_end=5371,
 )
 
 
@@ -4227,8 +5811,8 @@ _PACKEDSUBAREAS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3087,
-  serialized_end=3202,
+  serialized_start=5373,
+  serialized_end=5488,
 )
 
 
@@ -4299,8 +5883,8 @@ _LIDARFRAME = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=3205,
-  serialized_end=3463,
+  serialized_start=5491,
+  serialized_end=5749,
 )
 
 
@@ -4359,8 +5943,8 @@ _RADARTRACK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3465,
-  serialized_end=3589,
+  serialized_start=5751,
+  serialized_end=5875,
 )
 
 
@@ -4412,8 +5996,8 @@ _RADARFRAME = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3592,
-  serialized_end=3720,
+  serialized_start=5878,
+  serialized_end=6006,
 )
 
 
@@ -4493,8 +6077,8 @@ _TACTILEFRAME = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3723,
-  serialized_end=4008,
+  serialized_start=6009,
+  serialized_end=6294,
 )
 
 
@@ -4539,8 +6123,8 @@ _CONTACTPOINTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4010,
-  serialized_end=4093,
+  serialized_start=6296,
+  serialized_end=6379,
 )
 
 
@@ -4580,6 +6164,20 @@ _JOINTSTATE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='low_speed_position', full_name='proto.JointState.low_speed_position', index=4,
+      number=5, type=2, cpp_type=6, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='low_speed_velocity', full_name='proto.JointState.low_speed_velocity', index=5,
+      number=6, type=2, cpp_type=6, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -4592,8 +6190,8 @@ _JOINTSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4095,
-  serialized_end=4173,
+  serialized_start=6382,
+  serialized_end=6516,
 )
 
 
@@ -4645,8 +6243,8 @@ _JOINTCOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4175,
-  serialized_end=4255,
+  serialized_start=6518,
+  serialized_end=6598,
 )
 
 
@@ -4698,8 +6296,8 @@ _JOINTELECTRICALSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4257,
-  serialized_end=4360,
+  serialized_start=6600,
+  serialized_end=6703,
 )
 
 
@@ -4765,8 +6363,8 @@ _ARMSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4363,
-  serialized_end=4578,
+  serialized_start=6706,
+  serialized_end=6921,
 )
 
 
@@ -4830,8 +6428,8 @@ _ARMCOMMAND = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=4581,
-  serialized_end=4766,
+  serialized_start=6924,
+  serialized_end=7109,
 )
 
 
@@ -4890,8 +6488,8 @@ _HANDSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4769,
-  serialized_end=4964,
+  serialized_start=7112,
+  serialized_end=7307,
 )
 
 
@@ -4943,8 +6541,8 @@ _HANDCOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4967,
-  serialized_end=5107,
+  serialized_start=7310,
+  serialized_end=7450,
 )
 
 
@@ -4989,8 +6587,8 @@ _GLOVERAW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5109,
-  serialized_end=5209,
+  serialized_start=7452,
+  serialized_end=7552,
 )
 
 
@@ -5084,8 +6682,8 @@ _HANDFORCEINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5212,
-  serialized_end=5445,
+  serialized_start=7555,
+  serialized_end=7788,
 )
 
 
@@ -5130,8 +6728,8 @@ _TORSOSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5447,
-  serialized_end=5574,
+  serialized_start=7790,
+  serialized_end=7917,
 )
 
 
@@ -5181,8 +6779,8 @@ _TORSOCOMMAND = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=5576,
-  serialized_end=5702,
+  serialized_start=7919,
+  serialized_end=8045,
 )
 
 
@@ -5220,8 +6818,8 @@ _TORSOMODEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5704,
-  serialized_end=5792,
+  serialized_start=8047,
+  serialized_end=8135,
 )
 
 
@@ -5273,8 +6871,8 @@ _TORSOMODERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5795,
-  serialized_end=5943,
+  serialized_start=8138,
+  serialized_end=8286,
 )
 
 
@@ -5333,8 +6931,8 @@ _CHASSISSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5946,
-  serialized_end=6127,
+  serialized_start=8289,
+  serialized_end=8470,
 )
 
 
@@ -5386,8 +6984,8 @@ _CHASSISTARGET = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6130,
-  serialized_end=6268,
+  serialized_start=8473,
+  serialized_end=8611,
 )
 
 
@@ -5446,8 +7044,8 @@ _CHASSISCOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6270,
-  serialized_end=6370,
+  serialized_start=8613,
+  serialized_end=8713,
 )
 
 
@@ -5646,8 +7244,8 @@ _CHASSISRAWCOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6373,
-  serialized_end=7047,
+  serialized_start=8716,
+  serialized_end=9390,
 )
 
 
@@ -5720,8 +7318,8 @@ _CHASSISPOSECOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7050,
-  serialized_end=7224,
+  serialized_start=9393,
+  serialized_end=9567,
 )
 
 
@@ -5759,8 +7357,8 @@ _CHASSISMODEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7226,
-  serialized_end=7318,
+  serialized_start=9569,
+  serialized_end=9661,
 )
 
 
@@ -5812,8 +7410,8 @@ _CHASSISMODERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7321,
-  serialized_end=7475,
+  serialized_start=9664,
+  serialized_end=9818,
 )
 
 
@@ -5892,8 +7490,8 @@ _CHASSISSTRATEGYREQUEST = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=7478,
-  serialized_end=7787,
+  serialized_start=9821,
+  serialized_end=10130,
 )
 
 
@@ -5987,8 +7585,8 @@ _CHASSISSTRATEGYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7790,
-  serialized_end=8255,
+  serialized_start=10133,
+  serialized_end=10598,
 )
 
 
@@ -6082,8 +7680,8 @@ _POWERSAMPLEMETADATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8258,
-  serialized_end=8579,
+  serialized_start=10601,
+  serialized_end=10922,
 )
 
 
@@ -6133,8 +7731,8 @@ _POWERVOLTAGEREADING = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=8581,
-  serialized_end=8698,
+  serialized_start=10924,
+  serialized_end=11041,
 )
 
 
@@ -6184,8 +7782,8 @@ _POWERCURRENTREADING = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=8700,
-  serialized_end=8817,
+  serialized_start=11043,
+  serialized_end=11160,
 )
 
 
@@ -6235,8 +7833,8 @@ _POWERTEMPERATUREREADING = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=8819,
-  serialized_end=8944,
+  serialized_start=11162,
+  serialized_end=11287,
 )
 
 
@@ -6286,8 +7884,8 @@ _POWERPERCENTAGEREADING = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=8946,
-  serialized_end=9062,
+  serialized_start=11289,
+  serialized_end=11405,
 )
 
 
@@ -6337,8 +7935,8 @@ _POWERPOWERREADING = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=9064,
-  serialized_end=9179,
+  serialized_start=11407,
+  serialized_end=11522,
 )
 
 
@@ -6434,8 +8032,8 @@ _CHESTPOWEROUTPUTS = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=9182,
-  serialized_end=9539,
+  serialized_start=11525,
+  serialized_end=11882,
 )
 
 
@@ -6501,8 +8099,8 @@ _CHESTPOWERDIAGNOSTICS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9542,
-  serialized_end=9769,
+  serialized_start=11885,
+  serialized_end=12112,
 )
 
 
@@ -6547,8 +8145,8 @@ _CHASSISPOWERDIAGNOSTICS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9772,
-  serialized_end=9951,
+  serialized_start=12115,
+  serialized_end=12294,
 )
 
 
@@ -6745,8 +8343,8 @@ _CHESTPOWERSTATE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=9954,
-  serialized_end=11288,
+  serialized_start=12297,
+  serialized_end=13631,
 )
 
 
@@ -6931,8 +8529,8 @@ _CHASSISPOWERSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11291,
-  serialized_end=12610,
+  serialized_start=13634,
+  serialized_end=14953,
 )
 
 
@@ -7004,8 +8602,8 @@ _BATTERYPACKDIAGNOSTICS = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=12613,
-  serialized_end=12837,
+  serialized_start=14956,
+  serialized_end=15180,
 )
 
 
@@ -7134,8 +8732,8 @@ _BATTERYPACKSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12840,
-  serialized_end=13591,
+  serialized_start=15183,
+  serialized_end=15934,
 )
 
 
@@ -7180,8 +8778,8 @@ _BATTERYSYSTEMSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13594,
-  serialized_end=13729,
+  serialized_start=15937,
+  serialized_end=16072,
 )
 
 
@@ -7247,8 +8845,8 @@ _BATTERYSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13732,
-  serialized_end=13874,
+  serialized_start=16075,
+  serialized_end=16217,
 )
 
 
@@ -7293,8 +8891,8 @@ _ESTOPSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13876,
-  serialized_end=13949,
+  serialized_start=16219,
+  serialized_end=16292,
 )
 
 
@@ -7360,8 +8958,8 @@ _MOSSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13952,
-  serialized_end=14082,
+  serialized_start=16295,
+  serialized_end=16425,
 )
 
 
@@ -7406,8 +9004,8 @@ _FANSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14084,
-  serialized_end=14149,
+  serialized_start=16427,
+  serialized_end=16492,
 )
 
 
@@ -7452,8 +9050,8 @@ _POWERPGSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14151,
-  serialized_end=14233,
+  serialized_start=16494,
+  serialized_end=16576,
 )
 
 
@@ -7533,8 +9131,8 @@ _POWERCHANNELCMDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14236,
-  serialized_end=14439,
+  serialized_start=16579,
+  serialized_end=16782,
 )
 
 
@@ -7593,8 +9191,8 @@ _POWERCHANNELCMDRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14441,
-  serialized_end=14556,
+  serialized_start=16784,
+  serialized_end=16899,
 )
 
 
@@ -7646,8 +9244,8 @@ _POWERESTOPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14558,
-  serialized_end=14659,
+  serialized_start=16901,
+  serialized_end=17002,
 )
 
 
@@ -7692,8 +9290,8 @@ _POWERESTOPRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14661,
-  serialized_end=14733,
+  serialized_start=17004,
+  serialized_end=17076,
 )
 
 
@@ -7738,8 +9336,8 @@ _POWERSHUTDOWNREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14735,
-  serialized_end=14822,
+  serialized_start=17078,
+  serialized_end=17165,
 )
 
 
@@ -7784,8 +9382,8 @@ _POWERSHUTDOWNRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14824,
-  serialized_end=14899,
+  serialized_start=17167,
+  serialized_end=17242,
 )
 
 
@@ -7851,8 +9449,8 @@ _HEADSTEREOSTREAMPARAMS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14901,
-  serialized_end=15018,
+  serialized_start=17244,
+  serialized_end=17361,
 )
 
 
@@ -7890,8 +9488,8 @@ _HEADSTEREOSTREAMSTARTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15020,
-  serialized_end=15101,
+  serialized_start=17363,
+  serialized_end=17444,
 )
 
 
@@ -7929,8 +9527,8 @@ _HEADSTEREOSTREAMSTOPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15103,
-  serialized_end=15183,
+  serialized_start=17446,
+  serialized_end=17526,
 )
 
 
@@ -7989,8 +9587,8 @@ _HEADSTEREOSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15186,
-  serialized_end=15400,
+  serialized_start=17529,
+  serialized_end=17743,
 )
 
 
@@ -8021,8 +9619,8 @@ _RECORDERSTARTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15402,
-  serialized_end=15455,
+  serialized_start=17745,
+  serialized_end=17798,
 )
 
 
@@ -8053,8 +9651,8 @@ _RECORDERSTOPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15457,
-  serialized_end=15509,
+  serialized_start=17800,
+  serialized_end=17852,
 )
 
 
@@ -8092,8 +9690,8 @@ _RECORDERSETMODEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15511,
-  serialized_end=15610,
+  serialized_start=17854,
+  serialized_end=17953,
 )
 
 
@@ -8124,8 +9722,8 @@ _RECORDERDELETELASTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15612,
-  serialized_end=15670,
+  serialized_start=17955,
+  serialized_end=18013,
 )
 
 
@@ -8170,8 +9768,856 @@ _RECORDERCOMMANDRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15672,
-  serialized_end=15777,
+  serialized_start=18015,
+  serialized_end=18120,
+)
+
+
+_FILERECORD = _descriptor.Descriptor(
+  name='FileRecord',
+  full_name='proto.FileRecord',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='file_name', full_name='proto.FileRecord.file_name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='file_sha256', full_name='proto.FileRecord.file_sha256', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='file', full_name='proto.FileRecord.file', index=2,
+      number=3, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=18122,
+  serialized_end=18188,
+)
+
+
+_RECORDERSESSIONCOUNT = _descriptor.Descriptor(
+  name='RecorderSessionCount',
+  full_name='proto.RecorderSessionCount',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='header', full_name='proto.RecorderSessionCount.header', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='session_count', full_name='proto.RecorderSessionCount.session_count', index=1,
+      number=2, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=18190,
+  serialized_end=18266,
+)
+
+
+_RECORDERSESSIONLISTREQUEST = _descriptor.Descriptor(
+  name='RecorderSessionListRequest',
+  full_name='proto.RecorderSessionListRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='header', full_name='proto.RecorderSessionListRequest.header', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=18268,
+  serialized_end=18327,
+)
+
+
+_RECORDERSESSIONLISTRESPONSE = _descriptor.Descriptor(
+  name='RecorderSessionListResponse',
+  full_name='proto.RecorderSessionListResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='proto.RecorderSessionListResponse.result', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.RecorderSessionListResponse.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='sessions', full_name='proto.RecorderSessionListResponse.sessions', index=2,
+      number=3, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=18329,
+  serialized_end=18439,
+)
+
+
+_RECORDERSESSIONDELETEREQUEST = _descriptor.Descriptor(
+  name='RecorderSessionDeleteRequest',
+  full_name='proto.RecorderSessionDeleteRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='header', full_name='proto.RecorderSessionDeleteRequest.header', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='sessions', full_name='proto.RecorderSessionDeleteRequest.sessions', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='source', full_name='proto.RecorderSessionDeleteRequest.source', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=18441,
+  serialized_end=18536,
+)
+
+
+_RECORDERSESSIONDELETEENTRY = _descriptor.Descriptor(
+  name='RecorderSessionDeleteEntry',
+  full_name='proto.RecorderSessionDeleteEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='session', full_name='proto.RecorderSessionDeleteEntry.session', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='deleted', full_name='proto.RecorderSessionDeleteEntry.deleted', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='error', full_name='proto.RecorderSessionDeleteEntry.error', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=18538,
+  serialized_end=18615,
+)
+
+
+_RECORDERSESSIONDELETERESPONSE = _descriptor.Descriptor(
+  name='RecorderSessionDeleteResponse',
+  full_name='proto.RecorderSessionDeleteResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='proto.RecorderSessionDeleteResponse.result', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.RecorderSessionDeleteResponse.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='entries', full_name='proto.RecorderSessionDeleteResponse.entries', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=18618,
+  serialized_end=18764,
+)
+
+
+_RECORDERSESSIONUPLOADREQUEST = _descriptor.Descriptor(
+  name='RecorderSessionUploadRequest',
+  full_name='proto.RecorderSessionUploadRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='header', full_name='proto.RecorderSessionUploadRequest.header', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=18766,
+  serialized_end=18827,
+)
+
+
+_RECORDERSESSIONUPLOADENTRY = _descriptor.Descriptor(
+  name='RecorderSessionUploadEntry',
+  full_name='proto.RecorderSessionUploadEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='session', full_name='proto.RecorderSessionUploadEntry.session', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='accepted', full_name='proto.RecorderSessionUploadEntry.accepted', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='error', full_name='proto.RecorderSessionUploadEntry.error', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=18829,
+  serialized_end=18907,
+)
+
+
+_RECORDERSESSIONUPLOADRESPONSE = _descriptor.Descriptor(
+  name='RecorderSessionUploadResponse',
+  full_name='proto.RecorderSessionUploadResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='proto.RecorderSessionUploadResponse.result', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.RecorderSessionUploadResponse.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='job_id', full_name='proto.RecorderSessionUploadResponse.job_id', index=2,
+      number=3, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='entries', full_name='proto.RecorderSessionUploadResponse.entries', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=18910,
+  serialized_end=19072,
+)
+
+
+_RECORDERSESSIONUPLOADSTATUSREQUEST = _descriptor.Descriptor(
+  name='RecorderSessionUploadStatusRequest',
+  full_name='proto.RecorderSessionUploadStatusRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='header', full_name='proto.RecorderSessionUploadStatusRequest.header', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='job_id', full_name='proto.RecorderSessionUploadStatusRequest.job_id', index=1,
+      number=2, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=19074,
+  serialized_end=19157,
+)
+
+
+_RECORDERSESSIONUPLOADPROGRESS = _descriptor.Descriptor(
+  name='RecorderSessionUploadProgress',
+  full_name='proto.RecorderSessionUploadProgress',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='session', full_name='proto.RecorderSessionUploadProgress.session', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='proto.RecorderSessionUploadProgress.state', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='files_total', full_name='proto.RecorderSessionUploadProgress.files_total', index=2,
+      number=3, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='files_done', full_name='proto.RecorderSessionUploadProgress.files_done', index=3,
+      number=4, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='files_failed', full_name='proto.RecorderSessionUploadProgress.files_failed', index=4,
+      number=5, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='bytes_total', full_name='proto.RecorderSessionUploadProgress.bytes_total', index=5,
+      number=6, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='bytes_done', full_name='proto.RecorderSessionUploadProgress.bytes_done', index=6,
+      number=7, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='http_status', full_name='proto.RecorderSessionUploadProgress.http_status', index=7,
+      number=8, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='error', full_name='proto.RecorderSessionUploadProgress.error', index=8,
+      number=9, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='upload_id', full_name='proto.RecorderSessionUploadProgress.upload_id', index=9,
+      number=10, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=19160,
+  serialized_end=19410,
+)
+
+
+_RECORDERSESSIONUPLOADSTATUSRESPONSE = _descriptor.Descriptor(
+  name='RecorderSessionUploadStatusResponse',
+  full_name='proto.RecorderSessionUploadStatusResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='proto.RecorderSessionUploadStatusResponse.result', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.RecorderSessionUploadStatusResponse.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='job_id', full_name='proto.RecorderSessionUploadStatusResponse.job_id', index=2,
+      number=3, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='proto.RecorderSessionUploadStatusResponse.state', index=3,
+      number=4, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='bytes_total', full_name='proto.RecorderSessionUploadStatusResponse.bytes_total', index=4,
+      number=5, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='bytes_done', full_name='proto.RecorderSessionUploadStatusResponse.bytes_done', index=5,
+      number=6, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='speed_bytes_per_s', full_name='proto.RecorderSessionUploadStatusResponse.speed_bytes_per_s', index=6,
+      number=7, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='avg_speed_bytes_per_s', full_name='proto.RecorderSessionUploadStatusResponse.avg_speed_bytes_per_s', index=7,
+      number=8, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='eta_s', full_name='proto.RecorderSessionUploadStatusResponse.eta_s', index=8,
+      number=9, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='current_session', full_name='proto.RecorderSessionUploadStatusResponse.current_session', index=9,
+      number=10, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='current_file', full_name='proto.RecorderSessionUploadStatusResponse.current_file', index=10,
+      number=11, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='started_unix_ms', full_name='proto.RecorderSessionUploadStatusResponse.started_unix_ms', index=11,
+      number=12, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='finished_unix_ms', full_name='proto.RecorderSessionUploadStatusResponse.finished_unix_ms', index=12,
+      number=13, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='sessions', full_name='proto.RecorderSessionUploadStatusResponse.sessions', index=13,
+      number=14, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=19413,
+  serialized_end=19840,
+)
+
+
+_RECORDERFILENODE = _descriptor.Descriptor(
+  name='RecorderFileNode',
+  full_name='proto.RecorderFileNode',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='proto.RecorderFileNode.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='type', full_name='proto.RecorderFileNode.type', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='size_bytes', full_name='proto.RecorderFileNode.size_bytes', index=2,
+      number=3, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='mtime_unix_ms', full_name='proto.RecorderFileNode.mtime_unix_ms', index=3,
+      number=4, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='file_count', full_name='proto.RecorderFileNode.file_count', index=4,
+      number=5, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='children', full_name='proto.RecorderFileNode.children', index=5,
+      number=6, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='recording', full_name='proto.RecorderFileNode.recording', index=6,
+      number=7, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=19843,
+  serialized_end=20039,
+)
+
+
+_RECORDERSESSIONTREEREQUEST = _descriptor.Descriptor(
+  name='RecorderSessionTreeRequest',
+  full_name='proto.RecorderSessionTreeRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='header', full_name='proto.RecorderSessionTreeRequest.header', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='source', full_name='proto.RecorderSessionTreeRequest.source', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=20041,
+  serialized_end=20116,
+)
+
+
+_RECORDERSESSIONTREERESPONSE = _descriptor.Descriptor(
+  name='RecorderSessionTreeResponse',
+  full_name='proto.RecorderSessionTreeResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='proto.RecorderSessionTreeResponse.result', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.RecorderSessionTreeResponse.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='sessions', full_name='proto.RecorderSessionTreeResponse.sessions', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=20119,
+  serialized_end=20254,
 )
 
 
@@ -8209,8 +10655,8 @@ _ESTOPEVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15779,
-  serialized_end=15842,
+  serialized_start=20256,
+  serialized_end=20319,
 )
 
 
@@ -8269,8 +10715,8 @@ _FAULTEVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15845,
-  serialized_end=15981,
+  serialized_start=20322,
+  serialized_end=20458,
 )
 
 
@@ -8315,8 +10761,8 @@ _BATTERYALERTEVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15983,
-  serialized_end=16071,
+  serialized_start=20460,
+  serialized_end=20548,
 )
 
 
@@ -8354,8 +10800,8 @@ _MARKEVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16073,
-  serialized_end=16129,
+  serialized_start=20550,
+  serialized_end=20606,
 )
 
 
@@ -8393,8 +10839,8 @@ _ERRORMARKEVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16131,
-  serialized_end=16192,
+  serialized_start=20608,
+  serialized_end=20669,
 )
 
 
@@ -8446,8 +10892,8 @@ _LIFECYCLESTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16195,
-  serialized_end=16346,
+  serialized_start=20672,
+  serialized_end=20823,
 )
 
 
@@ -8492,8 +10938,8 @@ _HEARTBEATMETRIC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16348,
-  serialized_end=16412,
+  serialized_start=20825,
+  serialized_end=20889,
 )
 
 
@@ -8643,8 +11089,8 @@ _HEARTBEAT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16415,
-  serialized_end=16875,
+  serialized_start=20892,
+  serialized_end=21352,
 )
 
 
@@ -8696,8 +11142,8 @@ _HARDWAREHEALTH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16878,
-  serialized_end=17056,
+  serialized_start=21355,
+  serialized_end=21533,
 )
 
 
@@ -8735,8 +11181,54 @@ _SAFETYGUARDSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17058,
-  serialized_end=17112,
+  serialized_start=21535,
+  serialized_end=21589,
+)
+
+
+_FILESYSTEMUSAGE = _descriptor.Descriptor(
+  name='FilesystemUsage',
+  full_name='proto.FilesystemUsage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='mount_point', full_name='proto.FilesystemUsage.mount_point', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='total_bytes', full_name='proto.FilesystemUsage.total_bytes', index=1,
+      number=2, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='avail_bytes', full_name='proto.FilesystemUsage.avail_bytes', index=2,
+      number=3, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=21591,
+  serialized_end=21671,
 )
 
 
@@ -8776,6 +11268,13 @@ _HOSTRESOURCEMETRICS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='filesystems', full_name='proto.HostResourceMetrics.filesystems', index=4,
+      number=5, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -8788,8 +11287,8 @@ _HOSTRESOURCEMETRICS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17114,
-  serialized_end=17226,
+  serialized_start=21674,
+  serialized_end=21831,
 )
 
 
@@ -8834,8 +11333,8 @@ _WHOLEBODYCOMMANDCHANNELRATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17228,
-  serialized_end=17310,
+  serialized_start=21833,
+  serialized_end=21915,
 )
 
 
@@ -8908,8 +11407,8 @@ _SYSTEMHARDWAREHEALTH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17313,
-  serialized_end=17627,
+  serialized_start=21918,
+  serialized_end=22232,
 )
 
 
@@ -8928,6 +11427,13 @@ _STARTTASKCOMMAND = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='arguments_json', full_name='proto.StartTaskCommand.arguments_json', index=1,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -8940,8 +11446,8 @@ _STARTTASKCOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17629,
-  serialized_end=17670,
+  serialized_start=22234,
+  serialized_end=22299,
 )
 
 
@@ -8972,8 +11478,8 @@ _SETMODECOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17672,
-  serialized_end=17724,
+  serialized_start=22301,
+  serialized_end=22353,
 )
 
 
@@ -9011,8 +11517,8 @@ _SETHEALTHREQUIREMENTCOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17726,
-  serialized_end=17824,
+  serialized_start=22355,
+  serialized_end=22453,
 )
 
 
@@ -9050,8 +11556,8 @@ _SETSAFETYGUARDENABLEDCOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17826,
-  serialized_end=17891,
+  serialized_start=22455,
+  serialized_end=22520,
 )
 
 
@@ -9063,13 +11569,6 @@ _STOPTASKCOMMAND = _descriptor.Descriptor(
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
-    _descriptor.FieldDescriptor(
-      name='status', full_name='proto.StopTaskCommand.status', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -9082,8 +11581,8 @@ _STOPTASKCOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17893,
-  serialized_end=17926,
+  serialized_start=22522,
+  serialized_end=22553,
 )
 
 
@@ -9107,8 +11606,8 @@ _RESETCONFIRMCOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17928,
-  serialized_end=17949,
+  serialized_start=22555,
+  serialized_end=22576,
 )
 
 
@@ -9132,8 +11631,8 @@ _ENTEROTACOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17951,
-  serialized_end=17968,
+  serialized_start=22578,
+  serialized_end=22595,
 )
 
 
@@ -9157,8 +11656,8 @@ _EXITOTACOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17970,
-  serialized_end=17986,
+  serialized_start=22597,
+  serialized_end=22613,
 )
 
 
@@ -9182,8 +11681,8 @@ _ENTERESTOPCOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17988,
-  serialized_end=18007,
+  serialized_start=22615,
+  serialized_end=22634,
 )
 
 
@@ -9207,8 +11706,8 @@ _EXITESTOPCOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18009,
-  serialized_end=18027,
+  serialized_start=22636,
+  serialized_end=22654,
 )
 
 
@@ -9314,8 +11813,8 @@ _MASTERCOMMAND = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=18030,
-  serialized_end=18608,
+  serialized_start=22657,
+  serialized_end=23235,
 )
 
 
@@ -9367,8 +11866,8 @@ _MASTERSTATESNAPSHOT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18611,
-  serialized_end=18777,
+  serialized_start=23238,
+  serialized_end=23404,
 )
 
 
@@ -9399,8 +11898,8 @@ _STARTTASKRESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18779,
-  serialized_end=18813,
+  serialized_start=23406,
+  serialized_end=23440,
 )
 
 
@@ -9438,8 +11937,8 @@ _STOPTASKRESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18815,
-  serialized_end=18864,
+  serialized_start=23442,
+  serialized_end=23491,
 )
 
 
@@ -9470,8 +11969,8 @@ _SETMODERESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18866,
-  serialized_end=18927,
+  serialized_start=23493,
+  serialized_end=23554,
 )
 
 
@@ -9509,8 +12008,8 @@ _SETHEALTHREQUIREMENTRESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18929,
-  serialized_end=19026,
+  serialized_start=23556,
+  serialized_end=23653,
 )
 
 
@@ -9548,8 +12047,8 @@ _SETSAFETYGUARDENABLEDRESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19028,
-  serialized_end=19092,
+  serialized_start=23655,
+  serialized_end=23719,
 )
 
 
@@ -9580,8 +12079,8 @@ _PHASETRANSITIONRESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19094,
-  serialized_end=19175,
+  serialized_start=23721,
+  serialized_end=23802,
 )
 
 
@@ -9687,8 +12186,8 @@ _MASTERCOMMANDRESPONSE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=19178,
-  serialized_end=19705,
+  serialized_start=23805,
+  serialized_end=24332,
 )
 
 
@@ -9712,8 +12211,8 @@ _TELEOPERATIONPREPAREREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19707,
-  serialized_end=19736,
+  serialized_start=24334,
+  serialized_end=24363,
 )
 
 
@@ -9744,8 +12243,8 @@ _TELEOPERATIONPREPARERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19738,
-  serialized_end=19785,
+  serialized_start=24365,
+  serialized_end=24412,
 )
 
 
@@ -9792,6 +12291,13 @@ _MASTERSTATUS = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='error_code', full_name='proto.MasterStatus.error_code', index=5,
+      number=9, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -9804,8 +12310,8 @@ _MASTERSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19788,
-  serialized_end=19978,
+  serialized_start=24415,
+  serialized_end=24625,
 )
 
 
@@ -9857,8 +12363,8 @@ _MASTERTASKSTARTEVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19980,
-  serialized_end=20084,
+  serialized_start=24627,
+  serialized_end=24731,
 )
 
 
@@ -9917,8 +12423,8 @@ _MASTERTASKSTOPEVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20086,
-  serialized_end=20205,
+  serialized_start=24733,
+  serialized_end=24852,
 )
 
 
@@ -9963,8 +12469,158 @@ _MASTERDEGRADATIONEVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20207,
-  serialized_end=20295,
+  serialized_start=24854,
+  serialized_end=24942,
+)
+
+
+_REPLAYSTATUS = _descriptor.Descriptor(
+  name='ReplayStatus',
+  full_name='proto.ReplayStatus',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='header', full_name='proto.ReplayStatus.header', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='percent', full_name='proto.ReplayStatus.percent', index=1,
+      number=2, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='paused', full_name='proto.ReplayStatus.paused', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='loop', full_name='proto.ReplayStatus.loop', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='iteration', full_name='proto.ReplayStatus.iteration', index=4,
+      number=5, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='speed', full_name='proto.ReplayStatus.speed', index=5,
+      number=6, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='file', full_name='proto.ReplayStatus.file', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=24945,
+  serialized_end=25085,
+)
+
+
+_REPLAYCONTROLCOMMAND = _descriptor.Descriptor(
+  name='ReplayControlCommand',
+  full_name='proto.ReplayControlCommand',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='set_paused', full_name='proto.ReplayControlCommand.set_paused', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='control', full_name='proto.ReplayControlCommand.control',
+      index=0, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
+  ],
+  serialized_start=25087,
+  serialized_end=25142,
+)
+
+
+_REPLAYCONTROLRESPONSE = _descriptor.Descriptor(
+  name='ReplayControlResponse',
+  full_name='proto.ReplayControlResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='proto.ReplayControlResponse.result', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.ReplayControlResponse.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=25144,
+  serialized_end=25228,
 )
 
 
@@ -10030,8 +12686,8 @@ _MASTERDEVICEERROR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20298,
-  serialized_end=20490,
+  serialized_start=25231,
+  serialized_end=25423,
 )
 
 
@@ -10090,8 +12746,8 @@ _MASTERERROREVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20493,
-  serialized_end=20658,
+  serialized_start=25426,
+  serialized_end=25591,
 )
 
 
@@ -10178,8 +12834,8 @@ _PLUGINSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20661,
-  serialized_end=20893,
+  serialized_start=25594,
+  serialized_end=25826,
 )
 
 
@@ -10224,8 +12880,8 @@ _SYSTEMSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20895,
-  serialized_end=21016,
+  serialized_start=25828,
+  serialized_end=25949,
 )
 
 
@@ -10270,8 +12926,8 @@ _TOPICRATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21018,
-  serialized_end=21084,
+  serialized_start=25951,
+  serialized_end=26017,
 )
 
 
@@ -10323,8 +12979,8 @@ _MONITORREPORT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21087,
-  serialized_end=21220,
+  serialized_start=26020,
+  serialized_end=26153,
 )
 
 
@@ -10411,8 +13067,8 @@ _WHOLEBODYSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21223,
-  serialized_end=21571,
+  serialized_start=26156,
+  serialized_end=26504,
 )
 
 
@@ -10485,8 +13141,8 @@ _WHOLEBODYCOMMAND = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21574,
-  serialized_end=21853,
+  serialized_start=26507,
+  serialized_end=26786,
 )
 
 
@@ -10545,8 +13201,8 @@ _GAMEPADSTATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21856,
-  serialized_end=21993,
+  serialized_start=26789,
+  serialized_end=26926,
 )
 
 
@@ -10612,8 +13268,8 @@ _WHOLEBODYRAW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21996,
-  serialized_end=22237,
+  serialized_start=26929,
+  serialized_end=27170,
 )
 
 
@@ -10651,8 +13307,8 @@ _ENABLEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22239,
-  serialized_end=22301,
+  serialized_start=27172,
+  serialized_end=27234,
 )
 
 
@@ -10690,8 +13346,164 @@ _ENABLERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22303,
-  serialized_end=22353,
+  serialized_start=27236,
+  serialized_end=27286,
+)
+
+
+_CHASSISCALIBRATEREQUEST = _descriptor.Descriptor(
+  name='ChassisCalibrateRequest',
+  full_name='proto.ChassisCalibrateRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='request_id', full_name='proto.ChassisCalibrateRequest.request_id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=27288,
+  serialized_end=27333,
+)
+
+
+_CHASSISCALIBRATERESPONSE = _descriptor.Descriptor(
+  name='ChassisCalibrateResponse',
+  full_name='proto.ChassisCalibrateResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='success', full_name='proto.ChassisCalibrateResponse.success', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.ChassisCalibrateResponse.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=27335,
+  serialized_end=27395,
+)
+
+
+_CHASSISCALIBRATESTATUSREQUEST = _descriptor.Descriptor(
+  name='ChassisCalibrateStatusRequest',
+  full_name='proto.ChassisCalibrateStatusRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='request_id', full_name='proto.ChassisCalibrateStatusRequest.request_id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=27397,
+  serialized_end=27448,
+)
+
+
+_CHASSISCALIBRATESTATUSRESPONSE = _descriptor.Descriptor(
+  name='ChassisCalibrateStatusResponse',
+  full_name='proto.ChassisCalibrateStatusResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='proto.ChassisCalibrateStatusResponse.result', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='request_id', full_name='proto.ChassisCalibrateStatusResponse.request_id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='proto.ChassisCalibrateStatusResponse.state', index=2,
+      number=3, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.ChassisCalibrateStatusResponse.message', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=27451,
+  serialized_end=27610,
 )
 
 
@@ -10762,8 +13574,8 @@ _WAYPOINT = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=22356,
-  serialized_end=22531,
+  serialized_start=27613,
+  serialized_end=27788,
 )
 
 
@@ -10829,8 +13641,8 @@ _WAYPOINTTASK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22534,
-  serialized_end=22719,
+  serialized_start=27791,
+  serialized_end=27976,
 )
 
 
@@ -10868,8 +13680,8 @@ _WAYPOINTSUBMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22721,
-  serialized_end=22810,
+  serialized_start=27978,
+  serialized_end=28067,
 )
 
 
@@ -10907,8 +13719,8 @@ _WAYPOINTSUBMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22812,
-  serialized_end=22870,
+  serialized_start=28069,
+  serialized_end=28127,
 )
 
 
@@ -10939,8 +13751,8 @@ _WAYPOINTCANCELREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22872,
-  serialized_end=22926,
+  serialized_start=28129,
+  serialized_end=28183,
 )
 
 
@@ -10978,8 +13790,8 @@ _WAYPOINTCANCELRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22928,
-  serialized_end=22986,
+  serialized_start=28185,
+  serialized_end=28243,
 )
 
 
@@ -11017,8 +13829,8 @@ _ARMMODEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22988,
-  serialized_end=23069,
+  serialized_start=28245,
+  serialized_end=28326,
 )
 
 
@@ -11063,8 +13875,282 @@ _ARMMODERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23071,
-  serialized_end=23165,
+  serialized_start=28328,
+  serialized_end=28422,
+)
+
+
+_DEVICEPARAMETERKEY = _descriptor.Descriptor(
+  name='DeviceParameterKey',
+  full_name='proto.DeviceParameterKey',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='device_index', full_name='proto.DeviceParameterKey.device_index', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='proto.DeviceParameterKey.name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=28424,
+  serialized_end=28480,
+)
+
+
+_DEVICEPARAMETERVALUE = _descriptor.Descriptor(
+  name='DeviceParameterValue',
+  full_name='proto.DeviceParameterValue',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='proto.DeviceParameterValue.key', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='bool_value', full_name='proto.DeviceParameterValue.bool_value', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='integer_value', full_name='proto.DeviceParameterValue.integer_value', index=2,
+      number=3, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='double_value', full_name='proto.DeviceParameterValue.double_value', index=3,
+      number=4, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='value', full_name='proto.DeviceParameterValue.value',
+      index=0, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
+  ],
+  serialized_start=28483,
+  serialized_end=28625,
+)
+
+
+_DEVICEPARAMETERGETREQUEST = _descriptor.Descriptor(
+  name='DeviceParameterGetRequest',
+  full_name='proto.DeviceParameterGetRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='header', full_name='proto.DeviceParameterGetRequest.header', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='keys', full_name='proto.DeviceParameterGetRequest.keys', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=28627,
+  serialized_end=28726,
+)
+
+
+_DEVICEPARAMETERSETREQUEST = _descriptor.Descriptor(
+  name='DeviceParameterSetRequest',
+  full_name='proto.DeviceParameterSetRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='header', full_name='proto.DeviceParameterSetRequest.header', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='values', full_name='proto.DeviceParameterSetRequest.values', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=28728,
+  serialized_end=28831,
+)
+
+
+_DEVICEPARAMETERRESULT = _descriptor.Descriptor(
+  name='DeviceParameterResult',
+  full_name='proto.DeviceParameterResult',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='value', full_name='proto.DeviceParameterResult.value', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='status', full_name='proto.DeviceParameterResult.status', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.DeviceParameterResult.message', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=28834,
+  serialized_end=28964,
+)
+
+
+_DEVICEPARAMETERRESPONSE = _descriptor.Descriptor(
+  name='DeviceParameterResponse',
+  full_name='proto.DeviceParameterResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='success', full_name='proto.DeviceParameterResponse.success', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='status', full_name='proto.DeviceParameterResponse.status', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.DeviceParameterResponse.message', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='results', full_name='proto.DeviceParameterResponse.results', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=28967,
+  serialized_end=29119,
 )
 
 
@@ -11102,8 +14188,8 @@ _ESTOPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23167,
-  serialized_end=23228,
+  serialized_start=29121,
+  serialized_end=29182,
 )
 
 
@@ -11141,8 +14227,8 @@ _ESTOPRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23230,
-  serialized_end=23279,
+  serialized_start=29184,
+  serialized_end=29233,
 )
 
 
@@ -11173,8 +14259,8 @@ _RESETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23281,
-  serialized_end=23326,
+  serialized_start=29235,
+  serialized_end=29280,
 )
 
 
@@ -11212,8 +14298,8 @@ _RESETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23328,
-  serialized_end=23377,
+  serialized_start=29282,
+  serialized_end=29331,
 )
 
 
@@ -11258,8 +14344,8 @@ _BRAKEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23379,
-  serialized_end=23467,
+  serialized_start=29333,
+  serialized_end=29421,
 )
 
 
@@ -11297,8 +14383,8 @@ _BRAKERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23469,
-  serialized_end=23518,
+  serialized_start=29423,
+  serialized_end=29472,
 )
 
 
@@ -11343,8 +14429,8 @@ _HANDMODEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23520,
-  serialized_end=23614,
+  serialized_start=29474,
+  serialized_end=29568,
 )
 
 
@@ -11410,8 +14496,8 @@ _HANDMODERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23617,
-  serialized_end=23780,
+  serialized_start=29571,
+  serialized_end=29734,
 )
 
 
@@ -11463,8 +14549,8 @@ _CALIBTACTILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23783,
-  serialized_end=23917,
+  serialized_start=29737,
+  serialized_end=29871,
 )
 
 
@@ -11516,8 +14602,8 @@ _CALIBTACTILERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23919,
-  serialized_end=24041,
+  serialized_start=29873,
+  serialized_end=29995,
 )
 
 
@@ -11569,8 +14655,8 @@ _HANDESKINFORCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24043,
-  serialized_end=24142,
+  serialized_start=29997,
+  serialized_end=30096,
 )
 
 
@@ -11622,8 +14708,8 @@ _HANDESKINRAW = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24144,
-  serialized_end=24238,
+  serialized_start=30098,
+  serialized_end=30192,
 )
 
 
@@ -11661,8 +14747,8 @@ _CALIBESKINREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24240,
-  serialized_end=24317,
+  serialized_start=30194,
+  serialized_end=30271,
 )
 
 
@@ -11714,8 +14800,8 @@ _CALIBESKINRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24319,
-  serialized_end=24439,
+  serialized_start=30273,
+  serialized_end=30393,
 )
 
 
@@ -11753,8 +14839,8 @@ _HANDZEROCALIBRATIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24441,
-  serialized_end=24527,
+  serialized_start=30395,
+  serialized_end=30481,
 )
 
 
@@ -11820,8 +14906,8 @@ _HANDZEROCALIBRATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24530,
-  serialized_end=24733,
+  serialized_start=30484,
+  serialized_end=30687,
 )
 
 
@@ -11866,8 +14952,8 @@ _HANDSETPARAMETERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24735,
-  serialized_end=24832,
+  serialized_start=30689,
+  serialized_end=30786,
 )
 
 
@@ -11919,8 +15005,8 @@ _HANDSETPARAMETERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24834,
-  serialized_end=24960,
+  serialized_start=30788,
+  serialized_end=30914,
 )
 
 
@@ -11958,8 +15044,8 @@ _TACTILESKINZEROREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24962,
-  serialized_end=25033,
+  serialized_start=30916,
+  serialized_end=30987,
 )
 
 
@@ -11997,8 +15083,8 @@ _TACTILESKINZERORESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=25035,
-  serialized_end=25094,
+  serialized_start=30989,
+  serialized_end=31048,
 )
 
 
@@ -12036,8 +15122,8 @@ _TORQUECALIBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=25097,
-  serialized_end=25230,
+  serialized_start=31051,
+  serialized_end=31184,
 )
 
 
@@ -12089,8 +15175,8 @@ _TORQUECALIBRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=25232,
-  serialized_end=25346,
+  serialized_start=31186,
+  serialized_end=31300,
 )
 
 
@@ -12128,8 +15214,8 @@ _ZEROCALIBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=25348,
-  serialized_end=25418,
+  serialized_start=31302,
+  serialized_end=31372,
 )
 
 
@@ -12181,8 +15267,8 @@ _ZEROCALIBRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=25420,
-  serialized_end=25520,
+  serialized_start=31374,
+  serialized_end=31474,
 )
 
 
@@ -12234,8 +15320,8 @@ _GENERICSERVICEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=25522,
-  serialized_end=25607,
+  serialized_start=31476,
+  serialized_end=31561,
 )
 
 
@@ -12287,8 +15373,8 @@ _GENERICSERVICERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=25609,
-  serialized_end=25698,
+  serialized_start=31563,
+  serialized_end=31652,
 )
 
 
@@ -12319,8 +15405,8 @@ _DEVICESETUPTARGET = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=25700,
-  serialized_end=25741,
+  serialized_start=31654,
+  serialized_end=31695,
 )
 
 
@@ -12372,8 +15458,8 @@ _DEVICESETUPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=25744,
-  serialized_end=25873,
+  serialized_start=31698,
+  serialized_end=31827,
 )
 
 
@@ -12425,8 +15511,8 @@ _DEVICESETUPRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=25875,
-  serialized_end=25978,
+  serialized_start=31829,
+  serialized_end=31932,
 )
 
 
@@ -12471,8 +15557,8 @@ _OTATARGET = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=25980,
-  serialized_end=26045,
+  serialized_start=31934,
+  serialized_end=31999,
 )
 
 
@@ -12510,8 +15596,8 @@ _OTASUBMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=26047,
-  serialized_end=26119,
+  serialized_start=32001,
+  serialized_end=32073,
 )
 
 
@@ -12549,8 +15635,8 @@ _OTASUBMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=26121,
-  serialized_end=26191,
+  serialized_start=32075,
+  serialized_end=32145,
 )
 
 
@@ -12581,8 +15667,8 @@ _OTASTATUSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=26193,
-  serialized_end=26230,
+  serialized_start=32147,
+  serialized_end=32184,
 )
 
 
@@ -12634,8 +15720,8 @@ _OTACOMPONENTFAILURE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=26232,
-  serialized_end=26355,
+  serialized_start=32186,
+  serialized_end=32309,
 )
 
 
@@ -12666,8 +15752,8 @@ _OTAFAILUREREPORT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=26357,
-  serialized_end=26421,
+  serialized_start=32311,
+  serialized_end=32375,
 )
 
 
@@ -12726,8 +15812,8 @@ _OTATASKSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=26424,
-  serialized_end=26616,
+  serialized_start=32378,
+  serialized_end=32570,
 )
 
 
@@ -12772,8 +15858,8 @@ _OTASTATUSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=26618,
-  serialized_end=26726,
+  serialized_start=32572,
+  serialized_end=32680,
 )
 
 
@@ -12811,8 +15897,8 @@ _OTACOMPONENTREF = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=26728,
-  serialized_end=26780,
+  serialized_start=32682,
+  serialized_end=32734,
 )
 
 
@@ -12843,8 +15929,8 @@ _OTAVERSIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=26782,
-  serialized_end=26845,
+  serialized_start=32736,
+  serialized_end=32799,
 )
 
 
@@ -12903,8 +15989,8 @@ _OTACOMPONENTVERSIONRESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=26848,
-  serialized_end=26978,
+  serialized_start=32802,
+  serialized_end=32932,
 )
 
 
@@ -12949,8 +16035,8 @@ _OTAVERSIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=26981,
-  serialized_end=27113,
+  serialized_start=32935,
+  serialized_end=33067,
 )
 
 
@@ -12995,8 +16081,8 @@ _OTAAGENTDOWNLOADREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=27115,
-  serialized_end=27207,
+  serialized_start=33069,
+  serialized_end=33161,
 )
 
 
@@ -13027,8 +16113,8 @@ _OTAAGENTCANCELREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=27209,
-  serialized_end=27252,
+  serialized_start=33163,
+  serialized_end=33206,
 )
 
 
@@ -13080,8 +16166,8 @@ _OTAAGENTCANCELRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=27255,
-  serialized_end=27417,
+  serialized_start=33209,
+  serialized_end=33371,
 )
 
 
@@ -13126,8 +16212,8 @@ _OTAAGENTSUBMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=27419,
-  serialized_end=27509,
+  serialized_start=33373,
+  serialized_end=33463,
 )
 
 
@@ -13200,8 +16286,8 @@ _OTAAGENTSUBMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=27512,
-  serialized_end=27714,
+  serialized_start=33466,
+  serialized_end=33668,
 )
 
 
@@ -13232,8 +16318,8 @@ _OTAAGENTSTATUSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=27716,
-  serialized_end=27759,
+  serialized_start=33670,
+  serialized_end=33713,
 )
 
 
@@ -13271,8 +16357,8 @@ _OTAAGENTPERIPHERALFAILURESUMMARY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=27761,
-  serialized_end=27862,
+  serialized_start=33715,
+  serialized_end=33816,
 )
 
 
@@ -13373,8 +16459,8 @@ _OTAAGENTSTATUSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=27865,
-  serialized_end=28324,
+  serialized_start=33819,
+  serialized_end=34278,
 )
 
 
@@ -13405,8 +16491,8 @@ _OTAAGENTSYSTEMVERSIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=28326,
-  serialized_end=28378,
+  serialized_start=34280,
+  serialized_end=34332,
 )
 
 
@@ -13458,8 +16544,8 @@ _OTAAGENTSYSTEMVERSIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=28381,
-  serialized_end=28510,
+  serialized_start=34335,
+  serialized_end=34464,
 )
 
 
@@ -13495,8 +16581,8 @@ _OTAAGENTMODULEVERSIONSREQUEST = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=28512,
-  serialized_end=28587,
+  serialized_start=34466,
+  serialized_end=34541,
 )
 
 
@@ -13560,8 +16646,8 @@ _OTAAGENTMODULEVERSIONSRESPONSE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=28590,
-  serialized_end=28790,
+  serialized_start=34544,
+  serialized_end=34744,
 )
 
 
@@ -13635,8 +16721,8 @@ _OTAAGENTMODULEVERSIONSREPORT = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=28793,
-  serialized_end=29117,
+  serialized_start=34747,
+  serialized_end=35071,
 )
 
 
@@ -13710,8 +16796,8 @@ _OTAAGENTMODULEVERSION = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=29120,
-  serialized_end=29352,
+  serialized_start=35074,
+  serialized_end=35306,
 )
 
 
@@ -13749,8 +16835,8 @@ _OTAAGENTMODULEDIAGNOSTIC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=29354,
-  serialized_end=29448,
+  serialized_start=35308,
+  serialized_end=35402,
 )
 
 
@@ -13788,8 +16874,8 @@ _OTASTAGEPROGRESS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=29450,
-  serialized_end=29502,
+  serialized_start=35404,
+  serialized_end=35456,
 )
 
 
@@ -13841,8 +16927,8 @@ _OTAPUBLICSTAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=29505,
-  serialized_end=29691,
+  serialized_start=35459,
+  serialized_end=35645,
 )
 
 
@@ -13887,8 +16973,8 @@ _OTASTAGESUMMARY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=29694,
-  serialized_end=29838,
+  serialized_start=35648,
+  serialized_end=35792,
 )
 
 
@@ -13954,8 +17040,8 @@ _OTATASKPROGRESS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=29841,
-  serialized_end=30069,
+  serialized_start=35795,
+  serialized_end=36023,
 )
 
 
@@ -13986,8 +17072,8 @@ _CONFIGDOUBLEARRAY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=30071,
-  serialized_end=30106,
+  serialized_start=36025,
+  serialized_end=36060,
 )
 
 
@@ -14018,8 +17104,8 @@ _CONFIGINTEGERARRAY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=30108,
-  serialized_end=30144,
+  serialized_start=36062,
+  serialized_end=36098,
 )
 
 
@@ -14097,8 +17183,8 @@ _CONFIGVALUE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=30147,
-  serialized_end=30400,
+  serialized_start=36101,
+  serialized_end=36354,
 )
 
 
@@ -14124,6 +17210,13 @@ _CONFIGENUMOPTION = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='name_zh', full_name='proto.ConfigEnumOption.name_zh', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -14136,8 +17229,8 @@ _CONFIGENUMOPTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=30402,
-  serialized_end=30449,
+  serialized_start=36356,
+  serialized_end=36420,
 )
 
 
@@ -14266,8 +17359,8 @@ _CONFIGCONSTRAINTS = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=30452,
-  serialized_end=30868,
+  serialized_start=36423,
+  serialized_end=36839,
 )
 
 
@@ -14353,8 +17446,8 @@ _CONFIGELEMENTCONSTRAINTS = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=30871,
-  serialized_end=31119,
+  serialized_start=36842,
+  serialized_end=37090,
 )
 
 
@@ -14387,6 +17480,13 @@ _CONFIGARRAYELEMENTDESCRIPTOR = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='name_zh', full_name='proto.ConfigArrayElementDescriptor.name_zh', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -14404,8 +17504,8 @@ _CONFIGARRAYELEMENTDESCRIPTOR = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=31122,
-  serialized_end=31250,
+  serialized_start=37093,
+  serialized_end=37238,
 )
 
 
@@ -14494,6 +17594,20 @@ _CONFIGFIELDDESCRIPTOR = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='name_zh', full_name='proto.ConfigFieldDescriptor.name_zh', index=11,
+      number=12, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='description_zh', full_name='proto.ConfigFieldDescriptor.description_zh', index=12,
+      number=13, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -14506,8 +17620,8 @@ _CONFIGFIELDDESCRIPTOR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=31253,
-  serialized_end=31630,
+  serialized_start=37241,
+  serialized_end=37659,
 )
 
 
@@ -14564,8 +17678,8 @@ _CONFIGDIAGNOSTIC = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=31632,
-  serialized_end=31745,
+  serialized_start=37661,
+  serialized_end=37774,
 )
 
 
@@ -14638,8 +17752,8 @@ _CONFIGFIELDINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=31748,
-  serialized_end=32050,
+  serialized_start=37777,
+  serialized_end=38079,
 )
 
 
@@ -14684,8 +17798,8 @@ _CONFIGINSTANCEINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=32052,
-  serialized_end=32177,
+  serialized_start=38081,
+  serialized_end=38206,
 )
 
 
@@ -14716,8 +17830,8 @@ _CONFIGGETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=32179,
-  serialized_end=32216,
+  serialized_start=38208,
+  serialized_end=38245,
 )
 
 
@@ -14762,8 +17876,8 @@ _CONFIGGETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=32219,
-  serialized_end=32367,
+  serialized_start=38248,
+  serialized_end=38396,
 )
 
 
@@ -14808,8 +17922,8 @@ _CONFIGFIELDOPERATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=32369,
-  serialized_end=32487,
+  serialized_start=38398,
+  serialized_end=38516,
 )
 
 
@@ -14847,8 +17961,8 @@ _CONFIGSETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=32489,
-  serialized_end=32575,
+  serialized_start=38518,
+  serialized_end=38604,
 )
 
 
@@ -14893,16 +18007,429 @@ _CONFIGSETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=32578,
-  serialized_end=32725,
+  serialized_start=38607,
+  serialized_end=38754,
 )
 
+
+_CAMERACALIBRATIONREQUEST = _descriptor.Descriptor(
+  name='CameraCalibrationRequest',
+  full_name='proto.CameraCalibrationRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='positions', full_name='proto.CameraCalibrationRequest.positions', index=0,
+      number=1, type=14, cpp_type=8, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=38756,
+  serialized_end=38835,
+)
+
+
+_CAMERACALIBRATION = _descriptor.Descriptor(
+  name='CameraCalibration',
+  full_name='proto.CameraCalibration',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='proto.CameraCalibration.result', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.CameraCalibration.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='width', full_name='proto.CameraCalibration.width', index=2,
+      number=3, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='height', full_name='proto.CameraCalibration.height', index=3,
+      number=4, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='intrinsics_matrix', full_name='proto.CameraCalibration.intrinsics_matrix', index=4,
+      number=5, type=1, cpp_type=5, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='distortion_model', full_name='proto.CameraCalibration.distortion_model', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='distortion_coefficients', full_name='proto.CameraCalibration.distortion_coefficients', index=6,
+      number=7, type=1, cpp_type=5, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='base_link', full_name='proto.CameraCalibration.base_link', index=7,
+      number=8, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='rotation_matrix', full_name='proto.CameraCalibration.rotation_matrix', index=8,
+      number=9, type=1, cpp_type=5, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='translation', full_name='proto.CameraCalibration.translation', index=9,
+      number=10, type=1, cpp_type=5, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='intrinsics_valid', full_name='proto.CameraCalibration.intrinsics_valid', index=10,
+      number=11, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extrinsics_valid', full_name='proto.CameraCalibration.extrinsics_valid', index=11,
+      number=12, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=38838,
+  serialized_end=39156,
+)
+
+
+_CAMERACALIBRATIONRESPONSE = _descriptor.Descriptor(
+  name='CameraCalibrationResponse',
+  full_name='proto.CameraCalibrationResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='proto.CameraCalibrationResponse.result', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='proto.CameraCalibrationResponse.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='stereo_left', full_name='proto.CameraCalibrationResponse.stereo_left', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='stereo_right', full_name='proto.CameraCalibrationResponse.stereo_right', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='wrist_left', full_name='proto.CameraCalibrationResponse.wrist_left', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='wrist_right', full_name='proto.CameraCalibrationResponse.wrist_right', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=39159,
+  serialized_end=39439,
+)
+
+
+_WRISTISPSTATUSREQUEST = _descriptor.Descriptor(
+  name='WristIspStatusRequest',
+  full_name='proto.WristIspStatusRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='camera', full_name='proto.WristIspStatusRequest.camera', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+    _WRISTISPSTATUSREQUEST_CAMERA,
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=39441,
+  serialized_end=39558,
+)
+
+
+_WRISTISPSTATUSFIELD = _descriptor.Descriptor(
+  name='WristIspStatusField',
+  full_name='proto.WristIspStatusField',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='proto.WristIspStatusField.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='result', full_name='proto.WristIspStatusField.result', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='proto.WristIspStatusField.value', index=2,
+      number=3, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='sampled_unix_ms', full_name='proto.WristIspStatusField.sampled_unix_ms', index=3,
+      number=4, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+    _WRISTISPSTATUSFIELD_RESULT,
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='_value', full_name='proto.WristIspStatusField._value',
+      index=0, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
+  ],
+  serialized_start=39561,
+  serialized_end=39793,
+)
+
+
+_WRISTISPCAMERASTATUS = _descriptor.Descriptor(
+  name='WristIspCameraStatus',
+  full_name='proto.WristIspCameraStatus',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='camera', full_name='proto.WristIspCameraStatus.camera', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='result', full_name='proto.WristIspCameraStatus.result', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='fields', full_name='proto.WristIspCameraStatus.fields', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+    _WRISTISPCAMERASTATUS_RESULT,
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=39796,
+  serialized_end=39987,
+)
+
+
+_WRISTISPSTATUSRESPONSE = _descriptor.Descriptor(
+  name='WristIspStatusResponse',
+  full_name='proto.WristIspStatusResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='proto.WristIspStatusResponse.result', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='detail', full_name='proto.WristIspStatusResponse.detail', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='cameras', full_name='proto.WristIspStatusResponse.cameras', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+    _WRISTISPSTATUSRESPONSE_RESULT,
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=39990,
+  serialized_end=40222,
+)
+
+_DEVICEINFORESPONSE.fields_by_name['result'].enum_type = _DEVICEINFORESULT
 _HEADER.fields_by_name['stamp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _HEADER.fields_by_name['sys_time'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _POSE.fields_by_name['position'].message_type = _POINT
 _POSE.fields_by_name['orientation'].message_type = _QUATERNION
 _POSESTAMPED.fields_by_name['header'].message_type = _HEADER
 _POSESTAMPED.fields_by_name['pose'].message_type = _POSE
+_CARTOGRAPHERMAPINFO.fields_by_name['map'].message_type = _CARTOGRAPHERMAPKEY
+_CARTOGRAPHERMAPINFO.fields_by_name['layers'].message_type = _CARTOGRAPHERLAYERINFO
+_CARTOGRAPHERPOSE.fields_by_name['header'].message_type = _HEADER
+_CARTOGRAPHERPOSE.fields_by_name['local_from_published'].message_type = _POSE
+_CARTOGRAPHERPOSE.fields_by_name['map_from_local'].message_type = _POSE
+_CARTOGRAPHERSUBMAPTEXTURE.fields_by_name['slice_pose'].message_type = _POSE
+_CARTOGRAPHERSUBMAPTEXTURE.fields_by_name['map'].message_type = _CARTOGRAPHERMAPKEY
+_CARTOGRAPHERSUBMAPENTRY.fields_by_name['global_pose'].message_type = _POSE
+_CARTOGRAPHERSUBMAPENTRY.fields_by_name['submap_set'].enum_type = _CARTOGRAPHERSUBMAPSET
+_CARTOGRAPHERSUBMAPLIST.fields_by_name['map'].message_type = _CARTOGRAPHERMAPKEY
+_CARTOGRAPHERSUBMAPLIST.fields_by_name['submaps'].message_type = _CARTOGRAPHERSUBMAPENTRY
+_CARTOGRAPHERSCANMATCHEDPOINTS.fields_by_name['header'].message_type = _HEADER
+_CARTOGRAPHERSCANMATCHEDPOINTS.fields_by_name['points'].message_type = _CARTOGRAPHERSCANMATCHEDPOINT
+_CARTOGRAPHERRELOCALIZATIONREQUEST.fields_by_name['map'].message_type = _CARTOGRAPHERMAPKEY
+_CARTOGRAPHERRELOCALIZATIONREQUEST.fields_by_name['pose'].message_type = _POSE
+_CARTOGRAPHERLOCALIZATIONSTATUS.fields_by_name['map'].message_type = _CARTOGRAPHERMAPKEY
+_CARTOGRAPHERLOCALIZATIONSTATUS.fields_by_name['state'].enum_type = _CARTOGRAPHERLOCALIZATIONSTATE
+_CARTOGRAPHERSAVESTATEREQUEST.fields_by_name['header'].message_type = _HEADER
 _TWIST.fields_by_name['linear'].message_type = _VECTOR3
 _TWIST.fields_by_name['angular'].message_type = _VECTOR3
 _TWISTSTAMPED.fields_by_name['header'].message_type = _HEADER
@@ -15192,6 +18719,25 @@ _RECORDERSETMODEREQUEST.fields_by_name['header'].message_type = _HEADER
 _RECORDERSETMODEREQUEST.fields_by_name['mode'].enum_type = _RECORDERRECORDINGMODE
 _RECORDERDELETELASTREQUEST.fields_by_name['header'].message_type = _HEADER
 _RECORDERCOMMANDRESPONSE.fields_by_name['result'].enum_type = _RECORDERCOMMANDRESULT
+_RECORDERSESSIONCOUNT.fields_by_name['header'].message_type = _HEADER
+_RECORDERSESSIONLISTREQUEST.fields_by_name['header'].message_type = _HEADER
+_RECORDERSESSIONLISTRESPONSE.fields_by_name['result'].enum_type = _RECORDERCOMMANDRESULT
+_RECORDERSESSIONDELETEREQUEST.fields_by_name['header'].message_type = _HEADER
+_RECORDERSESSIONDELETERESPONSE.fields_by_name['result'].enum_type = _RECORDERCOMMANDRESULT
+_RECORDERSESSIONDELETERESPONSE.fields_by_name['entries'].message_type = _RECORDERSESSIONDELETEENTRY
+_RECORDERSESSIONUPLOADREQUEST.fields_by_name['header'].message_type = _HEADER
+_RECORDERSESSIONUPLOADRESPONSE.fields_by_name['result'].enum_type = _RECORDERCOMMANDRESULT
+_RECORDERSESSIONUPLOADRESPONSE.fields_by_name['entries'].message_type = _RECORDERSESSIONUPLOADENTRY
+_RECORDERSESSIONUPLOADSTATUSREQUEST.fields_by_name['header'].message_type = _HEADER
+_RECORDERSESSIONUPLOADPROGRESS.fields_by_name['state'].enum_type = _RECORDERUPLOADSTATE
+_RECORDERSESSIONUPLOADSTATUSRESPONSE.fields_by_name['result'].enum_type = _RECORDERCOMMANDRESULT
+_RECORDERSESSIONUPLOADSTATUSRESPONSE.fields_by_name['state'].enum_type = _RECORDERUPLOADSTATE
+_RECORDERSESSIONUPLOADSTATUSRESPONSE.fields_by_name['sessions'].message_type = _RECORDERSESSIONUPLOADPROGRESS
+_RECORDERFILENODE.fields_by_name['type'].enum_type = _RECORDERFILETYPE
+_RECORDERFILENODE.fields_by_name['children'].message_type = _RECORDERFILENODE
+_RECORDERSESSIONTREEREQUEST.fields_by_name['header'].message_type = _HEADER
+_RECORDERSESSIONTREERESPONSE.fields_by_name['result'].enum_type = _RECORDERCOMMANDRESULT
+_RECORDERSESSIONTREERESPONSE.fields_by_name['sessions'].message_type = _RECORDERFILENODE
 _ESTOPEVENT.fields_by_name['header'].message_type = _HEADER
 _FAULTEVENT.fields_by_name['header'].message_type = _HEADER
 _FAULTEVENT.fields_by_name['level'].enum_type = _FAULTLEVEL
@@ -15208,6 +18754,7 @@ _HEARTBEAT.fields_by_name['metrics'].message_type = _HEARTBEATMETRIC
 _HARDWAREHEALTH.fields_by_name['heartbeat'].message_type = _HEARTBEAT
 _HARDWAREHEALTH.fields_by_name['verdict'].enum_type = _HARDWAREHEALTHVERDICT
 _HARDWAREHEALTH.fields_by_name['health_requirement'].enum_type = _HEALTHREQUIREMENT
+_HOSTRESOURCEMETRICS.fields_by_name['filesystems'].message_type = _FILESYSTEMUSAGE
 _SYSTEMHARDWAREHEALTH.fields_by_name['header'].message_type = _HEADER
 _SYSTEMHARDWAREHEALTH.fields_by_name['subsystems'].message_type = _HARDWAREHEALTH
 _SYSTEMHARDWAREHEALTH.fields_by_name['master_status'].message_type = _MASTERSTATUS
@@ -15298,6 +18845,11 @@ _MASTERSTATUS.fields_by_name['task_health_level'].enum_type = _MASTERTASKHEALTHL
 _MASTERTASKSTARTEVENT.fields_by_name['header'].message_type = _HEADER
 _MASTERTASKSTOPEVENT.fields_by_name['header'].message_type = _HEADER
 _MASTERDEGRADATIONEVENT.fields_by_name['header'].message_type = _HEADER
+_REPLAYSTATUS.fields_by_name['header'].message_type = _HEADER
+_REPLAYCONTROLCOMMAND.oneofs_by_name['control'].fields.append(
+  _REPLAYCONTROLCOMMAND.fields_by_name['set_paused'])
+_REPLAYCONTROLCOMMAND.fields_by_name['set_paused'].containing_oneof = _REPLAYCONTROLCOMMAND.oneofs_by_name['control']
+_REPLAYCONTROLRESPONSE.fields_by_name['result'].enum_type = _MASTERCOMMANDRESULT
 _MASTERDEVICEERROR.fields_by_name['required'].enum_type = _HEALTHREQUIREMENT
 _MASTERDEVICEERROR.fields_by_name['actual'].enum_type = _HARDWAREHEALTHVERDICT
 _MASTERERROREVENT.fields_by_name['header'].message_type = _HEADER
@@ -15333,6 +18885,8 @@ _WHOLEBODYRAW.fields_by_name['gamepad_state_left'].message_type = _GAMEPADSTATE
 _WHOLEBODYRAW.fields_by_name['gamepad_state_right'].message_type = _GAMEPADSTATE
 _WHOLEBODYRAW.fields_by_name['full_body_joint_pose'].message_type = _POSE
 _ENABLEREQUEST.fields_by_name['header'].message_type = _HEADER
+_CHASSISCALIBRATESTATUSRESPONSE.fields_by_name['result'].enum_type = _CHASSISCALIBSTATUSRESULT
+_CHASSISCALIBRATESTATUSRESPONSE.fields_by_name['state'].enum_type = _CHASSISCALIBSTATE
 _WAYPOINT.fields_by_name['joints'].message_type = _JOINTCOMMAND
 _WAYPOINT.fields_by_name['cartesian'].message_type = _POSE
 _WAYPOINT.oneofs_by_name['target'].fields.append(
@@ -15349,6 +18903,24 @@ _WAYPOINTCANCELREQUEST.fields_by_name['header'].message_type = _HEADER
 _ARMMODEREQUEST.fields_by_name['header'].message_type = _HEADER
 _ARMMODEREQUEST.fields_by_name['mode'].enum_type = _CONTROLMODE
 _ARMMODERESPONSE.fields_by_name['previous_mode'].enum_type = _CONTROLMODE
+_DEVICEPARAMETERVALUE.fields_by_name['key'].message_type = _DEVICEPARAMETERKEY
+_DEVICEPARAMETERVALUE.oneofs_by_name['value'].fields.append(
+  _DEVICEPARAMETERVALUE.fields_by_name['bool_value'])
+_DEVICEPARAMETERVALUE.fields_by_name['bool_value'].containing_oneof = _DEVICEPARAMETERVALUE.oneofs_by_name['value']
+_DEVICEPARAMETERVALUE.oneofs_by_name['value'].fields.append(
+  _DEVICEPARAMETERVALUE.fields_by_name['integer_value'])
+_DEVICEPARAMETERVALUE.fields_by_name['integer_value'].containing_oneof = _DEVICEPARAMETERVALUE.oneofs_by_name['value']
+_DEVICEPARAMETERVALUE.oneofs_by_name['value'].fields.append(
+  _DEVICEPARAMETERVALUE.fields_by_name['double_value'])
+_DEVICEPARAMETERVALUE.fields_by_name['double_value'].containing_oneof = _DEVICEPARAMETERVALUE.oneofs_by_name['value']
+_DEVICEPARAMETERGETREQUEST.fields_by_name['header'].message_type = _HEADER
+_DEVICEPARAMETERGETREQUEST.fields_by_name['keys'].message_type = _DEVICEPARAMETERKEY
+_DEVICEPARAMETERSETREQUEST.fields_by_name['header'].message_type = _HEADER
+_DEVICEPARAMETERSETREQUEST.fields_by_name['values'].message_type = _DEVICEPARAMETERVALUE
+_DEVICEPARAMETERRESULT.fields_by_name['value'].message_type = _DEVICEPARAMETERVALUE
+_DEVICEPARAMETERRESULT.fields_by_name['status'].enum_type = _DEVICEPARAMETERSTATUS
+_DEVICEPARAMETERRESPONSE.fields_by_name['status'].enum_type = _DEVICEPARAMETERSTATUS
+_DEVICEPARAMETERRESPONSE.fields_by_name['results'].message_type = _DEVICEPARAMETERRESULT
 _ESTOPREQUEST.fields_by_name['header'].message_type = _HEADER
 _RESETREQUEST.fields_by_name['header'].message_type = _HEADER
 _BRAKEREQUEST.fields_by_name['header'].message_type = _HEADER
@@ -15526,6 +19098,28 @@ _CONFIGSETREQUEST.fields_by_name['operations'].message_type = _CONFIGFIELDOPERAT
 _CONFIGSETRESPONSE.fields_by_name['result'].enum_type = _CONFIGRESULT
 _CONFIGSETRESPONSE.fields_by_name['instance'].message_type = _CONFIGINSTANCEINFO
 _CONFIGSETRESPONSE.fields_by_name['diagnostics'].message_type = _CONFIGDIAGNOSTIC
+_CAMERACALIBRATIONREQUEST.fields_by_name['positions'].enum_type = _CAMERACALIBRATIONPOSITION
+_CAMERACALIBRATION.fields_by_name['result'].enum_type = _CAMERACALIBRATIONRESULT
+_CAMERACALIBRATIONRESPONSE.fields_by_name['result'].enum_type = _CAMERACALIBRATIONRESULT
+_CAMERACALIBRATIONRESPONSE.fields_by_name['stereo_left'].message_type = _CAMERACALIBRATION
+_CAMERACALIBRATIONRESPONSE.fields_by_name['stereo_right'].message_type = _CAMERACALIBRATION
+_CAMERACALIBRATIONRESPONSE.fields_by_name['wrist_left'].message_type = _CAMERACALIBRATION
+_CAMERACALIBRATIONRESPONSE.fields_by_name['wrist_right'].message_type = _CAMERACALIBRATION
+_WRISTISPSTATUSREQUEST.fields_by_name['camera'].enum_type = _WRISTISPSTATUSREQUEST_CAMERA
+_WRISTISPSTATUSREQUEST_CAMERA.containing_type = _WRISTISPSTATUSREQUEST
+_WRISTISPSTATUSFIELD.fields_by_name['result'].enum_type = _WRISTISPSTATUSFIELD_RESULT
+_WRISTISPSTATUSFIELD_RESULT.containing_type = _WRISTISPSTATUSFIELD
+_WRISTISPSTATUSFIELD.oneofs_by_name['_value'].fields.append(
+  _WRISTISPSTATUSFIELD.fields_by_name['value'])
+_WRISTISPSTATUSFIELD.fields_by_name['value'].containing_oneof = _WRISTISPSTATUSFIELD.oneofs_by_name['_value']
+_WRISTISPCAMERASTATUS.fields_by_name['result'].enum_type = _WRISTISPCAMERASTATUS_RESULT
+_WRISTISPCAMERASTATUS.fields_by_name['fields'].message_type = _WRISTISPSTATUSFIELD
+_WRISTISPCAMERASTATUS_RESULT.containing_type = _WRISTISPCAMERASTATUS
+_WRISTISPSTATUSRESPONSE.fields_by_name['result'].enum_type = _WRISTISPSTATUSRESPONSE_RESULT
+_WRISTISPSTATUSRESPONSE.fields_by_name['cameras'].message_type = _WRISTISPCAMERASTATUS
+_WRISTISPSTATUSRESPONSE_RESULT.containing_type = _WRISTISPSTATUSRESPONSE
+DESCRIPTOR.message_types_by_name['DeviceInfoRequest'] = _DEVICEINFOREQUEST
+DESCRIPTOR.message_types_by_name['DeviceInfoResponse'] = _DEVICEINFORESPONSE
 DESCRIPTOR.message_types_by_name['Header'] = _HEADER
 DESCRIPTOR.message_types_by_name['Point'] = _POINT
 DESCRIPTOR.message_types_by_name['Vector2'] = _VECTOR2
@@ -15533,6 +19127,24 @@ DESCRIPTOR.message_types_by_name['Vector3'] = _VECTOR3
 DESCRIPTOR.message_types_by_name['Quaternion'] = _QUATERNION
 DESCRIPTOR.message_types_by_name['Pose'] = _POSE
 DESCRIPTOR.message_types_by_name['PoseStamped'] = _POSESTAMPED
+DESCRIPTOR.message_types_by_name['CartographerMapKey'] = _CARTOGRAPHERMAPKEY
+DESCRIPTOR.message_types_by_name['CartographerLayerInfo'] = _CARTOGRAPHERLAYERINFO
+DESCRIPTOR.message_types_by_name['CartographerMapInfoRequest'] = _CARTOGRAPHERMAPINFOREQUEST
+DESCRIPTOR.message_types_by_name['CartographerMapInfo'] = _CARTOGRAPHERMAPINFO
+DESCRIPTOR.message_types_by_name['CartographerPose'] = _CARTOGRAPHERPOSE
+DESCRIPTOR.message_types_by_name['CartographerSubmapTextureRequest'] = _CARTOGRAPHERSUBMAPTEXTUREREQUEST
+DESCRIPTOR.message_types_by_name['CartographerSubmapTexture'] = _CARTOGRAPHERSUBMAPTEXTURE
+DESCRIPTOR.message_types_by_name['CartographerSubmapListRequest'] = _CARTOGRAPHERSUBMAPLISTREQUEST
+DESCRIPTOR.message_types_by_name['CartographerSubmapEntry'] = _CARTOGRAPHERSUBMAPENTRY
+DESCRIPTOR.message_types_by_name['CartographerSubmapList'] = _CARTOGRAPHERSUBMAPLIST
+DESCRIPTOR.message_types_by_name['CartographerScanMatchedPoint'] = _CARTOGRAPHERSCANMATCHEDPOINT
+DESCRIPTOR.message_types_by_name['CartographerScanMatchedPoints'] = _CARTOGRAPHERSCANMATCHEDPOINTS
+DESCRIPTOR.message_types_by_name['CartographerRelocalizationRequest'] = _CARTOGRAPHERRELOCALIZATIONREQUEST
+DESCRIPTOR.message_types_by_name['CartographerRelocalizationResponse'] = _CARTOGRAPHERRELOCALIZATIONRESPONSE
+DESCRIPTOR.message_types_by_name['CartographerLocalizationStatusRequest'] = _CARTOGRAPHERLOCALIZATIONSTATUSREQUEST
+DESCRIPTOR.message_types_by_name['CartographerLocalizationStatus'] = _CARTOGRAPHERLOCALIZATIONSTATUS
+DESCRIPTOR.message_types_by_name['CartographerSaveStateRequest'] = _CARTOGRAPHERSAVESTATEREQUEST
+DESCRIPTOR.message_types_by_name['CartographerSaveStateResponse'] = _CARTOGRAPHERSAVESTATERESPONSE
 DESCRIPTOR.message_types_by_name['Twist'] = _TWIST
 DESCRIPTOR.message_types_by_name['TwistStamped'] = _TWISTSTAMPED
 DESCRIPTOR.message_types_by_name['Wrench'] = _WRENCH
@@ -15619,6 +19231,22 @@ DESCRIPTOR.message_types_by_name['RecorderStopRequest'] = _RECORDERSTOPREQUEST
 DESCRIPTOR.message_types_by_name['RecorderSetModeRequest'] = _RECORDERSETMODEREQUEST
 DESCRIPTOR.message_types_by_name['RecorderDeleteLastRequest'] = _RECORDERDELETELASTREQUEST
 DESCRIPTOR.message_types_by_name['RecorderCommandResponse'] = _RECORDERCOMMANDRESPONSE
+DESCRIPTOR.message_types_by_name['FileRecord'] = _FILERECORD
+DESCRIPTOR.message_types_by_name['RecorderSessionCount'] = _RECORDERSESSIONCOUNT
+DESCRIPTOR.message_types_by_name['RecorderSessionListRequest'] = _RECORDERSESSIONLISTREQUEST
+DESCRIPTOR.message_types_by_name['RecorderSessionListResponse'] = _RECORDERSESSIONLISTRESPONSE
+DESCRIPTOR.message_types_by_name['RecorderSessionDeleteRequest'] = _RECORDERSESSIONDELETEREQUEST
+DESCRIPTOR.message_types_by_name['RecorderSessionDeleteEntry'] = _RECORDERSESSIONDELETEENTRY
+DESCRIPTOR.message_types_by_name['RecorderSessionDeleteResponse'] = _RECORDERSESSIONDELETERESPONSE
+DESCRIPTOR.message_types_by_name['RecorderSessionUploadRequest'] = _RECORDERSESSIONUPLOADREQUEST
+DESCRIPTOR.message_types_by_name['RecorderSessionUploadEntry'] = _RECORDERSESSIONUPLOADENTRY
+DESCRIPTOR.message_types_by_name['RecorderSessionUploadResponse'] = _RECORDERSESSIONUPLOADRESPONSE
+DESCRIPTOR.message_types_by_name['RecorderSessionUploadStatusRequest'] = _RECORDERSESSIONUPLOADSTATUSREQUEST
+DESCRIPTOR.message_types_by_name['RecorderSessionUploadProgress'] = _RECORDERSESSIONUPLOADPROGRESS
+DESCRIPTOR.message_types_by_name['RecorderSessionUploadStatusResponse'] = _RECORDERSESSIONUPLOADSTATUSRESPONSE
+DESCRIPTOR.message_types_by_name['RecorderFileNode'] = _RECORDERFILENODE
+DESCRIPTOR.message_types_by_name['RecorderSessionTreeRequest'] = _RECORDERSESSIONTREEREQUEST
+DESCRIPTOR.message_types_by_name['RecorderSessionTreeResponse'] = _RECORDERSESSIONTREERESPONSE
 DESCRIPTOR.message_types_by_name['EstopEvent'] = _ESTOPEVENT
 DESCRIPTOR.message_types_by_name['FaultEvent'] = _FAULTEVENT
 DESCRIPTOR.message_types_by_name['BatteryAlertEvent'] = _BATTERYALERTEVENT
@@ -15629,6 +19257,7 @@ DESCRIPTOR.message_types_by_name['HeartbeatMetric'] = _HEARTBEATMETRIC
 DESCRIPTOR.message_types_by_name['Heartbeat'] = _HEARTBEAT
 DESCRIPTOR.message_types_by_name['HardwareHealth'] = _HARDWAREHEALTH
 DESCRIPTOR.message_types_by_name['SafetyGuardStatus'] = _SAFETYGUARDSTATUS
+DESCRIPTOR.message_types_by_name['FilesystemUsage'] = _FILESYSTEMUSAGE
 DESCRIPTOR.message_types_by_name['HostResourceMetrics'] = _HOSTRESOURCEMETRICS
 DESCRIPTOR.message_types_by_name['WholeBodyCommandChannelRate'] = _WHOLEBODYCOMMANDCHANNELRATE
 DESCRIPTOR.message_types_by_name['SystemHardwareHealth'] = _SYSTEMHARDWAREHEALTH
@@ -15657,6 +19286,9 @@ DESCRIPTOR.message_types_by_name['MasterStatus'] = _MASTERSTATUS
 DESCRIPTOR.message_types_by_name['MasterTaskStartEvent'] = _MASTERTASKSTARTEVENT
 DESCRIPTOR.message_types_by_name['MasterTaskStopEvent'] = _MASTERTASKSTOPEVENT
 DESCRIPTOR.message_types_by_name['MasterDegradationEvent'] = _MASTERDEGRADATIONEVENT
+DESCRIPTOR.message_types_by_name['ReplayStatus'] = _REPLAYSTATUS
+DESCRIPTOR.message_types_by_name['ReplayControlCommand'] = _REPLAYCONTROLCOMMAND
+DESCRIPTOR.message_types_by_name['ReplayControlResponse'] = _REPLAYCONTROLRESPONSE
 DESCRIPTOR.message_types_by_name['MasterDeviceError'] = _MASTERDEVICEERROR
 DESCRIPTOR.message_types_by_name['MasterErrorEvent'] = _MASTERERROREVENT
 DESCRIPTOR.message_types_by_name['PluginStatus'] = _PLUGINSTATUS
@@ -15669,6 +19301,10 @@ DESCRIPTOR.message_types_by_name['GamepadState'] = _GAMEPADSTATE
 DESCRIPTOR.message_types_by_name['WholeBodyRaw'] = _WHOLEBODYRAW
 DESCRIPTOR.message_types_by_name['EnableRequest'] = _ENABLEREQUEST
 DESCRIPTOR.message_types_by_name['EnableResponse'] = _ENABLERESPONSE
+DESCRIPTOR.message_types_by_name['ChassisCalibrateRequest'] = _CHASSISCALIBRATEREQUEST
+DESCRIPTOR.message_types_by_name['ChassisCalibrateResponse'] = _CHASSISCALIBRATERESPONSE
+DESCRIPTOR.message_types_by_name['ChassisCalibrateStatusRequest'] = _CHASSISCALIBRATESTATUSREQUEST
+DESCRIPTOR.message_types_by_name['ChassisCalibrateStatusResponse'] = _CHASSISCALIBRATESTATUSRESPONSE
 DESCRIPTOR.message_types_by_name['Waypoint'] = _WAYPOINT
 DESCRIPTOR.message_types_by_name['WaypointTask'] = _WAYPOINTTASK
 DESCRIPTOR.message_types_by_name['WaypointSubmitRequest'] = _WAYPOINTSUBMITREQUEST
@@ -15677,6 +19313,12 @@ DESCRIPTOR.message_types_by_name['WaypointCancelRequest'] = _WAYPOINTCANCELREQUE
 DESCRIPTOR.message_types_by_name['WaypointCancelResponse'] = _WAYPOINTCANCELRESPONSE
 DESCRIPTOR.message_types_by_name['ArmModeRequest'] = _ARMMODEREQUEST
 DESCRIPTOR.message_types_by_name['ArmModeResponse'] = _ARMMODERESPONSE
+DESCRIPTOR.message_types_by_name['DeviceParameterKey'] = _DEVICEPARAMETERKEY
+DESCRIPTOR.message_types_by_name['DeviceParameterValue'] = _DEVICEPARAMETERVALUE
+DESCRIPTOR.message_types_by_name['DeviceParameterGetRequest'] = _DEVICEPARAMETERGETREQUEST
+DESCRIPTOR.message_types_by_name['DeviceParameterSetRequest'] = _DEVICEPARAMETERSETREQUEST
+DESCRIPTOR.message_types_by_name['DeviceParameterResult'] = _DEVICEPARAMETERRESULT
+DESCRIPTOR.message_types_by_name['DeviceParameterResponse'] = _DEVICEPARAMETERRESPONSE
 DESCRIPTOR.message_types_by_name['EstopRequest'] = _ESTOPREQUEST
 DESCRIPTOR.message_types_by_name['EstopResponse'] = _ESTOPRESPONSE
 DESCRIPTOR.message_types_by_name['ResetRequest'] = _RESETREQUEST
@@ -15753,6 +19395,16 @@ DESCRIPTOR.message_types_by_name['ConfigGetResponse'] = _CONFIGGETRESPONSE
 DESCRIPTOR.message_types_by_name['ConfigFieldOperation'] = _CONFIGFIELDOPERATION
 DESCRIPTOR.message_types_by_name['ConfigSetRequest'] = _CONFIGSETREQUEST
 DESCRIPTOR.message_types_by_name['ConfigSetResponse'] = _CONFIGSETRESPONSE
+DESCRIPTOR.message_types_by_name['CameraCalibrationRequest'] = _CAMERACALIBRATIONREQUEST
+DESCRIPTOR.message_types_by_name['CameraCalibration'] = _CAMERACALIBRATION
+DESCRIPTOR.message_types_by_name['CameraCalibrationResponse'] = _CAMERACALIBRATIONRESPONSE
+DESCRIPTOR.message_types_by_name['WristIspStatusRequest'] = _WRISTISPSTATUSREQUEST
+DESCRIPTOR.message_types_by_name['WristIspStatusField'] = _WRISTISPSTATUSFIELD
+DESCRIPTOR.message_types_by_name['WristIspCameraStatus'] = _WRISTISPCAMERASTATUS
+DESCRIPTOR.message_types_by_name['WristIspStatusResponse'] = _WRISTISPSTATUSRESPONSE
+DESCRIPTOR.enum_types_by_name['DeviceInfoResult'] = _DEVICEINFORESULT
+DESCRIPTOR.enum_types_by_name['CartographerSubmapSet'] = _CARTOGRAPHERSUBMAPSET
+DESCRIPTOR.enum_types_by_name['CartographerLocalizationState'] = _CARTOGRAPHERLOCALIZATIONSTATE
 DESCRIPTOR.enum_types_by_name['Side'] = _SIDE
 DESCRIPTOR.enum_types_by_name['TactileFinger'] = _TACTILEFINGER
 DESCRIPTOR.enum_types_by_name['CameraMount'] = _CAMERAMOUNT
@@ -15776,6 +19428,8 @@ DESCRIPTOR.enum_types_by_name['HeadStereoStreamResult'] = _HEADSTEREOSTREAMRESUL
 DESCRIPTOR.enum_types_by_name['HeadStereoStreamState'] = _HEADSTEREOSTREAMSTATE
 DESCRIPTOR.enum_types_by_name['RecorderCommandResult'] = _RECORDERCOMMANDRESULT
 DESCRIPTOR.enum_types_by_name['RecorderRecordingMode'] = _RECORDERRECORDINGMODE
+DESCRIPTOR.enum_types_by_name['RecorderUploadState'] = _RECORDERUPLOADSTATE
+DESCRIPTOR.enum_types_by_name['RecorderFileType'] = _RECORDERFILETYPE
 DESCRIPTOR.enum_types_by_name['HeartbeatMetricKind'] = _HEARTBEATMETRICKIND
 DESCRIPTOR.enum_types_by_name['HardwareHealthVerdict'] = _HARDWAREHEALTHVERDICT
 DESCRIPTOR.enum_types_by_name['HealthRequirement'] = _HEALTHREQUIREMENT
@@ -15785,6 +19439,9 @@ DESCRIPTOR.enum_types_by_name['MasterPhase'] = _MASTERPHASE
 DESCRIPTOR.enum_types_by_name['MasterCommandResult'] = _MASTERCOMMANDRESULT
 DESCRIPTOR.enum_types_by_name['MasterTaskHealthLevel'] = _MASTERTASKHEALTHLEVEL
 DESCRIPTOR.enum_types_by_name['MasterPhaseTransitionOperation'] = _MASTERPHASETRANSITIONOPERATION
+DESCRIPTOR.enum_types_by_name['ChassisCalibStatusResult'] = _CHASSISCALIBSTATUSRESULT
+DESCRIPTOR.enum_types_by_name['ChassisCalibState'] = _CHASSISCALIBSTATE
+DESCRIPTOR.enum_types_by_name['DeviceParameterStatus'] = _DEVICEPARAMETERSTATUS
 DESCRIPTOR.enum_types_by_name['HandServiceResult'] = _HANDSERVICERESULT
 DESCRIPTOR.enum_types_by_name['HandZeroCalibrationState'] = _HANDZEROCALIBRATIONSTATE
 DESCRIPTOR.enum_types_by_name['OtaResult'] = _OTARESULT
@@ -15808,7 +19465,23 @@ DESCRIPTOR.enum_types_by_name['ConfigApplyPolicy'] = _CONFIGAPPLYPOLICY
 DESCRIPTOR.enum_types_by_name['ConfigOperation'] = _CONFIGOPERATION
 DESCRIPTOR.enum_types_by_name['ConfigOverrideStatus'] = _CONFIGOVERRIDESTATUS
 DESCRIPTOR.enum_types_by_name['ConfigResult'] = _CONFIGRESULT
+DESCRIPTOR.enum_types_by_name['CameraCalibrationPosition'] = _CAMERACALIBRATIONPOSITION
+DESCRIPTOR.enum_types_by_name['CameraCalibrationResult'] = _CAMERACALIBRATIONRESULT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
+
+DeviceInfoRequest = _reflection.GeneratedProtocolMessageType('DeviceInfoRequest', (_message.Message,), {
+  'DESCRIPTOR' : _DEVICEINFOREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.DeviceInfoRequest)
+  })
+_sym_db.RegisterMessage(DeviceInfoRequest)
+
+DeviceInfoResponse = _reflection.GeneratedProtocolMessageType('DeviceInfoResponse', (_message.Message,), {
+  'DESCRIPTOR' : _DEVICEINFORESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.DeviceInfoResponse)
+  })
+_sym_db.RegisterMessage(DeviceInfoResponse)
 
 Header = _reflection.GeneratedProtocolMessageType('Header', (_message.Message,), {
   'DESCRIPTOR' : _HEADER,
@@ -15858,6 +19531,132 @@ PoseStamped = _reflection.GeneratedProtocolMessageType('PoseStamped', (_message.
   # @@protoc_insertion_point(class_scope:proto.PoseStamped)
   })
 _sym_db.RegisterMessage(PoseStamped)
+
+CartographerMapKey = _reflection.GeneratedProtocolMessageType('CartographerMapKey', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERMAPKEY,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerMapKey)
+  })
+_sym_db.RegisterMessage(CartographerMapKey)
+
+CartographerLayerInfo = _reflection.GeneratedProtocolMessageType('CartographerLayerInfo', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERLAYERINFO,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerLayerInfo)
+  })
+_sym_db.RegisterMessage(CartographerLayerInfo)
+
+CartographerMapInfoRequest = _reflection.GeneratedProtocolMessageType('CartographerMapInfoRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERMAPINFOREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerMapInfoRequest)
+  })
+_sym_db.RegisterMessage(CartographerMapInfoRequest)
+
+CartographerMapInfo = _reflection.GeneratedProtocolMessageType('CartographerMapInfo', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERMAPINFO,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerMapInfo)
+  })
+_sym_db.RegisterMessage(CartographerMapInfo)
+
+CartographerPose = _reflection.GeneratedProtocolMessageType('CartographerPose', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERPOSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerPose)
+  })
+_sym_db.RegisterMessage(CartographerPose)
+
+CartographerSubmapTextureRequest = _reflection.GeneratedProtocolMessageType('CartographerSubmapTextureRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERSUBMAPTEXTUREREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerSubmapTextureRequest)
+  })
+_sym_db.RegisterMessage(CartographerSubmapTextureRequest)
+
+CartographerSubmapTexture = _reflection.GeneratedProtocolMessageType('CartographerSubmapTexture', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERSUBMAPTEXTURE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerSubmapTexture)
+  })
+_sym_db.RegisterMessage(CartographerSubmapTexture)
+
+CartographerSubmapListRequest = _reflection.GeneratedProtocolMessageType('CartographerSubmapListRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERSUBMAPLISTREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerSubmapListRequest)
+  })
+_sym_db.RegisterMessage(CartographerSubmapListRequest)
+
+CartographerSubmapEntry = _reflection.GeneratedProtocolMessageType('CartographerSubmapEntry', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERSUBMAPENTRY,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerSubmapEntry)
+  })
+_sym_db.RegisterMessage(CartographerSubmapEntry)
+
+CartographerSubmapList = _reflection.GeneratedProtocolMessageType('CartographerSubmapList', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERSUBMAPLIST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerSubmapList)
+  })
+_sym_db.RegisterMessage(CartographerSubmapList)
+
+CartographerScanMatchedPoint = _reflection.GeneratedProtocolMessageType('CartographerScanMatchedPoint', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERSCANMATCHEDPOINT,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerScanMatchedPoint)
+  })
+_sym_db.RegisterMessage(CartographerScanMatchedPoint)
+
+CartographerScanMatchedPoints = _reflection.GeneratedProtocolMessageType('CartographerScanMatchedPoints', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERSCANMATCHEDPOINTS,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerScanMatchedPoints)
+  })
+_sym_db.RegisterMessage(CartographerScanMatchedPoints)
+
+CartographerRelocalizationRequest = _reflection.GeneratedProtocolMessageType('CartographerRelocalizationRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERRELOCALIZATIONREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerRelocalizationRequest)
+  })
+_sym_db.RegisterMessage(CartographerRelocalizationRequest)
+
+CartographerRelocalizationResponse = _reflection.GeneratedProtocolMessageType('CartographerRelocalizationResponse', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERRELOCALIZATIONRESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerRelocalizationResponse)
+  })
+_sym_db.RegisterMessage(CartographerRelocalizationResponse)
+
+CartographerLocalizationStatusRequest = _reflection.GeneratedProtocolMessageType('CartographerLocalizationStatusRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERLOCALIZATIONSTATUSREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerLocalizationStatusRequest)
+  })
+_sym_db.RegisterMessage(CartographerLocalizationStatusRequest)
+
+CartographerLocalizationStatus = _reflection.GeneratedProtocolMessageType('CartographerLocalizationStatus', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERLOCALIZATIONSTATUS,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerLocalizationStatus)
+  })
+_sym_db.RegisterMessage(CartographerLocalizationStatus)
+
+CartographerSaveStateRequest = _reflection.GeneratedProtocolMessageType('CartographerSaveStateRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERSAVESTATEREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerSaveStateRequest)
+  })
+_sym_db.RegisterMessage(CartographerSaveStateRequest)
+
+CartographerSaveStateResponse = _reflection.GeneratedProtocolMessageType('CartographerSaveStateResponse', (_message.Message,), {
+  'DESCRIPTOR' : _CARTOGRAPHERSAVESTATERESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CartographerSaveStateResponse)
+  })
+_sym_db.RegisterMessage(CartographerSaveStateResponse)
 
 Twist = _reflection.GeneratedProtocolMessageType('Twist', (_message.Message,), {
   'DESCRIPTOR' : _TWIST,
@@ -16461,6 +20260,118 @@ RecorderCommandResponse = _reflection.GeneratedProtocolMessageType('RecorderComm
   })
 _sym_db.RegisterMessage(RecorderCommandResponse)
 
+FileRecord = _reflection.GeneratedProtocolMessageType('FileRecord', (_message.Message,), {
+  'DESCRIPTOR' : _FILERECORD,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.FileRecord)
+  })
+_sym_db.RegisterMessage(FileRecord)
+
+RecorderSessionCount = _reflection.GeneratedProtocolMessageType('RecorderSessionCount', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONCOUNT,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionCount)
+  })
+_sym_db.RegisterMessage(RecorderSessionCount)
+
+RecorderSessionListRequest = _reflection.GeneratedProtocolMessageType('RecorderSessionListRequest', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONLISTREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionListRequest)
+  })
+_sym_db.RegisterMessage(RecorderSessionListRequest)
+
+RecorderSessionListResponse = _reflection.GeneratedProtocolMessageType('RecorderSessionListResponse', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONLISTRESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionListResponse)
+  })
+_sym_db.RegisterMessage(RecorderSessionListResponse)
+
+RecorderSessionDeleteRequest = _reflection.GeneratedProtocolMessageType('RecorderSessionDeleteRequest', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONDELETEREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionDeleteRequest)
+  })
+_sym_db.RegisterMessage(RecorderSessionDeleteRequest)
+
+RecorderSessionDeleteEntry = _reflection.GeneratedProtocolMessageType('RecorderSessionDeleteEntry', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONDELETEENTRY,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionDeleteEntry)
+  })
+_sym_db.RegisterMessage(RecorderSessionDeleteEntry)
+
+RecorderSessionDeleteResponse = _reflection.GeneratedProtocolMessageType('RecorderSessionDeleteResponse', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONDELETERESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionDeleteResponse)
+  })
+_sym_db.RegisterMessage(RecorderSessionDeleteResponse)
+
+RecorderSessionUploadRequest = _reflection.GeneratedProtocolMessageType('RecorderSessionUploadRequest', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONUPLOADREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionUploadRequest)
+  })
+_sym_db.RegisterMessage(RecorderSessionUploadRequest)
+
+RecorderSessionUploadEntry = _reflection.GeneratedProtocolMessageType('RecorderSessionUploadEntry', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONUPLOADENTRY,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionUploadEntry)
+  })
+_sym_db.RegisterMessage(RecorderSessionUploadEntry)
+
+RecorderSessionUploadResponse = _reflection.GeneratedProtocolMessageType('RecorderSessionUploadResponse', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONUPLOADRESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionUploadResponse)
+  })
+_sym_db.RegisterMessage(RecorderSessionUploadResponse)
+
+RecorderSessionUploadStatusRequest = _reflection.GeneratedProtocolMessageType('RecorderSessionUploadStatusRequest', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONUPLOADSTATUSREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionUploadStatusRequest)
+  })
+_sym_db.RegisterMessage(RecorderSessionUploadStatusRequest)
+
+RecorderSessionUploadProgress = _reflection.GeneratedProtocolMessageType('RecorderSessionUploadProgress', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONUPLOADPROGRESS,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionUploadProgress)
+  })
+_sym_db.RegisterMessage(RecorderSessionUploadProgress)
+
+RecorderSessionUploadStatusResponse = _reflection.GeneratedProtocolMessageType('RecorderSessionUploadStatusResponse', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONUPLOADSTATUSRESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionUploadStatusResponse)
+  })
+_sym_db.RegisterMessage(RecorderSessionUploadStatusResponse)
+
+RecorderFileNode = _reflection.GeneratedProtocolMessageType('RecorderFileNode', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERFILENODE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderFileNode)
+  })
+_sym_db.RegisterMessage(RecorderFileNode)
+
+RecorderSessionTreeRequest = _reflection.GeneratedProtocolMessageType('RecorderSessionTreeRequest', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONTREEREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionTreeRequest)
+  })
+_sym_db.RegisterMessage(RecorderSessionTreeRequest)
+
+RecorderSessionTreeResponse = _reflection.GeneratedProtocolMessageType('RecorderSessionTreeResponse', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDERSESSIONTREERESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.RecorderSessionTreeResponse)
+  })
+_sym_db.RegisterMessage(RecorderSessionTreeResponse)
+
 EstopEvent = _reflection.GeneratedProtocolMessageType('EstopEvent', (_message.Message,), {
   'DESCRIPTOR' : _ESTOPEVENT,
   '__module__' : 'north_pb2'
@@ -16530,6 +20441,13 @@ SafetyGuardStatus = _reflection.GeneratedProtocolMessageType('SafetyGuardStatus'
   # @@protoc_insertion_point(class_scope:proto.SafetyGuardStatus)
   })
 _sym_db.RegisterMessage(SafetyGuardStatus)
+
+FilesystemUsage = _reflection.GeneratedProtocolMessageType('FilesystemUsage', (_message.Message,), {
+  'DESCRIPTOR' : _FILESYSTEMUSAGE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.FilesystemUsage)
+  })
+_sym_db.RegisterMessage(FilesystemUsage)
 
 HostResourceMetrics = _reflection.GeneratedProtocolMessageType('HostResourceMetrics', (_message.Message,), {
   'DESCRIPTOR' : _HOSTRESOURCEMETRICS,
@@ -16727,6 +20645,27 @@ MasterDegradationEvent = _reflection.GeneratedProtocolMessageType('MasterDegrada
   })
 _sym_db.RegisterMessage(MasterDegradationEvent)
 
+ReplayStatus = _reflection.GeneratedProtocolMessageType('ReplayStatus', (_message.Message,), {
+  'DESCRIPTOR' : _REPLAYSTATUS,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.ReplayStatus)
+  })
+_sym_db.RegisterMessage(ReplayStatus)
+
+ReplayControlCommand = _reflection.GeneratedProtocolMessageType('ReplayControlCommand', (_message.Message,), {
+  'DESCRIPTOR' : _REPLAYCONTROLCOMMAND,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.ReplayControlCommand)
+  })
+_sym_db.RegisterMessage(ReplayControlCommand)
+
+ReplayControlResponse = _reflection.GeneratedProtocolMessageType('ReplayControlResponse', (_message.Message,), {
+  'DESCRIPTOR' : _REPLAYCONTROLRESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.ReplayControlResponse)
+  })
+_sym_db.RegisterMessage(ReplayControlResponse)
+
 MasterDeviceError = _reflection.GeneratedProtocolMessageType('MasterDeviceError', (_message.Message,), {
   'DESCRIPTOR' : _MASTERDEVICEERROR,
   '__module__' : 'north_pb2'
@@ -16811,6 +20750,34 @@ EnableResponse = _reflection.GeneratedProtocolMessageType('EnableResponse', (_me
   })
 _sym_db.RegisterMessage(EnableResponse)
 
+ChassisCalibrateRequest = _reflection.GeneratedProtocolMessageType('ChassisCalibrateRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CHASSISCALIBRATEREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.ChassisCalibrateRequest)
+  })
+_sym_db.RegisterMessage(ChassisCalibrateRequest)
+
+ChassisCalibrateResponse = _reflection.GeneratedProtocolMessageType('ChassisCalibrateResponse', (_message.Message,), {
+  'DESCRIPTOR' : _CHASSISCALIBRATERESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.ChassisCalibrateResponse)
+  })
+_sym_db.RegisterMessage(ChassisCalibrateResponse)
+
+ChassisCalibrateStatusRequest = _reflection.GeneratedProtocolMessageType('ChassisCalibrateStatusRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CHASSISCALIBRATESTATUSREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.ChassisCalibrateStatusRequest)
+  })
+_sym_db.RegisterMessage(ChassisCalibrateStatusRequest)
+
+ChassisCalibrateStatusResponse = _reflection.GeneratedProtocolMessageType('ChassisCalibrateStatusResponse', (_message.Message,), {
+  'DESCRIPTOR' : _CHASSISCALIBRATESTATUSRESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.ChassisCalibrateStatusResponse)
+  })
+_sym_db.RegisterMessage(ChassisCalibrateStatusResponse)
+
 Waypoint = _reflection.GeneratedProtocolMessageType('Waypoint', (_message.Message,), {
   'DESCRIPTOR' : _WAYPOINT,
   '__module__' : 'north_pb2'
@@ -16866,6 +20833,48 @@ ArmModeResponse = _reflection.GeneratedProtocolMessageType('ArmModeResponse', (_
   # @@protoc_insertion_point(class_scope:proto.ArmModeResponse)
   })
 _sym_db.RegisterMessage(ArmModeResponse)
+
+DeviceParameterKey = _reflection.GeneratedProtocolMessageType('DeviceParameterKey', (_message.Message,), {
+  'DESCRIPTOR' : _DEVICEPARAMETERKEY,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.DeviceParameterKey)
+  })
+_sym_db.RegisterMessage(DeviceParameterKey)
+
+DeviceParameterValue = _reflection.GeneratedProtocolMessageType('DeviceParameterValue', (_message.Message,), {
+  'DESCRIPTOR' : _DEVICEPARAMETERVALUE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.DeviceParameterValue)
+  })
+_sym_db.RegisterMessage(DeviceParameterValue)
+
+DeviceParameterGetRequest = _reflection.GeneratedProtocolMessageType('DeviceParameterGetRequest', (_message.Message,), {
+  'DESCRIPTOR' : _DEVICEPARAMETERGETREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.DeviceParameterGetRequest)
+  })
+_sym_db.RegisterMessage(DeviceParameterGetRequest)
+
+DeviceParameterSetRequest = _reflection.GeneratedProtocolMessageType('DeviceParameterSetRequest', (_message.Message,), {
+  'DESCRIPTOR' : _DEVICEPARAMETERSETREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.DeviceParameterSetRequest)
+  })
+_sym_db.RegisterMessage(DeviceParameterSetRequest)
+
+DeviceParameterResult = _reflection.GeneratedProtocolMessageType('DeviceParameterResult', (_message.Message,), {
+  'DESCRIPTOR' : _DEVICEPARAMETERRESULT,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.DeviceParameterResult)
+  })
+_sym_db.RegisterMessage(DeviceParameterResult)
+
+DeviceParameterResponse = _reflection.GeneratedProtocolMessageType('DeviceParameterResponse', (_message.Message,), {
+  'DESCRIPTOR' : _DEVICEPARAMETERRESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.DeviceParameterResponse)
+  })
+_sym_db.RegisterMessage(DeviceParameterResponse)
 
 EstopRequest = _reflection.GeneratedProtocolMessageType('EstopRequest', (_message.Message,), {
   'DESCRIPTOR' : _ESTOPREQUEST,
@@ -17398,6 +21407,55 @@ ConfigSetResponse = _reflection.GeneratedProtocolMessageType('ConfigSetResponse'
   # @@protoc_insertion_point(class_scope:proto.ConfigSetResponse)
   })
 _sym_db.RegisterMessage(ConfigSetResponse)
+
+CameraCalibrationRequest = _reflection.GeneratedProtocolMessageType('CameraCalibrationRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CAMERACALIBRATIONREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CameraCalibrationRequest)
+  })
+_sym_db.RegisterMessage(CameraCalibrationRequest)
+
+CameraCalibration = _reflection.GeneratedProtocolMessageType('CameraCalibration', (_message.Message,), {
+  'DESCRIPTOR' : _CAMERACALIBRATION,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CameraCalibration)
+  })
+_sym_db.RegisterMessage(CameraCalibration)
+
+CameraCalibrationResponse = _reflection.GeneratedProtocolMessageType('CameraCalibrationResponse', (_message.Message,), {
+  'DESCRIPTOR' : _CAMERACALIBRATIONRESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CameraCalibrationResponse)
+  })
+_sym_db.RegisterMessage(CameraCalibrationResponse)
+
+WristIspStatusRequest = _reflection.GeneratedProtocolMessageType('WristIspStatusRequest', (_message.Message,), {
+  'DESCRIPTOR' : _WRISTISPSTATUSREQUEST,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.WristIspStatusRequest)
+  })
+_sym_db.RegisterMessage(WristIspStatusRequest)
+
+WristIspStatusField = _reflection.GeneratedProtocolMessageType('WristIspStatusField', (_message.Message,), {
+  'DESCRIPTOR' : _WRISTISPSTATUSFIELD,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.WristIspStatusField)
+  })
+_sym_db.RegisterMessage(WristIspStatusField)
+
+WristIspCameraStatus = _reflection.GeneratedProtocolMessageType('WristIspCameraStatus', (_message.Message,), {
+  'DESCRIPTOR' : _WRISTISPCAMERASTATUS,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.WristIspCameraStatus)
+  })
+_sym_db.RegisterMessage(WristIspCameraStatus)
+
+WristIspStatusResponse = _reflection.GeneratedProtocolMessageType('WristIspStatusResponse', (_message.Message,), {
+  'DESCRIPTOR' : _WRISTISPSTATUSRESPONSE,
+  '__module__' : 'north_pb2'
+  # @@protoc_insertion_point(class_scope:proto.WristIspStatusResponse)
+  })
+_sym_db.RegisterMessage(WristIspStatusResponse)
 
 
 _HEARTBEAT.fields_by_name['fault_codes']._options = None

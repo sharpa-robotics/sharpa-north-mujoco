@@ -17,6 +17,8 @@ struct ViewerConfig
     // Also caps rendering when vsync is disabled.
     double sync_rate_hz = 60.0;
     bool vsync = true;
+    // Maintainer-only measurement; empty leaves normal rendering unchanged.
+    std::string benchmark_report;
 };
 
 class Viewer
@@ -27,6 +29,9 @@ public:
 
     Viewer(const Viewer&) = delete;
     Viewer& operator=(const Viewer&) = delete;
+
+    // Check desktop/OpenGL availability before starting runtime threads or devices.
+    static bool check_environment(std::string* error = nullptr);
 
     // Runs the GLFW render loop on the calling thread until the window closes,
     // shutdown is requested, or Runtime stops.

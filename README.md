@@ -2,93 +2,96 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-Sharpa MuJoCo is a high-fidelity simulation environment for the **Sharpa D01**
-robot. Built on MuJoCo, it reproduces the D01 hardware interfaces, device
-lifecycle, joint mappings, and motion-control behavior used by the physical
-robot.
+Sharpa MuJoCo simulates the **Sharpa D01** torso, dual arms, and dual dexterous
+hands in MuJoCo, with hardware-compatible UDP and CAN/CAN-FD device interfaces.
 
-Instead of introducing a simulator-specific control API, the project uses the
-same production UDP and CAN/CAN-FD paths as the physical devices. Applications
-can therefore share one control stack across simulation and real hardware,
-moving from development to the physical robot with only endpoint or
-configuration changes.
+The bundled **Sharpa Platform** runtime starts with the simulator and provides
+state feedback and motion control to applications.
 
-**[Sharpa Platform](third_party/sharpa_platform/README.md)** is the robot runtime
-shared by simulation and the physical D01, allowing applications to reuse the
-same control interfaces and workflows. This project bundles Platform as prebuilt
-binaries and starts it automatically with the simulator.
+## Key features
 
-## Highlights
-
-- **Hardware-compatible communication** — emulates production UDP protocols
-  and Linux SocketCAN/CAN-FD interfaces rather than a simulator-only API.
-- **Control-stack reuse** — works with the same device lifecycle, state
-  feedback, and command paths used on the D01.
-- **Broad motion-control coverage** — supports the primary control modes used
-  by the torso, arms, and Wave hands, including CSP, MIT, zero-force, position,
-  and admittance control where applicable.
-- **Consistent kinematics and dynamics** — preserves joint directions, coupled
-  transmissions, limits, feedback units, gravity, contact, and calibrated
-  actuator behavior to reduce the sim-to-real gap.
-- **Whole-body simulation** — integrates the torso, dual arms, dual dexterous
-  hands, and fingertip force/torque sensing in one shared MuJoCo runtime.
-- **Deployment flexibility** — runs as a standalone simulator with Viewer or
-  as an embeddable C runtime for applications that own their render loop.
+- **Hardware-compatible interfaces**: D01 UDP and CAN/CAN-FD communication,
+  device state, and joint commands.
+- **Whole-body simulation**: torso, dual arms, and dual dexterous hands in one
+  MuJoCo model.
+- **Two control options**: programmatic control with North SDK or graphical
+  control with North Pilot.
 
 ## System architecture
 
 ```text
-Application / Algorithm / Teleoperation
-                  |
-       Production UDP or CAN/CAN-FD
-                  |
-      D01 simulated device plugins
-                  |
-        Shared MuJoCo runtime/model
+C++ / Python application       North Pilot
+          |                        |
+      North SDK                    |
+          +-----------+------------+
+                    Zenoh
+                      |
+               Sharpa Platform
+                      |
+               UDP / CAN / CAN-FD
+                      |
+            D01 simulated device plugins
+                      |
+             MuJoCo runtime and model
 ```
 
-The protocol boundary is aligned with the real robot. Switching targets
-typically requires only an endpoint or configuration change; upper-level
-applications and motion logic remain unchanged.
-
-## Prerequisites
-
-Install these base tools:
-
-- Linux with a C++17 compiler, CMake 3.22+, Git, and Python 3 with `venv`
-- [MuJoCo 3.8.1](https://github.com/google-deepmind/mujoco/releases/tag/3.8.1)
-
-Download and extract the complete MuJoCo Linux release. The archive must
-contain `include/mujoco`, `lib`, and `simulate`.
+SDK and North Pilot communicate with Platform over Zenoh. Platform controls
+the simulation through device protocols. Device plugins map protocol commands
+to the MuJoCo model and return state feedback.
 
 ## Quick start
 
-### 1. Install dependencies
+Supports Linux x86_64 and aarch64. Run the commands from the root of a Git checkout
+of this project.
 
-From the `sharpa_mujoco` project root:
+### 1. Prepare the environment
+
+Install these base tools:
+
+- Linux x86_64 or aarch64, a C++17 compiler, CMake 3.22+, Git, and Python 3 with `venv`.
+- A graphical desktop for the Viewer.
+- A graphics driver providing desktop OpenGL 1.5+ compatibility functions,
+  `GL_ARB_framebuffer_object`, and `GL_ARB_vertex_buffer_object`. See [graphics requirements and validated environments](CONFIGURATION.md#graphics-requirements).
+- The complete [MuJoCo 3.8.1 Linux release](https://github.com/google-deepmind/mujoco/releases/tag/3.8.1),
+  extracted with `include/mujoco`, `lib`, and `simulate` present.
+
+On Ubuntu/Debian, install the base tools and project dependencies:
 
 ```bash
+sudo apt-get update
+sudo apt-get install build-essential cmake curl python3 python3-venv
 ./scripts/install_dependencies.sh
 ```
 
-Download the **standalone** binary archive for your host architecture from the
-[official Zenoh 1.10.0 release](https://github.com/eclipse-zenoh/zenoh/releases/tag/1.10.0).
+The dependency script installs GLFW and Git LFS, and downloads the Platform runtime.
+
+Robot model assets are available in the official
+[sharpa-urdf-usd-xml](https://github.com/sharpa-robotics/sharpa-urdf-usd-xml) repository.
+This project currently uses the D01-W HA1.2 precise model.
+
+After installing dependencies, fetch the pinned robot assets and North SDK before building:
+
+```bash
+./scripts/update_submodules.sh --pinned
+```
+
+Download the **standalone** archive for your host architecture from the
+[Zenoh 1.10.0 release](https://github.com/eclipse-zenoh/zenoh/releases/tag/1.10.0):
 
 - x86_64: `zenoh-1.10.0-x86_64-unknown-linux-gnu-standalone.zip`
 - aarch64 / ARM64: `zenoh-1.10.0-aarch64-unknown-linux-gnu-standalone.zip`
 
-After extracting the archive, run the following commands to install `zenohd`
-into `~/.local/bin` and add it to the current terminal's PATH. Replace
-`/path/to/zenohd` with the actual extracted executable path:
+Extract and install `zenohd`, replacing `/path/to/zenohd` with its actual path:
 
 ```bash
 install -Dm755 /path/to/zenohd "$HOME/.local/bin/zenohd"
 export PATH="$HOME/.local/bin:$PATH"
+zenohd --version
 ```
 
 Do not use the Snap package; its sandbox may block access to the project config file.
 
-### 2. Configure MuJoCo
+### 2. Configure MuJoCo and the simulated device
 
 Set the extracted MuJoCo path in `sharpa_mujoco.conf`:
 
@@ -96,10 +99,7 @@ Set the extracted MuJoCo path in `sharpa_mujoco.conf`:
 mujoco_root=/absolute/path/to/mujoco-3.8.1
 ```
 
-For all `sharpa_mujoco.conf` parameters, see the
-[configuration reference](CONFIGURATION.md).
-
-### 3. Create the device configuration
+See the [configuration reference](CONFIGURATION.md) for all parameters.
 
 Create `/userapp/sharpa/device.conf` before the first run:
 
@@ -113,33 +113,37 @@ batch = HA12
 EOF
 ```
 
-### 4. Build
+### 3. Build
 
 ```bash
 ./scripts/build.sh
 ```
 
-### 5. Run
+The default build directory is `build-linux`. Repeating the command reuses it and updates build outputs incrementally.
 
-Start the router on UDP port 7449:
+### 4. Start the router and simulation
+
+In terminal A, start the router on UDP port 7449:
 
 ```bash
+export PATH="$HOME/.local/bin:$PATH"
 zenohd -c resources/zenoh/router.json
 ```
 
-Then start the simulator:
+Keep terminal A running. In terminal B, start the simulator:
 
 ```bash
 ./scripts/run.sh
 ```
 
-The launcher starts the required components. Closing the Viewer stops the
-simulation environment.
+The launcher checks the environment, offers virtual CAN setup when needed,
+and starts Platform and the Viewer automatically.
+If graphics are unavailable, startup reports the error and exits.
 
-### 6. Optional: verify the startup
+### 5. Optional: verify the startup
 
-With the simulator running, install the motion-example dependencies in another
-terminal:
+Keep the router and simulator running. In terminal C, install the example
+dependencies from the repository root:
 
 ```bash
 python3 -m venv .venv
@@ -153,6 +157,60 @@ Run the whole-body motion example:
 python examples/whole_body_motion.py
 ```
 
+The robot squats, raises its arms, and forms a thumbs-up. It holds the pose
+until Ctrl+C, then returns to its starting pose and exits.
+
+The simulation environment is now ready. Choose North SDK or North Pilot below
+to control the simulation.
+
+## Control the simulation
+
+### North SDK
+
+Use the official **C++ or Python API** to read state and control motion for
+algorithm development and application integration. This repository includes
+state-reading, whole-body motion, and Home examples.
+
+Official project: [sharpa-north-sdk](https://github.com/sharpa-robotics/sharpa-north-sdk).
+
+→ [Connect to the simulation with SDK](docs/sdk.md)
+
+### North Pilot
+
+Use the desktop graphical interface to connect to the simulation, view device
+and joint state, and execute Home.
+Download and install the `production` build to get started.
+
+Official project: [sharpa-north-app](https://github.com/sharpa-robotics/sharpa-north-app).
+
+→ [Connect to the simulation with North Pilot](docs/north-pilot.md)
+
+Use one source of motion commands at a time. Finish the current task before
+switching controllers or closing the Viewer. Closing the Viewer stops Platform;
+press Ctrl+C in the router terminal to stop the router.
+
+## Simulation setup and startup troubleshooting
+
+| Symptom | Action |
+| --- | --- |
+| Missing Platform bundle | Check Git LFS access and rerun `./scripts/install_dependencies.sh`. |
+| Missing robot assets, `Git LFS content not downloaded`, or `Skipping object checkout, Git LFS is not installed` | Run `./scripts/update_submodules.sh --pinned`. Git LFS must be configured in the asset submodule as well as installed on the system; the script handles this automatically. |
+| Startup reports `sharpa_mujoco.conf:line: expected key=value` | Check the reported line: settings use `key=value` and comments start with `#`. Remove accidental characters, for example change `1#` to `#`. Correct the file and run again; no rebuild is needed. |
+| MuJoCo not found | Set `mujoco_root` to the extracted complete release; if `MUJOCO_ROOT` is set in the environment, check that path. Then rerun `./scripts/build.sh`, which automatically refreshes cached MuJoCo paths. |
+| Startup reports `Simulator not found or not executable` | Run `./scripts/build.sh` and confirm it succeeds before running `./scripts/run.sh`. Both use the same build directory by default. |
+| Window creation fails or reports a GLX error | Check your desktop session and graphics driver. NVIDIA users can run `nvidia-smi`; if it reports `Driver/library version mismatch`, save your work and reboot. Devices and Platform are not started when graphics checks fail. |
+| `wave_tactile` cannot bind port 59998 | Check that no other simulator instance is running. Before devices bind ports, startup reclaims a Platform process left by a previous crashed simulator. |
+| Missing virtual CAN interfaces | Run `sudo bash scripts/setup_vcan.sh vcan0 vcan1`. |
+| Platform cannot select its device profile | Check that `device.conf` uses model `D01W` and batch `HA12`. |
+| Port 7449 is in use | Check the existing router; use this repository's `resources/zenoh/router.json`. |
+| Viewer opens but the controller has no state | Check Platform startup output and the router configuration. |
+
+## More documentation
+
+- [Simulator configuration](CONFIGURATION.md)
+- [Platform runtime](third_party/sharpa_platform/README.md)
+
 ## License
 
-Apache-2.0. See [LICENSE](LICENSE).
+[Apache-2.0](LICENSE). For the bundled Platform runtime's license, see its
+[distribution notes](third_party/sharpa_platform/README.md).

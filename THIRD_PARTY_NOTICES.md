@@ -13,3 +13,8 @@ not part of this SDK unless explicitly added with compatible licensing.
 
 This repository bundles msgpack11 (Copyright 2016 Masahiro Wada) under the MIT
 License. Its license text is available at `third_party/msgpack11/LICENSE.txt`.
+
+Robot assets are supplied by the sharpa-urdf-usd-xml Git submodule under
+Apache-2.0: https://github.com/sharpa-robotics/sharpa-urdf-usd-xml.
+Runtime distributions include its original LICENSE.txt and NOTICE.txt alongside
+the selected assets under mjcf/sharpa-assets/.

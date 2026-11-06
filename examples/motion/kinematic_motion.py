@@ -18,7 +18,8 @@ from pathlib import Path
 
 
 ZENOH_CLIENT_CONFIG = Path(__file__).resolve().parents[2] / "resources/zenoh/client.json"
-DEFAULT_ZENOH_ENDPOINT = json.loads(ZENOH_CLIENT_CONFIG.read_text())["connect"]["endpoints"][0]
+DEFAULT_ZENOH_ENDPOINT = "udp/192.168.100.100:7449?rel=1;multistream=1;mixed_rel=0"
+# DEFAULT_ZENOH_ENDPOINT = json.loads(ZENOH_CLIENT_CONFIG.read_text())["connect"]["endpoints"][0]
 PROFILE_NAMES = ("sweep", "sine", "trapezoid", "minjerk", "chirp")
 # Reference peak speed for point-to-point profiles at --speed 1. Longer
 # excursions take longer; coordinated axes share the slowest axis's timing.
@@ -526,6 +527,10 @@ class MotionRunner:
             for label, listener in self._listeners.items()
         }
 
+    def _feedback_axes(self, label):
+        """Axes included in response and measured-arrival checks."""
+        return range(len(self._joint_names))
+
     def wait_for_baselines(self, counts_before=None):
         counts_before = counts_before or {
             channel.label: 0 for channel in self._channels
@@ -541,7 +546,7 @@ class MotionRunner:
             ):
                 raise RuntimeError(
                     f"no fresh {channel.label} state received; check zenohd, "
-                    "Platform, MuJoCo, device configuration, and endpoints"
+                    "Platform, device configuration, and endpoints"
                 )
             positions, count = self._listeners[channel.label].snapshot()
             baselines[channel.label] = positions
@@ -614,7 +619,10 @@ class MotionRunner:
             failures = []
             for channel in self._channels:
                 label = channel.label
+                checked_axes = set(self._feedback_axes(label))
                 for axis in axes:
+                    if axis not in checked_axes:
+                        continue
                     response = observed_max[label][axis] - observed_min[label][axis]
                     if response < threshold:
                         failures.append(
@@ -624,7 +632,7 @@ class MotionRunner:
                 raise RuntimeError(
                     "insufficient state response on joints " + ",".join(failures)
                 )
-            print("[Verify] PASS: all selected joints reported motion")
+            print("[Verify] PASS: all checked joints reported motion")
         print("[Test] completed")
 
     def _group_sweep_axes(self, axes, sweep_groups):
@@ -711,10 +719,8 @@ class MotionRunner:
                 positions, count = listener.snapshot()
                 feedback[channel.label] = (positions, count)
                 errors = [
-                    abs(position - baseline)
-                    for position, baseline in zip(
-                        positions, self._baselines[channel.label]
-                    )
+                    abs(positions[axis] - self._baselines[channel.label][axis])
+                    for axis in self._feedback_axes(channel.label)
                 ]
                 channel_error = max(errors, default=0.0)
                 max_error = max(max_error, channel_error)
@@ -725,7 +731,7 @@ class MotionRunner:
             self._on_return_feedback(now - wait_started, tolerance, feedback, status)
             if all_arrived:
                 print(
-                    "[Return] measured joints reached baseline "
+                    "[Return] checked joints reached baseline "
                     f"(max error {math.degrees(max_error):.2f}deg)"
                 )
                 return True

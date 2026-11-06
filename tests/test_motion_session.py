@@ -372,6 +372,71 @@ class MotionSessionTest(unittest.TestCase):
                             for runner in motion.runners))
         self.assertEqual(self.args.return_tolerance_deg, 0.5)
 
+    def freeze_feedback(self, label, axis, degrees):
+        listener = self.listeners[label]
+        original = listener.snapshot
+
+        def snapshot():
+            values, count = original()
+            values[axis] = math.radians(degrees)
+            return values, count
+
+        listener.snapshot = snapshot
+
+    def test_ignored_right_j5_allows_coordinated_profiles_and_zero_cleanup(self):
+        self.args.ignore_right_j5 = True
+        arms = self.make_runner(arm, "arm", ("left", "right"), torso.ArmClearanceRunner)
+        moving = self.make_runner(hand, "hand", ("left", "right"), hand.HandMotionRunner, arms=arms)
+        motion = self.initialize((moving, arms))
+        self.freeze_feedback("right_hand", 4, 120)
+        moving._baselines["right_hand"][4] = math.radians(120)
+        moving._last_targets["right_hand"][4] = math.radians(120)
+        arms.spread(shoulder_deg=hand.HAND_SHOULDER_CLEARANCE_DEG, motion_name="hand")
+        drive_segment = moving._drive_segment
+        with patch.object(moving, "_drive_segment", wraps=drive_segment) as drive:
+            moving.run((4, 5), PROFILE_NAMES, sweep_groups=hand.FINGER_JOINT_GROUPS)
+        self.assertEqual({call.args[0] for call in drive.call_args_list}, set(PROFILE_NAMES))
+        self.assertTrue(motion.return_to_zero())
+        self.assertEqual(arms._last_targets["right_arm"], [0.0] * 7)
+        self.assertEqual(moving._last_targets["right_hand"][4], 0.0)
+        self.assertEqual(self.listeners["right_hand"].snapshot()[0][4], math.radians(120))
+
+    def test_right_j5_exception_does_not_skip_other_response_checks(self):
+        self.args.ignore_right_j5 = True
+        arms = self.make_runner(arm, "arm", ("left", "right"), torso.ArmClearanceRunner)
+        moving = self.make_runner(hand, "hand", ("left", "right"), hand.HandMotionRunner, arms=arms)
+        self.initialize((moving, arms))
+        arms.spread(shoulder_deg=hand.HAND_SHOULDER_CLEARANCE_DEG, motion_name="hand")
+        for label, axis in (("left_hand", 4), ("right_hand", 5)):
+            with self.subTest(label=label, axis=axis):
+                listener = self.listeners[label]
+                original = listener.snapshot
+                self.freeze_feedback(label, axis, 3)
+                with self.assertRaisesRegex(RuntimeError, f"{label}:{axis + 1}"):
+                    moving.run((axis,), ("sweep",))
+                listener.snapshot = original
+
+    def test_right_j5_exception_does_not_skip_other_arrival_or_freshness_checks(self):
+        self.args.ignore_right_j5 = True
+        moving = self.make_runner(hand, "hand", ("right",), hand.HandFeedbackRunner)
+        self.initialize((moving,))
+        self.freeze_feedback("right_hand", 5, 120)
+        self.assertFalse(moving.return_to_zero(duration=0.01))
+        self.listeners["right_hand"].fresh = False
+        with self.assertRaisesRegex(RuntimeError, "right_hand state became stale"):
+            moving.return_to_zero(duration=0.01)
+
+    def test_right_j5_is_checked_by_default_and_exception_applies_to_companion_hand(self):
+        moving = self.make_runner(hand, "hand", ("left",), hand.HandFeedbackRunner)
+        motion = self.initialize((moving,))
+        right = next(runner for runner in motion.runners if "right_hand" in runner._listeners)
+        self.freeze_feedback("right_hand", 4, 120)
+        self.assertFalse(right.return_to_zero(duration=0.01))
+        self.args.ignore_right_j5 = True
+        # Companion runners copy CLI arguments when the session is constructed.
+        right._args.ignore_right_j5 = True
+        self.assertTrue(right.return_to_zero(duration=0.01))
+
     def test_drivers_home_on_normal_completion_ctrl_c_and_exercise_failure(self):
         for module, runner_name in (
             (arm, "ArmMotionRunner"), (torso, "TorsoMotionRunner"), (hand, "HandMotionRunner"),

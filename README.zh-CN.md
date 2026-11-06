@@ -2,84 +2,89 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-Sharpa MuJoCo 是面向 **Sharpa D01** 机器人打造的高一致性仿真环境。项目基于
-MuJoCo 构建，重点复现 D01 真机的硬件接口、设备生命周期、关节映射和运动控制
-行为。
+Sharpa MuJoCo 是面向 **Sharpa D01** 的仿真环境，基于 MuJoCo 模拟躯干、双臂和
+双灵巧手，提供兼容真机的 UDP 与 CAN/CAN-FD 设备接口。
 
-项目没有额外引入仅供仿真使用的控制 API，而是直接使用与真机一致的 UDP 与
-CAN/CAN-FD 通信链路。因此，上层应用可以复用同一套控制栈对接仿真与真机，
-从开发、联调和验证过渡到实体机器人时，通常只需切换设备端点或运行配置。
-
-**[Sharpa Platform](third_party/sharpa_platform/README.md)** 是仿真与 D01 真机共用的
-机器人运行时，上层应用可复用同一套控制接口与运行流程。本项目提供 Platform
-预编译包，随仿真自动启动。
+仓库随附 **Sharpa Platform** 运行时，由模拟器自动启动，为上层应用提供状态反馈
+和运动控制接口。
 
 ## 核心特性
 
-- **真机协议兼容**：模拟生产环境使用的 UDP 协议及 Linux SocketCAN/CAN-FD
-  接口，而不是另行定义仿真专用接口。
-- **控制栈直接复用**：兼容 D01 真机使用的设备生命周期、状态反馈与指令链路。
-- **覆盖主要运动控制模式**：根据不同设备支持 CSP、MIT、零力、位置和导纳等
-  真机常用控制模式。
-- **运动学与动力学一致性**：保留关节方向、耦合传动、软硬限位、反馈单位、
-  重力、接触及标定后的执行器行为，降低 Sim-to-Real 差异。
-- **全身一体化仿真**：在同一个 MuJoCo 运行时中集成躯干、双臂、双灵巧手及
-  指尖力/力矩传感器。
-- **灵活集成方式**：既可通过 Viewer 独立运行，也可通过 C API 嵌入已有应用和
-  渲染循环。
+- **真机接口兼容**：模拟 D01 的 UDP 与 CAN/CAN-FD 通信、设备状态和关节指令。
+- **全身仿真**：在同一 MuJoCo 模型中运行躯干、双臂和双灵巧手。
+- **两种控制入口**：通过 North SDK 编程控制，或使用 North Pilot 图形界面。
 
 ## 系统架构
 
 ```text
-上层应用 / 算法 / 遥操作
-          |
- 真机 UDP 或 CAN/CAN-FD
-          |
-  D01 仿真设备插件
-          |
- 共享 MuJoCo 运行时与模型
+C++ / Python 应用              North Pilot
+        │                          │
+    North SDK                      │
+        └────────────┬─────────────┘
+                   Zenoh
+                     │
+              Sharpa Platform
+                     │
+              UDP / CAN / CAN-FD
+                     │
+               D01 仿真设备插件
+                     │
+              MuJoCo 运行时与模型
 ```
 
-仿真与真机在设备协议边界上保持一致。切换运行目标时，通常只需要调整设备端点或
-运行配置，上层应用与运动逻辑可以保持不变。
-
-## 前置准备
-
-请安装以下基础环境：
-
-- Linux、支持 C++17 的编译器、CMake 3.22+、Git，以及支持 `venv` 的 Python 3
-- [MuJoCo 3.8.1](https://github.com/google-deepmind/mujoco/releases/tag/3.8.1)
-
-请下载并解压完整的 MuJoCo Linux 发布包，其中应包含 `include/mujoco`、`lib`
-和 `simulate`。
+SDK 和 North Pilot 通过 Zenoh 与 Platform 通信；Platform 通过设备协议控制仿真。
+设备插件将协议指令映射到 MuJoCo 模型，并返回状态反馈。
 
 ## 快速开始
 
-### 1. 安装依赖
+支持 Linux x86_64 和 aarch64。以下命令均在通过 Git 克隆的项目根目录执行。
 
-在 `sharpa_mujoco` 项目根目录执行：
+### 1. 准备环境
+
+请安装以下基础环境：
+
+- Linux x86_64 或 aarch64、C++17 编译器、CMake 3.22+、Git、Python 3 和 `venv`。
+- 图形桌面，用于运行 Viewer。
+- 显卡驱动需支持桌面 OpenGL 1.5+ 兼容功能及 `GL_ARB_framebuffer_object`、`GL_ARB_vertex_buffer_object`。
+  [图形要求与已验证环境](CONFIGURATION.zh-CN.md#图形环境要求)。
+- 完整的 [MuJoCo 3.8.1 Linux 发布包](https://github.com/google-deepmind/mujoco/releases/tag/3.8.1)，
+  解压后包含 `include/mujoco`、`lib` 和 `simulate`。
+
+Ubuntu/Debian 安装基础工具和项目依赖：
 
 ```bash
+sudo apt-get update
+sudo apt-get install build-essential cmake curl python3 python3-venv
 ./scripts/install_dependencies.sh
 ```
 
-从 [Zenoh 官方 1.10.0 发布页](https://github.com/eclipse-zenoh/zenoh/releases/tag/1.10.0)
-下载适合主机架构的 **standalone** 二进制包：
+依赖脚本会安装 GLFW、Git LFS，并下载 Platform 运行时。
+
+机器人模型资源见官方资产仓库 [sharpa-urdf-usd-xml](https://github.com/sharpa-robotics/sharpa-urdf-usd-xml)。本项目当前使用 D01-W HA1.2 precise 模型。
+
+安装依赖后、构建之前，拉取固定版本的机器人资产和 North SDK：
+
+```bash
+./scripts/update_submodules.sh --pinned
+```
+
+从 [Zenoh 1.10.0 发布页](https://github.com/eclipse-zenoh/zenoh/releases/tag/1.10.0)
+下载适合主机架构的 **standalone** 包：
 
 - x86_64：`zenoh-1.10.0-x86_64-unknown-linux-gnu-standalone.zip`
 - aarch64 / ARM64：`zenoh-1.10.0-aarch64-unknown-linux-gnu-standalone.zip`
 
-解压后执行以下命令，将 `zenohd` 安装到 `~/.local/bin` 并加入当前终端的 PATH。
-将 `/path/to/zenohd` 替换为解压后的实际文件路径：
+解压后安装 `zenohd`，将 `/path/to/zenohd` 替换为实际路径：
 
 ```bash
 install -Dm755 /path/to/zenohd "$HOME/.local/bin/zenohd"
 export PATH="$HOME/.local/bin:$PATH"
+zenohd --version
 ```
 
 请勿使用 Snap 包，其沙箱可能阻止读取项目配置文件。
 
-### 2. 配置 MuJoCo
+### 2. 配置 MuJoCo 和仿真设备
 
 在 `sharpa_mujoco.conf` 中填写 MuJoCo 解压路径：
 
@@ -87,9 +92,7 @@ export PATH="$HOME/.local/bin:$PATH"
 mujoco_root=/absolute/path/to/mujoco-3.8.1
 ```
 
-`sharpa_mujoco.conf` 的完整参数说明请查看[配置参考](CONFIGURATION.zh-CN.md)。
-
-### 3. 创建设备配置
+完整参数说明见[配置参考](CONFIGURATION.zh-CN.md)。
 
 首次运行前创建 `/userapp/sharpa/device.conf`：
 
@@ -103,31 +106,35 @@ batch = HA12
 EOF
 ```
 
-### 4. 构建
+### 3. 构建
 
 ```bash
 ./scripts/build.sh
 ```
 
-### 5. 运行
+默认在 `build-linux` 中构建。重复执行会复用该目录，增量更新编译产物。
 
-启动路由器，监听 UDP 7449：
+### 4. 启动路由器和仿真
+
+终端 A，启动路由器，监听 UDP 7449：
 
 ```bash
+export PATH="$HOME/.local/bin:$PATH"
 zenohd -c resources/zenoh/router.json
 ```
 
-随后启动模拟器：
+保持终端 A 运行，在终端 B 启动模拟器：
 
 ```bash
 ./scripts/run.sh
 ```
 
-启动器会自动运行所需组件。关闭 Viewer 后，整个仿真环境会一并退出。
+启动器会检查环境，按需提示准备虚拟 CAN 接口，并自动启动 Platform 和 Viewer。
+图形环境不可用时，会报告错误并退出。
 
-### 6. 可选：验证启动是否正确
+### 5. 可选：验证启动是否正确
 
-保持模拟器运行，并在另一个终端中安装运动示例所需的 Python 依赖：
+保持路由器和模拟器运行，在终端 C 的仓库根目录安装示例依赖：
 
 ```bash
 python3 -m venv .venv
@@ -141,6 +148,54 @@ python -m pip install -r requirements.txt
 python examples/whole_body_motion.py
 ```
 
+机器人会下蹲、抬臂并竖拇指，保持姿态直到按 Ctrl+C，随后回到起始姿态并退出。
+
+至此，仿真环境已准备就绪。如需进一步控制，可选择下方的 North SDK 或 North Pilot。
+
+## 控制仿真
+
+### North SDK
+
+通过官方 **C++ 或 Python API** 读取状态和控制运动，适合算法开发与程序联调。
+本仓库提供状态读取、全身运动和 Home 示例。
+
+官方项目：[sharpa-north-sdk](https://github.com/sharpa-robotics/sharpa-north-sdk)。
+
+→ [使用 SDK 连接仿真](docs/sdk.zh-CN.md)
+
+### North Pilot
+
+通过桌面图形界面连接仿真、查看设备和关节状态，以及执行 Home，适合交互操作。
+下载并安装 `production` 版本后即可使用。
+
+官方项目：[sharpa-north-app](https://github.com/sharpa-robotics/sharpa-north-app)。
+
+→ [使用 North Pilot 连接仿真](docs/north-pilot.zh-CN.md)
+
+同一时间只使用一个运动指令来源。切换或退出前，先结束当前控制任务。
+关闭 Viewer 会一并退出 Platform；路由器需要在其终端按 Ctrl+C 停止。
+
+## 仿真环境配置与启动常见问题
+
+| 现象 | 处理方法 |
+| --- | --- |
+| 缺少 Platform 包 | 检查 Git LFS 访问权限，重新执行 `./scripts/install_dependencies.sh`。 |
+| 缺少机器人资产，或提示 `Git LFS content not downloaded` / `Skipping object checkout, Git LFS is not installed` | 执行 `./scripts/update_submodules.sh --pinned`。除了安装 Git LFS 程序，还需在资产子模块中配置 LFS，脚本会自动完成。 |
+| 启动提示 `sharpa_mujoco.conf:行号: expected key=value` | 检查报错行：配置项使用 `key=value`，注释以 `#` 开头；删除误输入的字符，例如将 `1#` 改为 `#`。修正后重新运行，无需重新构建。 |
+| 找不到 MuJoCo | 将 `mujoco_root` 设置为完整发布包的解压目录；若设置了环境变量 `MUJOCO_ROOT`，检查其路径。修正后重新执行 `./scripts/build.sh`，会自动刷新 MuJoCo 路径缓存。 |
+| 启动提示 `Simulator not found or not executable` | 先执行 `./scripts/build.sh` 并确认构建成功，再执行 `./scripts/run.sh`。默认使用同一个构建目录。 |
+| 窗口创建失败或提示 GLX 错误 | 检查图形桌面和显卡驱动。NVIDIA 用户可运行 `nvidia-smi`；若提示 `Driver/library version mismatch`，保存工作并重启电脑。图形检查失败时不会启动设备或 Platform。 |
+| 提示 `wave_tactile` 无法绑定 59998 端口 | 确认没有另一个仿真实例运行。启动器会在设备绑定端口前回收上次异常退出留下的 Platform 进程。 |
+| 缺少虚拟 CAN 接口 | 执行 `sudo bash scripts/setup_vcan.sh vcan0 vcan1`。 |
+| Platform 无法选择设备配置 | 检查 `device.conf` 中的型号和批次为 `D01W` / `HA12`。 |
+| 7449 端口被占用 | 检查已有路由器，使用本仓库的 `resources/zenoh/router.json` 配置。 |
+| Viewer 打开但控制端没有状态 | 检查 Platform 启动输出和路由器配置。 |
+
+## 更多文档
+
+- [仿真配置参考](CONFIGURATION.zh-CN.md)
+- [Platform 运行时说明](third_party/sharpa_platform/README.md)
+
 ## 许可证
 
-Apache-2.0，详见 [LICENSE](LICENSE)。
+[Apache-2.0](LICENSE)。随附 Platform 运行时的许可见其[分发说明](third_party/sharpa_platform/README.md)。

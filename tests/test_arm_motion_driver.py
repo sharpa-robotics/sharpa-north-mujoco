@@ -115,7 +115,7 @@ class ArmMotionDriverTest(unittest.TestCase):
                 self.assertEqual(slowed.targets, original.targets)
                 self.assertAlmostEqual(slowed.duration, original.duration * factor)
 
-    def test_extra_j1_sweep_has_fixed_endpoints_and_zero_companion_joints(self):
+    def test_extra_j1_sweep_opens_shoulders_before_fixed_endpoints(self):
         for speed, scale in ((1.0, 1.0), (2.0, 10.0)):
             with self.subTest(speed=speed, scale=scale):
                 self.runner._args.speed = speed
@@ -126,17 +126,28 @@ class ArmMotionDriverTest(unittest.TestCase):
                 self.runner.sweep_j1()
                 angles = []
                 previous = {label: [0.0] * 7 for label in self.runner._baselines}
+                shoulder_target = math.radians(arm.J1_SWEEP_SHOULDER_OPEN_DEG)
+                first_j1_motion = None
                 for targets in self.targets:
                     self.assertEqual(targets["left_arm"], targets["right_arm"])
                     for label, values in targets.items():
-                        self.assertEqual(values[1:], [0.0] * 6)
+                        self.assertEqual(values[2:], [0.0] * 5)
                         self.assertLessEqual(abs(values[0] - previous[label][0]), math.radians(5) + 1e-9)
                     angles.append(targets["left_arm"][0])
+                    if first_j1_motion is None and abs(angles[-1]) > 1e-9:
+                        first_j1_motion = len(angles) - 1
                     previous = targets
+                self.assertIsNotNone(first_j1_motion)
+                self.assertAlmostEqual(
+                    self.targets[first_j1_motion]["left_arm"][1], shoulder_target
+                )
                 self.assertAlmostEqual(min(angles), math.radians(-45))
                 self.assertAlmostEqual(max(angles), math.radians(135))
                 self.assertLess(angles.index(min(angles)), angles.index(max(angles)))
-                self.assertEqual(self.targets[-1], {label: [0.0] * 7 for label in previous})
+                expected = [0.0, shoulder_target, 0.0, 0.0, 0.0, 0.0, 0.0]
+                self.assertEqual(
+                    self.targets[-1], {label: list(expected) for label in previous}
+                )
 
     def test_interrupting_extra_j1_sweep_still_returns_to_zero(self):
         self.runner._has_published = True

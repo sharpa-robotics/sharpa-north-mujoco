@@ -1,5 +1,5 @@
 <mujoco model="lidar_test_scene">
-  <include file="../../mjcf/NTH-HA1-MJCF/NTH-HA1-scene.xml"/>
+  <include file="../../mjcf/sharpa-assets/d01/d01-w/ha1.2/mjcf/NTH-HA1-scene-precise-collision.xml"/>
 
   <worldbody>
     <!-- Front FTX140 (-Y): three square steps and a flat wall. -->

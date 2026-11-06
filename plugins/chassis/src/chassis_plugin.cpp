@@ -223,7 +223,7 @@ public:
         for (auto& profile : steer_profiles_) profile.reset();
         wheel_pi_reset_generation_ = runtime.reset_generation();
         std::vector<std::string> brake_joints;
-        brake_joints.reserve(8);
+        brake_joints.reserve(12);
         for (std::size_t axis = 0; axis < 4; ++axis)
         {
             brake_joints.push_back(config_.axes[axis].joint);
@@ -232,6 +232,9 @@ public:
         {
             brake_joints.push_back(config_.axes[axis].joint);
         }
+        // Keep existing steer/slider indices, append the four precise-model wheel brakes.
+        for (std::size_t wheel = 0; wheel < 4; ++wheel)
+            brake_joints.push_back(config_.axes[4 + wheel].joint);
         if (!startup_brake_.initialize(runtime, brake_joints, error))
         {
             return false;
@@ -700,7 +703,7 @@ private:
         {
             // Brake changes can call mj_forward. Keep them outside the physics
             // updater and outside the controller lock.
-            std::array<bool, 4> release{};
+            std::array<bool, 8> release{};
             {
                 std::lock_guard<std::mutex> control_lock(wheel_control_mutex_);
                 std::lock_guard<std::mutex> lock(mutex_);
@@ -710,9 +713,9 @@ private:
                         (kinco_[axis].homing_active() ||
                          std::chrono::duration<double>(std::chrono::steady_clock::now() -
                             last_kinco_commands_[axis]).count() <= config_.command_timeout_s);
+                    release[axis] = active;
                     if (axis < 4)
                     {
-                        release[axis] = active;
                         if (!active || (kinco_[axis].mode() != 1 && !kinco_[axis].homing_active()))
                             steer_profiles_[axis].reset();
                     }
@@ -720,8 +723,10 @@ private:
                         wheel_pi_[axis - 4].reset();
                 }
             }
-            for (std::size_t axis = 0; axis < 4; ++axis)
-                if (release[axis]) startup_brake_.release(axis);
+            std::vector<std::size_t> released_axes;
+            for (std::size_t axis = 0; axis < 8; ++axis)
+                if (release[axis]) released_axes.push_back(axis < 4 ? axis : axis + 4);
+            if (!released_axes.empty()) startup_brake_.release(released_axes);
             if (config_.kinco_control_in_step) return;
         }
         std::unique_lock<std::mutex> control_lock(wheel_control_mutex_);
@@ -1243,7 +1248,8 @@ private:
         {
             return;
         }
-        for (std::size_t axis = 0; axis < 4; ++axis)
+        std::vector<std::size_t> released_axes;
+        for (std::size_t axis = 0; axis < kJiechangAxisCount; ++axis)
         {
             const AxisCommand& axis_command = axis_commands[axis];
             const bool fresh =
@@ -1253,11 +1259,13 @@ private:
             if (fresh && axis_command.enabled && axis_command.brake_released &&
                 (axis_command.mode == AxisControlMode::Position ||
                  axis_command.mode == AxisControlMode::Torque ||
-                 axis_command.mode == AxisControlMode::Mit))
+                 axis_command.mode == AxisControlMode::Mit ||
+                 axis_command.mode == AxisControlMode::Velocity))
             {
-                startup_brake_.release(axis);
+                released_axes.push_back(axis < 4 ? axis : axis + 4);
             }
         }
+        if (!released_axes.empty()) startup_brake_.release(released_axes);
     }
 
     void submit_slider_command()

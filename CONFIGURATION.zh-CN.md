@@ -33,9 +33,9 @@
 | --- | --- |
 | `mujoco_root` | MuJoCo 3.8.1 SDK 解压目录，需包含 `include/mujoco`、`lib` 和 `simulate`。填写本机实际路径，例如 `/absolute/path/to/mujoco-3.8.1`。由构建、打包工具读取，模拟器不使用此项选择场景。 |
 
-CMake 中已有的 `MUJOCO_ROOT` 缓存或首次配置时设置的同名环境变量会优先于文件值。
-更换 SDK 后如仍引用旧路径，可使用新的构建目录，或按 `scripts/build.sh --help`
-中的清理选项重新配置。
+`./scripts/build.sh` 每次构建会重新读取 MuJoCo 路径，环境变量 `MUJOCO_ROOT` 优先于文件值。
+修改路径后重新执行该命令即可。直接使用 CMake 时，已有的 `MUJOCO_ROOT` 缓存优先；
+切换 SDK 后请使用新的构建目录。
 
 ## 仿真与 Viewer
 
@@ -43,7 +43,7 @@ CMake 中已有的 `MUJOCO_ROOT` 缓存或首次配置时设置的同名环境�
 
 | 参数 | 当前值 | 说明 |
 | --- | --- | --- |
-| `model` | `mjcf/NTH-HA1-MJCF/NTH-HA1-scene.xml` | 主场景 MJCF 文件。 |
+| `model` | `mjcf/sharpa-assets/d01/d01-w/ha1.2/mjcf/NTH-HA1-scene-precise-collision.xml` | 主场景 MJCF 文件。 |
 | `snapshot_rate_hz` | `500` | 按仿真时间生成运行时状态快照的频率，必须大于零；物理步长仍由模型设置。 |
 
 ### `[viewer]`
@@ -53,6 +53,17 @@ CMake 中已有的 `MUJOCO_ROOT` 缓存或首次配置时设置的同名环境�
 | `enabled` | `true` | 是否启动 Viewer。关闭后可无界面运行。 |
 | `sync_rate_hz` | `60` | Viewer 同步频率，必须大于零。 |
 | `vsync` | `false` | 是否启用图形垂直同步。当前关闭 VSync，使用 `sync_rate_hz` 软件限速，避免后台 GLX VSync 阻塞。 |
+
+### 图形环境要求
+
+Viewer 需要 Linux 图形桌面、桌面 OpenGL 1.5+ 兼容功能，以及
+`GL_ARB_framebuffer_object`、`GL_ARB_vertex_buffer_object`。建议使用硬件加速。
+
+已验证环境：Ubuntu 22.04 x86_64、RTX 4070 Ti SUPER，NVIDIA 驱动
+**570.211.01、580.178.04**（OpenGL 4.6）。其他组合尚未验证。
+
+检查失败时会提示原因并退出，不会自动切换渲染器。
+若驱动更新后 `nvidia-smi` 提示 `Driver/library version mismatch`，请保存工作并重启电脑。
 
 ## 设备启用与驱动
 
@@ -392,7 +403,7 @@ Kinco 扭矩上限在峰值转速与额定转速之间线性降至连续扭矩�
 | `mount_pos` | `-2.94958e-07,-0.0803,0.11755` | `-0.0126496,0.1171,0.22518` | `0.2685,0,0.12463` |
 | `mount_quat` | `-0.707106781,0,0,0.707106781` | `0.459227,-0.537688,-0.459231,0.537688` | `1,0,0,0` |
 | `calibration_file` | `resources/lidar/calibration/FTX140_angle_calib_file.csv` | `resources/lidar/calibration/FTX140_angle_calib_file.csv` | `resources/lidar/calibration/JT16_sample_angle.csv` |
-| `raycast_exclude_meshes` | `mesh_meshes_torso__torso_FTX_link,mesh_meshes_torso__torso_base_link,mesh_meshes_torso__torso_base_link002,mesh_meshes_torso__torso_base_link003` | `mesh_meshes_torso__torso_FTX_link` | `mesh_root_link` |
+| `raycast_exclude_meshes` | `visual_old_mesh_meshes_torso__torso_FTX_link,visual_old_mesh_meshes_torso__torso_base_link,visual_old_mesh_meshes_torso__torso_base_link002,visual_old_mesh_meshes_torso__torso_base_link003` | `visual_old_mesh_meshes_torso__torso_FTX_link` | `visual_old_mesh_root_link` |
 | `min_range_m` | `0.1` | `0.1` | `0.15` |
 | `max_range_m` | `60` | `60` | `100` |
 | `bind_port` | `45980` | `45981` | `45982` |

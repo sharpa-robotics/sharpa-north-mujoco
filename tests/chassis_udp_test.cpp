@@ -683,9 +683,13 @@ bool test_wheel_pi_lifecycle(bool kinco, bool in_step = false)
     std::this_thread::sleep_for(std::chrono::milliseconds(150));
     if (!sample(0.0) || !require(std::abs(runtime.latest_snapshot().controls[actuator]) < 1e-8,
                                "Command timeout retained PI torque.")) return false;
-    if (!accumulate() || !runtime.reset(&error) || !sample(0.0) ||
+    if (!accumulate() || !runtime.reset(&error)) return false;
+    simulated_time = 0.0;  // Preserve the reset's backward-time semantics in this synthetic-clock test.
+    if (!sample(0.0) ||
         !require(std::abs(runtime.latest_snapshot().controls[actuator]) < 1e-8,
-                 "Runtime reset retained PI torque.")) return false;
+                 std::string("Runtime reset retained PI torque: ") + (kinco ? "Kinco" : "Jiechang") +
+                 " in_step=" + std::to_string(in_step) + " control=" +
+                 std::to_string(runtime.latest_snapshot().controls[actuator]))) return false;
     plugin.stop();
     std::cout << (kinco ? "Kinco" : "Jiechang") << " PI lifecycle UDP checks passed.\n";
     return true;

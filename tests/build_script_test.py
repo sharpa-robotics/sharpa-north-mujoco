@@ -250,5 +250,81 @@ elif tool == 'rm':
         self.assertEqual(self.commands(), [])
 
 
+class MuJoCoCacheTest(unittest.TestCase):
+    """Exercise real CMake discovery without compiling the simulator."""
+
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory(prefix="sharpa-mujoco-cache-")
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name).resolve()
+        self.project = self.root / "project with spaces"
+        (self.project / "scripts").mkdir(parents=True)
+        (self.project / "cmake").mkdir()
+        shutil.copy2(SCRIPT, self.project / "scripts/build.sh")
+        shutil.copy2(SCRIPT.parent.parent / "cmake/FindMuJoCo.cmake", self.project / "cmake")
+        (self.project / "CMakeLists.txt").write_text('''
+cmake_minimum_required(VERSION 3.22)
+project(MuJoCoDiscovery NONE)
+list(PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+find_package(MuJoCo REQUIRED MODULE)
+file(WRITE "${CMAKE_BINARY_DIR}/mujoco-paths.txt"
+    "${MUJOCO_ROOT}\\n${MuJoCo_INCLUDE_DIR}\\n${MuJoCo_LIBRARY}\\n${MuJoCo_RUNTIME_LIBRARY}\\n")
+''')
+        self.env = dict(os.environ, CMAKE_GENERATOR="Unix Makefiles")
+        self.env.pop("MUJOCO_ROOT", None)
+        self.first_sdk = self.make_sdk("first SDK")
+        self.second_sdk = self.make_sdk("second SDK")
+
+    def make_sdk(self, name):
+        sdk = self.root / name
+        (sdk / "include/mujoco").mkdir(parents=True)
+        (sdk / "include/mujoco/mujoco.h").touch()
+        (sdk / "lib").mkdir()
+        (sdk / "lib/libmujoco.so").touch()
+        return sdk
+
+    def configure(self, sdk):
+        (self.project / "sharpa_mujoco.conf").write_text(f'mujoco_root="{sdk}"\n')
+
+    def build(self, **env):
+        return subprocess.run(
+            ["bash", str(self.project / "scripts/build.sh")], cwd=self.root,
+            env=dict(self.env, **env), text=True, capture_output=True, timeout=15,
+        )
+
+    def assert_sdk(self, result, sdk):
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        paths = (self.project / "build-linux/mujoco-paths.txt").read_text().splitlines()
+        self.assertEqual(paths, [str(sdk), str(sdk / "include"),
+                                 str(sdk / "lib/libmujoco.so"), str(sdk / "lib/libmujoco.so")])
+
+    def test_corrected_config_recovers_from_failed_first_build(self):
+        self.configure(self.root / "missing SDK")
+        self.assertNotEqual(self.build().returncode, 0)
+        self.configure(self.first_sdk)
+        self.assert_sdk(self.build(), self.first_sdk)
+
+    def test_changed_config_refreshes_all_sdk_paths(self):
+        self.configure(self.first_sdk)
+        self.assert_sdk(self.build(), self.first_sdk)
+        marker = self.project / "build-linux/previous-output.o"
+        marker.write_text("existing build output")
+        self.configure(self.second_sdk)
+        self.assert_sdk(self.build(), self.second_sdk)
+        self.assertTrue(marker.is_file())
+
+    def test_environment_override_is_refreshed_and_can_be_removed(self):
+        self.configure(self.first_sdk)
+        self.assert_sdk(self.build(), self.first_sdk)
+        self.assert_sdk(self.build(MUJOCO_ROOT=str(self.second_sdk)), self.second_sdk)
+        self.assert_sdk(self.build(), self.first_sdk)
+
+    def test_missing_new_sdk_does_not_reuse_previous_library(self):
+        self.configure(self.first_sdk)
+        self.assert_sdk(self.build(), self.first_sdk)
+        self.configure(self.root / "missing SDK")
+        self.assertNotEqual(self.build().returncode, 0)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Exercise simulated arms with bounded, common kinematic motion profiles.
+"""Exercise real robot arms with bounded, common kinematic motion profiles.
 
-Start zenohd, sharpa_platform, and sharpa_mujoco_simulator before running this
-file, with the arms in their neutral hanging pose and the torso stationary.
+Connect to the robot at 192.168.100.100 with zenohd and sharpa_platform running,
+with the arms in their neutral hanging pose and the torso stationary.
 Open the shoulders before exercising the joints around a fixed spread pose.
 On completion or interruption, return all joint groups to zero and leave them
 enabled for Platform to keep holding their position targets.
@@ -50,6 +50,7 @@ EXERCISE_POSE_DEG = (0.0, -75.0, 0.0, 25.0, 0.0, 0.0, 0.0)
 # Allow that error during exit without changing the test's arrival threshold.
 EXIT_RETURN_TOLERANCE_DEG = 2.0
 J1_SWEEP_DEG = (-45.0, 135.0, 0.0)
+J1_SWEEP_SHOULDER_OPEN_DEG = -10.0
 
 
 class ArmMotionRunner(MotionRunner):
@@ -92,16 +93,29 @@ class ArmMotionRunner(MotionRunner):
         return speed * 0.5 if profile in ("sine", "chirp") else speed
 
     def sweep_j1(self):
-        """Move J1 through fixed endpoints with all other arm targets at zero."""
-        print("[Arms] J1 sweep: -45 -> 135 -> 0deg; J2-J7 held at zero")
+        """Open the shoulders slightly, then move J1 through fixed endpoints."""
+        print(
+            "[Arms] J1 sweep: open shoulders to 10deg, then "
+            "-45 -> 135 -> 0deg; J2 held open and J3-J7 held at zero"
+        )
         if not self.return_to_zero():
             raise RuntimeError("arms did not reach zero before the J1 sweep")
         tolerance = max(self._args.return_tolerance_deg, EXIT_RETURN_TOLERANCE_DEG)
+
+        shoulder_target = math.radians(J1_SWEEP_SHOULDER_OPEN_DEG)
+        self._baselines = {
+            label: [0.0, shoulder_target, 0.0, 0.0, 0.0, 0.0, 0.0]
+            for label in self._baselines
+        }
+        self._return_stage = "opening shoulders for J1 sweep"
+        if not self.return_to_baseline(tolerance_deg=tolerance):
+            raise RuntimeError("arms did not open shoulders before the J1 sweep")
+
         for angle in J1_SWEEP_DEG:
             target = math.radians(angle)
             travel = max(abs(target - values[0]) for values in self._last_targets.values())
             self._baselines = {
-                label: [target, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+                label: [target, shoulder_target, 0.0, 0.0, 0.0, 0.0, 0.0]
                 for label in self._baselines
             }
             self._return_stage = f"J1 sweep to {angle:g}deg"

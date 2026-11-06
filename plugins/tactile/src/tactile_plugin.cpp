@@ -294,6 +294,14 @@ private:
             {
                 geom_ids_[index] =
                     mj_name2id(model, mjOBJ_GEOM, kFingers[index].surface_geom);
+                // Precise assets retain the native elastomer collision surface.
+                if (geom_ids_[index] < 0)
+                {
+                    std::string precise = kFingers[index].surface_geom;
+                    precise.replace(precise.find("_tactile_surface"),
+                                    std::string::npos, "_elastomer_collision_01");
+                    geom_ids_[index] = mj_name2id(model, mjOBJ_GEOM, precise.c_str());
+                }
                 site_ids_[index] =
                     mj_name2id(model, mjOBJ_SITE, kFingers[index].sensor_site);
                 if (geom_ids_[index] < 0 || site_ids_[index] < 0) valid = false;

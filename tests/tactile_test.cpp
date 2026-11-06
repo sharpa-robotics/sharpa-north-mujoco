@@ -208,8 +208,9 @@ bool model_test()
         for (const auto& [parent, prefix_value] : fingers)
         {
             const std::string prefix = prefix_value;
-            const int geom_id = mj_name2id(
-                model, mjOBJ_GEOM, (prefix + "surface").c_str());
+            const std::string surface = std::string(parent).substr(0, std::string(parent).size() - 3) +
+                "_elastomer_collision_01";
+            const int geom_id = mj_name2id(model, mjOBJ_GEOM, surface.c_str());
             const int site_id = mj_name2id(
                 model, mjOBJ_SITE, (prefix + "frame").c_str());
             if (geom_id < 0 || site_id < 0)

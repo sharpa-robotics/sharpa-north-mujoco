@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Exercise the simulated torso with common kinematic motion profiles.
+"""Exercise the real robot torso with common kinematic motion profiles.
+
+Connect to the robot at 192.168.100.100 with zenohd and sharpa_platform running.
 
 The script covers the five lower-body/waist axes and three neck axes through
 the production Zenoh topics used by ``torso_zenoh_test.py``. First spread both
@@ -25,6 +27,7 @@ from motion_session import MotionSession
 from kinematic_motion import (
     ChannelSpec,
     MotionRunner,
+    ProfilePlan,
     add_common_arguments,
     default_platform_root,
     load_dependencies,
@@ -70,6 +73,7 @@ ARM_SPREAD_DURATION = 4.0
 # threshold separate from the stricter torso return-to-baseline tolerance.
 ARM_CLEARANCE_TOLERANCE_DEG = 2.0
 ARM_HOLD_TOLERANCE_DEG = 5.0
+J1_SWEEP_PAUSE_SECONDS = 1.0
 
 
 class ArmClearanceRunner(ArmMotionRunner):
@@ -158,6 +162,37 @@ class TorsoMotionRunner(MotionRunner):
         if profile == "sweep" and any(axis in (0, 1) for axis in axes):
             return speed
         return speed * (2.0 if profile == "sweep" else 0.5)
+
+    def _plan_segment(self, profile, axes, deltas=None):
+        plan = super()._plan_segment(profile, axes, deltas)
+        if profile != "sweep" or 0 not in axes:
+            return plan
+
+        # Hold J1 at the outbound endpoint before starting the return leg.
+        # Keep publishing during the pause so torso/arm state checks remain
+        # active instead of blocking the control loop with a plain sleep.
+        midpoint = len(plan.times) // 2
+        pause_end = plan.times[midpoint] + J1_SWEEP_PAUSE_SECONDS
+        times = (
+            plan.times[:midpoint + 1]
+            + (pause_end,)
+            + tuple(
+                timestamp + J1_SWEEP_PAUSE_SECONDS
+                for timestamp in plan.times[midpoint + 1:]
+            )
+        )
+        targets = (
+            plan.targets[:midpoint + 1]
+            + (plan.targets[midpoint],)
+            + plan.targets[midpoint + 1:]
+        )
+        return ProfilePlan(
+            times,
+            targets,
+            plan.nominal_duration + J1_SWEEP_PAUSE_SECONDS,
+            plan.limited_seconds,
+            plan.return_start_time,
+        )
 
     def _publish(self, targets):
         if self._hold_callback is None:

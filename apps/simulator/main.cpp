@@ -65,6 +65,8 @@ void print_usage()
         << "  --feedback-rate <hz>    Override motor feedback rate\n"
         << "  --viewer                Enable the MuJoCo Viewer\n"
         << "  --no-viewer             Disable the MuJoCo Viewer\n"
+        << "  --check-viewer          Check graphics availability without starting devices\n"
+        << "  --benchmark-report <p>  Measure 1080p/60Hz after 10s warmup for 60s; keep running\n"
         << "  --with-platform         Require the installed Platform companion\n"
         << "  --without-platform      Do not launch Platform (bundled default: launch)\n"
         << "  --platform-config <id>  Select a bundled Platform configuration\n"
@@ -887,6 +889,8 @@ int main(int argc, char** argv)
     SimulatorConfig config = sharpa::mujoco::simulator::default_config();
     std::string config_path;
     bool explicit_config = false;
+    bool check_viewer = false;
+    std::string benchmark_report;
     enum class PlatformLaunchMode { Automatic, Required, Disabled };
     PlatformLaunchMode platform_mode = PlatformLaunchMode::Automatic;
     std::string platform_config;
@@ -957,6 +961,16 @@ int main(int argc, char** argv)
             else if (argument == "--config")
             {
                 ++index;
+            }
+            else if (argument == "--check-viewer")
+            {
+                check_viewer = true;
+            }
+            else if (argument == "--benchmark-report")
+            {
+                benchmark_report = require_value("--benchmark-report");
+                if (benchmark_report.empty() || benchmark_report.front() == '-')
+                    throw std::invalid_argument("--benchmark-report requires a file path");
             }
             else if (argument == "--enable-device")
             {
@@ -1055,15 +1069,33 @@ int main(int argc, char** argv)
     }
 
 #if !SHARPA_MUJOCO_HAS_VIEWER
-    if (config.viewer.enabled)
+    if (config.viewer.enabled || check_viewer || !benchmark_report.empty())
     {
         std::cerr
-            << "Configuration error: viewer.enabled=true, but this build does "
+            << "Configuration error: Viewer was requested, but this build does "
                "not include the Linux Viewer. Rebuild with "
                "SHARPA_MUJOCO_BUILD_VIEWER=ON or use --no-viewer.\n";
         return EXIT_FAILURE;
     }
 #endif
+
+#if SHARPA_MUJOCO_HAS_VIEWER
+    if (!benchmark_report.empty() && (!config.viewer.enabled || check_viewer))
+    {
+        std::cerr << "--benchmark-report requires Viewer and conflicts with --check-viewer\n";
+        return EXIT_FAILURE;
+    }
+    if (config.viewer.enabled || check_viewer)
+    {
+        std::string graphics_error;
+        if (!sharpa::mujoco::Viewer::check_environment(&graphics_error))
+        {
+            std::cerr << graphics_error << '\n';
+            return EXIT_FAILURE;
+        }
+    }
+#endif
+    if (check_viewer) return EXIT_SUCCESS;
 
     sharpa::mujoco::RuntimeConfig runtime_config;
     runtime_config.snapshot_rate_hz = config.snapshot_rate_hz;
@@ -1079,6 +1111,18 @@ int main(int argc, char** argv)
     if (!simulator.configure(runtime, config, false, &error))
     {
         std::cerr << error << '\n';
+        runtime.unload();
+        return EXIT_FAILURE;
+    }
+
+    // Reclaim a verified orphan before devices bind sockets it may still hold.
+    sharpa::mujoco::CompanionProcess companion;
+    if (with_platform &&
+        (platform_root.empty() || !companion.prepare(platform_root, platform_config, &error)))
+    {
+        std::cerr << "Platform preparation failed: "
+                  << (platform_root.empty() ? "runtime is not staged; rebuild with the Platform bundle" : error)
+                  << '\n';
         runtime.unload();
         return EXIT_FAILURE;
     }
@@ -1099,7 +1143,6 @@ int main(int argc, char** argv)
 
     std::signal(SIGINT, handle_signal);
     std::signal(SIGTERM, handle_signal);
-    sharpa::mujoco::CompanionProcess companion;
     if (with_platform)
     {
         if (platform_root.empty() || !companion.start(platform_root, platform_config, &error))
@@ -1134,6 +1177,12 @@ int main(int argc, char** argv)
         sharpa::mujoco::ViewerConfig viewer_config;
         viewer_config.sync_rate_hz = config.viewer.sync_rate_hz;
         viewer_config.vsync = config.viewer.vsync;
+        viewer_config.benchmark_report = benchmark_report;
+        if (!benchmark_report.empty())
+        {
+            viewer_config.sync_rate_hz = 60.0;
+            viewer_config.vsync = false;
+        }
         sharpa::mujoco::Viewer viewer(viewer_config);
         if (!viewer.run(runtime, keep_running, &viewer_error))
         {

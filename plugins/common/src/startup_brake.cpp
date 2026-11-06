@@ -46,8 +46,13 @@ bool StartupBrake::initialize(
     std::string missing;
     if (!runtime.read_native(
             [&](const mjModel* model, const mjData*) {
-                for (const std::string& equality_name : equality_names)
+                for (std::string& equality_name : equality_names)
                 {
+                    if (mj_name2id(model, mjOBJ_EQUALITY, equality_name.c_str()) < 0 &&
+                        mj_name2id(model, mjOBJ_EQUALITY, ("startup_" + equality_name).c_str()) >= 0)
+                    {
+                        equality_name = "startup_" + equality_name;
+                    }
                     if (mj_name2id(
                             model,
                             mjOBJ_EQUALITY,
