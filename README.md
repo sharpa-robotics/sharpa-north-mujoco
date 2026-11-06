@@ -1,8 +1,8 @@
-# Sharpa MuJoCo
+# Sharpa North MuJoCo
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-Sharpa MuJoCo simulates the **Sharpa D01** torso, dual arms, and dual dexterous
+Sharpa North MuJoCo simulates the **Sharpa D01** torso, dual arms, and dual dexterous
 hands in MuJoCo, with hardware-compatible UDP and CAN/CAN-FD device interfaces.
 
 The bundled **Sharpa Platform** runtime starts with the simulator and provides
@@ -41,8 +41,14 @@ to the MuJoCo model and return state feedback.
 
 ## Quick start
 
-Supports Linux x86_64 and aarch64. Run the commands from the root of a Git checkout
-of this project.
+Supports Linux x86_64 and aarch64. Clone the
+[sharpa-north-mujoco](https://github.com/sharpa-robotics/sharpa-north-mujoco)
+repository, then run the commands below from its root:
+
+```bash
+git clone https://github.com/sharpa-robotics/sharpa-north-mujoco.git
+cd sharpa-north-mujoco
+```
 
 ### 1. Prepare the environment
 

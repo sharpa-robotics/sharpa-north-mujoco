@@ -3,7 +3,7 @@
 [English](sdk.md) | [简体中文](sdk.zh-CN.md) · [返回 README](../README.zh-CN.md)
 
 使用官方 [North SDK](https://github.com/sharpa-robotics/sharpa-north-sdk) 的 C++ / Python API
-读取仿真状态、执行全身动作和 Home 任务。以下命令均在本仿真仓库根目录执行。
+读取仿真状态、执行全身动作和 Home 任务。以下命令均在 `sharpa-north-mujoco` 仓库根目录执行。
 
 ## 适用范围与版本
 

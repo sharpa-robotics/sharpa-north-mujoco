@@ -4,7 +4,7 @@
 
 Use the official [North SDK](https://github.com/sharpa-robotics/sharpa-north-sdk)
 C++ / Python APIs to read simulation state, run whole-body motion, and execute Home.
-Run all commands below from this simulation repository's root.
+Run all commands below from the `sharpa-north-mujoco` repository root.
 
 ## Scope and versions
 

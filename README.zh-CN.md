@@ -1,8 +1,8 @@
-# Sharpa MuJoCo
+# Sharpa North MuJoCo
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-Sharpa MuJoCo 是面向 **Sharpa D01** 的仿真环境，基于 MuJoCo 模拟躯干、双臂和
+Sharpa North MuJoCo 是面向 **Sharpa D01** 的仿真环境，基于 MuJoCo 模拟躯干、双臂和
 双灵巧手，提供兼容真机的 UDP 与 CAN/CAN-FD 设备接口。
 
 仓库随附 **Sharpa Platform** 运行时，由模拟器自动启动，为上层应用提供状态反馈
@@ -37,7 +37,14 @@ SDK 和 North Pilot 通过 Zenoh 与 Platform 通信；Platform 通过设备协�
 
 ## 快速开始
 
-支持 Linux x86_64 和 aarch64。以下命令均在通过 Git 克隆的项目根目录执行。
+支持 Linux x86_64 和 aarch64。先克隆
+[sharpa-north-mujoco](https://github.com/sharpa-robotics/sharpa-north-mujoco)
+仓库，再在仓库根目录执行后续命令：
+
+```bash
+git clone https://github.com/sharpa-robotics/sharpa-north-mujoco.git
+cd sharpa-north-mujoco
+```
 
 ### 1. 准备环境
 

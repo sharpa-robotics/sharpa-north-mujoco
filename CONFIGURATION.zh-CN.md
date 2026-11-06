@@ -1,4 +1,4 @@
-# Sharpa MuJoCo 配置参考
+# Sharpa North MuJoCo 配置参考
 
 [English](CONFIGURATION.md) | [简体中文](CONFIGURATION.zh-CN.md)
 

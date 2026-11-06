@@ -17,7 +17,7 @@
 
 ## 运行
 
-在 `sharpa_mujoco` 仓库根目录执行：
+在 `sharpa-north-mujoco` 仓库根目录执行：
 
 ```bash
 # 1：躯干
