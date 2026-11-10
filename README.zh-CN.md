@@ -5,12 +5,9 @@
 sharpa-north-mujoco 是面向 **Sharpa D01** 的仿真环境，基于 MuJoCo 模拟躯干、双臂和
 双灵巧手，提供兼容真机的 UDP 与 CAN/CAN-FD 设备接口。
 
-![sharpa-north-mujoco 演示](docs/media/sharpa-mujoco-demo.mp4)
+Mujoco仿真、基于Mujoco的虚幻5渲染和Sharpa North App效果展示：
 
-仿真、Sharpa North App 与真机动作效果展示。
-
-仓库随附 **Sharpa Platform** 运行时，由模拟器自动启动，为上层应用提供状态反馈
-和运动控制接口。
+https://github.com/user-attachments/assets/a71ac2f2-62c3-483b-a34a-ec6c08877c1b
 
 ## 核心特性
 
