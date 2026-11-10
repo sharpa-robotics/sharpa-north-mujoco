@@ -5,12 +5,9 @@
 sharpa-north-mujoco simulates the **Sharpa D01** torso, dual arms, and dual dexterous
 hands in MuJoCo, with hardware-compatible UDP and CAN/CAN-FD device interfaces.
 
-![sharpa-north-mujoco demo](docs/media/sharpa-mujoco-demo.mp4)
+Simulation in mujoco, Simulation with unreal5 and Sharpa North App demo:
 
-Simulation, Sharpa North App, and real robot demo.
-
-The bundled **Sharpa Platform** runtime starts with the simulator and provides
-state feedback and motion control to applications.
+https://github.com/user-attachments/assets/a71ac2f2-62c3-483b-a34a-ec6c08877c1b
 
 ## Key features
 
