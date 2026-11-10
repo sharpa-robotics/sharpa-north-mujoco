@@ -256,6 +256,77 @@ bool test_kinco_protocol()
                "Kinco TPDO mapping failed.");
 }
 
+bool test_kinco_store_control_parameters()
+{
+    using namespace sharpa::mujoco::plugins;
+    for (std::uint8_t node = 1; node <= 8; ++node)
+    {
+        chassis::KincoMotorEmulator motor(node);
+        common::CanFdFrame frame;
+        frame.can_interface = node % 2;
+        frame.can_id = 0x600U + node;
+        const auto write = [&](std::uint8_t command, std::uint16_t index,
+                               std::uint8_t subindex, std::uint32_t value) {
+            frame.data = {command, static_cast<std::uint8_t>(index),
+                          static_cast<std::uint8_t>(index >> 8U), subindex,
+                          0, 0, 0, 0};
+            common::write_le32(frame.data.data() + 4, value);
+            return motor.process(frame);
+        };
+        const auto mode = static_cast<std::uint8_t>(node <= 4 ? 1 : 0xFD);
+        auto reply = write(0x2F, 0x6060, 0, mode);
+        if (!require(reply && reply->data[0] == 0x60,
+                     "Store test could not configure drive mode.")) return false;
+        reply = write(0x23, 0x6083, 0, 123456);
+        if (!require(reply && reply->data[0] == 0x60,
+                     "Store test could not configure acceleration.")) return false;
+        const auto status = motor.status_word();
+        const auto control = motor.control_word();
+
+        // Platform saves parameters in Pre-Operational, before enabling.
+        // Repeating the trigger must not reset parameters or drive state.
+        for (int repeat = 0; repeat < 2; ++repeat)
+        {
+            reply = write(0x2F, 0x2FF0, 1, 1);
+            if (!require(reply && reply->can_id == 0x580U + node &&
+                         reply->can_interface == frame.can_interface &&
+                         reply->data == std::vector<std::uint8_t>{
+                             0x60, 0xF0, 0x2F, 1, 0, 0, 0, 0},
+                         "Kinco store-control-parameters acknowledgement failed.")) return false;
+            if (!require(!motor.enabled() &&
+                         motor.nmt_state() == chassis::KincoMotorEmulator::NmtState::pre_operational &&
+                         static_cast<std::uint8_t>(motor.mode()) == mode &&
+                         motor.status_word() == status && motor.control_word() == control &&
+                         motor.profile_acceleration() == 123456,
+                         "Kinco save changed live configuration or drive state.")) return false;
+        }
+
+        const auto rejects = [&](std::uint8_t command, std::uint8_t subindex,
+                                 std::uint32_t value, std::uint32_t error) {
+            const auto response = write(command, 0x2FF0, subindex, value);
+            return require(response && response->data[0] == 0x80 &&
+                           common::read_le32(response->data.data() + 4) == error,
+                           "Kinco store command returned the wrong abort code.");
+        };
+        if (!rejects(0x2B, 1, 1, 0x06070010U) ||
+            !rejects(0x23, 1, 1, 0x06070010U) ||
+            !rejects(0x2F, 0, 1, 0x06090011U) ||
+            !rejects(0x2F, 2, 1, 0x06090011U) ||
+            !rejects(0x2F, 1, 0, 0x06090030U) ||
+            !rejects(0x2F, 1, 2, 0x06090030U)) return false;
+
+        frame.can_id = 0;
+        frame.data = {0x01, node};
+        motor.process(frame);
+        frame.can_id = 0x600U + node;
+        reply = write(0x2B, 0x6040, 0, 0x0F);
+        if (!require(reply && reply->data[0] == 0x60 && motor.enabled() &&
+                     motor.profile_acceleration() == 123456,
+                     "Kinco could not enable after saving parameters.")) return false;
+    }
+    return true;
+}
+
 bool test_kinco_platform_homing()
 {
     using namespace sharpa::mujoco::plugins;
@@ -408,6 +479,7 @@ int main()
         !test_jiechang_protocol() ||
         !test_m42p_protocol() ||
         !test_kinco_protocol() ||
+        !test_kinco_store_control_parameters() ||
         !test_kinco_platform_homing() ||
         !test_jiechang_stretch_protocol())
     {

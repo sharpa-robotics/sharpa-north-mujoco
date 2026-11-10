@@ -281,6 +281,23 @@ def validate_runtime(root, bundle, manifest):
     return entrypoint, default_profile, profiles, profile_files
 
 
+def configure_simulation_calibration(root, profile_files):
+    """Use MuJoCo's zero offsets in the bundled D01-W HA1.2 profile only."""
+    for relative in {path for files in profile_files.values() for path in files}:
+        if relative != "config/sim/sim_north.D01W.HA12.json":
+            continue
+        path = root / relative
+        config = read_json(path)
+        plugins = config.get("plugins", [])
+        calibration = "config/sim/joint_zero_offsets.json"
+        require((root / calibration).is_file(), "Simulation joint zero offsets file is missing")
+        for plugin in plugins:
+            if plugin.get("common", {}).get("name") in (
+                "sharpa_arm_plugin", "sharpa_body_plugin"):
+                plugin["joint_zero_offsets_file"] = f"./{calibration}"
+        path.write_text(json.dumps(config, ensure_ascii=False, indent=4) + "\n")
+
+
 def stage_runtime(bundle, destination):
     bundle = bundle.resolve()
     bundle_spec(bundle)
@@ -323,6 +340,7 @@ def stage_runtime(bundle, destination):
                 require(target.resolve().is_relative_to(staged), f"Runtime overlay escapes staging: {target}")
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(path, target)
+            configure_simulation_calibration(staged, profile_files)
             shutil.copy2(manifest_path, staged / MANIFEST)
             descriptor = [
                 f"schema_version={manifest['schema_version']}",

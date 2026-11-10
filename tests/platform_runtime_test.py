@@ -180,6 +180,40 @@ class RuntimeArchiveTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "must target GEN_X86"):
                 runtime.check_package_available(wrong_bundle)
 
+    def test_d01_simulation_uses_bundled_zero_offsets_without_changing_hardware(self):
+        profiles = {"fixture": {
+            "config": "config/sim/sim_north.json",
+            "files": ["config/sim/sim_north.D01W.HA12.json"],
+        }}
+        production_path = "/userapp/sharpa/platform/calib/kinematic/joint_zero_offsets.json"
+        plugins = [{"common": {"name": name}, "joint_zero_offsets_file": production_path}
+                   for name in ("sharpa_arm_plugin", "sharpa_body_plugin", "other_plugin")]
+        for target, bundle_name in (("GEN_X86", "linux-x86_64"), ("GEN_THOR", "linux-aarch64")):
+            with self.subTest(target=target), tempfile.TemporaryDirectory() as temporary:
+                base = Path(temporary)
+                source = self.production(base, target, profiles)
+                profile = Path(profiles["fixture"]["files"][0])
+                (source / profile).write_text(json.dumps({"plugins": plugins}))
+                hardware = source / "config/sharpa_arm_plugin_config.json"
+                hardware.write_text(json.dumps({"joint_zero_offsets_file": production_path}))
+                bundle = base / bundle_name
+                self.package(source, bundle, profiles)
+                destination = base / "stage/sharpa_platform"
+                runtime.stage_runtime(bundle, destination)
+                staged = json.loads((destination / profile).read_text())["plugins"]
+                for plugin in staged[:2]:
+                    self.assertEqual(plugin["joint_zero_offsets_file"], "./config/sim/joint_zero_offsets.json")
+                self.assertEqual(staged[2], plugins[2])
+                self.assertEqual((destination / hardware.relative_to(source)).read_bytes(), hardware.read_bytes())
+                values = json.loads((destination / "config/sim/joint_zero_offsets.json").read_text())["joint_zero_offsets_rad"]
+                expected = {f"{prefix}_joint_{i}" for prefix, count in
+                            (("left_arm", 7), ("right_arm", 7), ("body", 5), ("neck", 3))
+                            for i in range(1, count + 1)}
+                self.assertEqual(set(values), expected)
+                self.assertTrue(all(value == 0 for value in values.values()))
+                runtime.stage_runtime(bundle, destination)
+                self.assertEqual(json.loads((destination / profile).read_text())["plugins"], staged)
+
     def test_runtime_overlay_survives_restaging_and_invalidates_cache(self):
         with tempfile.TemporaryDirectory(prefix="sharpa-overlay-test-") as temporary:
             base = Path(temporary)

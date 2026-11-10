@@ -18,6 +18,7 @@ constexpr std::uint32_t kAbortReadOnly = 0x06010002U;
 constexpr std::uint32_t kAbortWriteOnly = 0x06010001U;
 constexpr std::uint32_t kAbortNoSubindex = 0x06090011U;
 constexpr std::uint32_t kAbortTypeMismatch = 0x06070010U;
+constexpr std::uint32_t kAbortValueRange = 0x06090030U;
 constexpr std::uint32_t kAbortMapping = 0x06040041U;
 constexpr std::uint32_t kAbortGeneral = 0x08000000U;
 constexpr std::uint8_t kCanRtrFlag = 0x02U;
@@ -393,6 +394,18 @@ std::uint32_t KincoMotorEmulator::write_object(
     std::uint32_t value,
     std::size_t width) noexcept
 {
+    if (index == 0x2FF0U)
+    {
+        if (subindex != 1U) return kAbortNoSubindex;
+        if (width != 1U) return kAbortTypeMismatch;
+        if (value != 1U) return kAbortValueRange;
+        // Platform saves Kinco control parameters before enabling. The
+        // emulator retains them in memory for this session; acknowledge the
+        // trigger without resetting configuration, enabling or moving motors.
+        // Power-cycle persistence is not simulated.
+        return 0;
+    }
+
     const auto object = read_object(index, subindex);
     if (!object)
     {
