@@ -218,6 +218,8 @@ An **experimental preview** with Unreal Engine (UE) rendering is also available,
 
 [Download the Linux preview (AvatarSimWorld)](https://packages.sharpa.com/repository/raw-releases/apps/sim/AvatarSimWorld-Linux.tar.zst)
 
+The preview requires Zenoh; see the Zenoh installation instructions under [Prepare the environment](#1-prepare-the-environment) above.
+
 Run the following commands in the extracted directory:
 
 ```bash

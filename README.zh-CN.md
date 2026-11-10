@@ -205,6 +205,8 @@ python examples/whole_body_motion.py
 
 [下载 Linux 体验版（AvatarSimWorld）](https://packages.sharpa.com/repository/raw-releases/apps/sim/AvatarSimWorld-Linux.tar.zst)
 
+体验版依赖 Zenoh，安装方法见上文[准备环境](#1-准备环境)中的 Zenoh 安装说明。
+
 在解压后的目录执行以下命令：
 
 ```bash
