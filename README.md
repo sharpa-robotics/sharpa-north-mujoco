@@ -1,9 +1,13 @@
-# Sharpa North MuJoCo
+# sharpa-north-mujoco
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-Sharpa North MuJoCo simulates the **Sharpa D01** torso, dual arms, and dual dexterous
+sharpa-north-mujoco simulates the **Sharpa D01** torso, dual arms, and dual dexterous
 hands in MuJoCo, with hardware-compatible UDP and CAN/CAN-FD device interfaces.
+
+![sharpa-north-mujoco demo](docs/media/sharpa-mujoco-demo.mp4)
+
+Simulation, Sharpa North App, and real robot demo.
 
 The bundled **Sharpa Platform** runtime starts with the simulator and provides
 state feedback and motion control to applications.
@@ -15,12 +19,12 @@ state feedback and motion control to applications.
 - **Whole-body simulation**: torso, dual arms, and dual dexterous hands in one
   MuJoCo model.
 - **Two control options**: programmatic control with North SDK or graphical
-  control with North Pilot.
+  control with Sharpa North App.
 
 ## System architecture
 
 ```text
-C++ / Python application       North Pilot
+C++ / Python application     Sharpa North App
           |                        |
       North SDK                    |
           +-----------+------------+
@@ -35,7 +39,7 @@ C++ / Python application       North Pilot
              MuJoCo runtime and model
 ```
 
-SDK and North Pilot communicate with Platform over Zenoh. Platform controls
+SDK and Sharpa North App communicate with Platform over Zenoh. Platform controls
 the simulation through device protocols. Device plugins map protocol commands
 to the MuJoCo model and return state feedback.
 
@@ -166,7 +170,7 @@ python examples/whole_body_motion.py
 The robot squats, raises its arms, and forms a thumbs-up. It holds the pose
 until Ctrl+C, then returns to its starting pose and exits.
 
-The simulation environment is now ready. Choose North SDK or North Pilot below
+The simulation environment is now ready. Choose North SDK or Sharpa North App below
 to control the simulation.
 
 ## Control the simulation
@@ -181,7 +185,7 @@ Official project: [sharpa-north-sdk](https://github.com/sharpa-robotics/sharpa-n
 
 → [Connect to the simulation with SDK](docs/sdk.md)
 
-### North Pilot
+### Sharpa North App
 
 Use the desktop graphical interface to connect to the simulation, view device
 and joint state, and execute Home.
@@ -189,7 +193,7 @@ Download and install the `production` build to get started.
 
 Official project: [sharpa-north-app](https://github.com/sharpa-robotics/sharpa-north-app).
 
-→ [Connect to the simulation with North Pilot](docs/north-pilot.md)
+→ [Connect to the simulation with Sharpa North App](docs/sharpanorth-app.md)
 
 Use one source of motion commands at a time. Finish the current task before
 switching controllers or closing the Viewer. Closing the Viewer stops Platform;
@@ -210,6 +214,12 @@ press Ctrl+C in the router terminal to stop the router.
 | Platform cannot select its device profile | Check that `device.conf` uses model `D01W` and batch `HA12`. |
 | Port 7449 is in use | Check the existing router; use this repository's `resources/zenoh/router.json`. |
 | Viewer opens but the controller has no state | Check Platform startup output and the router configuration. |
+
+## UE visualization preview
+
+An **experimental preview** with Unreal Engine (UE) rendering is also available, powered by `sharpa-north-mujoco`. You can also integrate your own renderer with this repository.
+
+[Download the Linux preview (AvatarSimWorld)](https://packages.sharpa.com/repository/raw-releases/apps/sim/AvatarSimWorld-Linux.tar.zst)
 
 ## More documentation
 

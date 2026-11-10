@@ -1,9 +1,13 @@
-# Sharpa North MuJoCo
+# sharpa-north-mujoco
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-Sharpa North MuJoCo 是面向 **Sharpa D01** 的仿真环境，基于 MuJoCo 模拟躯干、双臂和
+sharpa-north-mujoco 是面向 **Sharpa D01** 的仿真环境，基于 MuJoCo 模拟躯干、双臂和
 双灵巧手，提供兼容真机的 UDP 与 CAN/CAN-FD 设备接口。
+
+![sharpa-north-mujoco 演示](docs/media/sharpa-mujoco-demo.mp4)
+
+仿真、Sharpa North App 与真机动作效果展示。
 
 仓库随附 **Sharpa Platform** 运行时，由模拟器自动启动，为上层应用提供状态反馈
 和运动控制接口。
@@ -12,12 +16,12 @@ Sharpa North MuJoCo 是面向 **Sharpa D01** 的仿真环境，基于 MuJoCo 模
 
 - **真机接口兼容**：模拟 D01 的 UDP 与 CAN/CAN-FD 通信、设备状态和关节指令。
 - **全身仿真**：在同一 MuJoCo 模型中运行躯干、双臂和双灵巧手。
-- **两种控制入口**：通过 North SDK 编程控制，或使用 North Pilot 图形界面。
+- **两种控制入口**：通过 North SDK 编程控制，或使用 Sharpa North App 图形界面。
 
 ## 系统架构
 
 ```text
-C++ / Python 应用              North Pilot
+C++ / Python 应用            Sharpa North App
         │                          │
     North SDK                      │
         └────────────┬─────────────┘
@@ -32,7 +36,7 @@ C++ / Python 应用              North Pilot
               MuJoCo 运行时与模型
 ```
 
-SDK 和 North Pilot 通过 Zenoh 与 Platform 通信；Platform 通过设备协议控制仿真。
+SDK 和 Sharpa North App 通过 Zenoh 与 Platform 通信；Platform 通过设备协议控制仿真。
 设备插件将协议指令映射到 MuJoCo 模型，并返回状态反馈。
 
 ## 快速开始
@@ -157,7 +161,7 @@ python examples/whole_body_motion.py
 
 机器人会下蹲、抬臂并竖拇指，保持姿态直到按 Ctrl+C，随后回到起始姿态并退出。
 
-至此，仿真环境已准备就绪。如需进一步控制，可选择下方的 North SDK 或 North Pilot。
+至此，仿真环境已准备就绪。如需进一步控制，可选择下方的 North SDK 或 Sharpa North App。
 
 ## 控制仿真
 
@@ -170,14 +174,14 @@ python examples/whole_body_motion.py
 
 → [使用 SDK 连接仿真](docs/sdk.zh-CN.md)
 
-### North Pilot
+### Sharpa North App
 
 通过桌面图形界面连接仿真、查看设备和关节状态，以及执行 Home，适合交互操作。
 下载并安装 `production` 版本后即可使用。
 
 官方项目：[sharpa-north-app](https://github.com/sharpa-robotics/sharpa-north-app)。
 
-→ [使用 North Pilot 连接仿真](docs/north-pilot.zh-CN.md)
+→ [使用 Sharpa North App 连接仿真](docs/sharpanorth-app.zh-CN.md)
 
 同一时间只使用一个运动指令来源。切换或退出前，先结束当前控制任务。
 关闭 Viewer 会一并退出 Platform；路由器需要在其终端按 Ctrl+C 停止。
@@ -197,6 +201,12 @@ python examples/whole_body_motion.py
 | Platform 无法选择设备配置 | 检查 `device.conf` 中的型号和批次为 `D01W` / `HA12`。 |
 | 7449 端口被占用 | 检查已有路由器，使用本仓库的 `resources/zenoh/router.json` 配置。 |
 | Viewer 打开但控制端没有状态 | 检查 Platform 启动输出和路由器配置。 |
+
+## UE 可视化体验版
+
+我们还提供基于 Unreal Engine（UE）渲染的可视化仿真**体验版**，底层使用 `sharpa-north-mujoco`。用户也可基于本仓库适配自己的渲染器。
+
+[下载 Linux 体验版（AvatarSimWorld）](https://packages.sharpa.com/repository/raw-releases/apps/sim/AvatarSimWorld-Linux.tar.zst)
 
 ## 更多文档
 

@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
                       << (stopped ? stopped.value().message : stopped.error().message) << '\n';
         }
         std::cerr << "Start outcome was not confirmed. Inspect Master with sdk_read_state "
-                     "before another run; stop home from North Pilot if still running. "
+                     "before another run; stop home from Sharpa North App if still running. "
                      "Do not retry start_task blindly.\n";
         sdk->close(); return 1;
     }

@@ -78,7 +78,7 @@ process is already running or only MuJoCo is required.
 Platform is supervised as a separate process. Startup failure rolls back MuJoCo
 startup; later exit is reported; shutdown signals and reaps only the owned
 process group. A per-user lock rejects duplicate owners. Processes started
-outside Sharpa North MuJoCo are neither detected nor terminated.
+outside sharpa-north-mujoco are neither detected nor terminated.
 
 The C ABI exposes
 `sharpa_mujoco_companion_create/start/status/stop/destroy` for embedding hosts.

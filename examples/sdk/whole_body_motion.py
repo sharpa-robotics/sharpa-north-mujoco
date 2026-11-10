@@ -270,7 +270,7 @@ def main(args):
             except Exception as exc:
                 report["cleanup_error"] = str(exc)
                 print("Could not confirm task cleanup. Inspect Master with sdk_read_state; "
-                      "stop the inference task from North Pilot if it is still running. "
+                      "stop the inference task from Sharpa North App if it is still running. "
                       "Do not retry start_task blindly.", file=sys.stderr)
                 raise
             finally:
