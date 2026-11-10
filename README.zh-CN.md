@@ -205,6 +205,16 @@ python examples/whole_body_motion.py
 
 [下载 Linux 体验版（AvatarSimWorld）](https://packages.sharpa.com/repository/raw-releases/apps/sim/AvatarSimWorld-Linux.tar.zst)
 
+在解压后的目录执行以下命令：
+
+```bash
+# 初始化虚拟 CAN 接口
+sudo bash AvatarSimWorld/Binaries/Linux/sharpa_mujoco/scripts/setup_vcan.sh
+
+# 启动程序
+bash AvatarSimWorld.sh
+```
+
 ## 更多文档
 
 - [仿真配置参考](CONFIGURATION.zh-CN.md)

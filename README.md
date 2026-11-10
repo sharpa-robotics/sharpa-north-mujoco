@@ -218,6 +218,16 @@ An **experimental preview** with Unreal Engine (UE) rendering is also available,
 
 [Download the Linux preview (AvatarSimWorld)](https://packages.sharpa.com/repository/raw-releases/apps/sim/AvatarSimWorld-Linux.tar.zst)
 
+Run the following commands in the extracted directory:
+
+```bash
+# Initialize virtual CAN interfaces
+sudo bash AvatarSimWorld/Binaries/Linux/sharpa_mujoco/scripts/setup_vcan.sh
+
+# Start the application
+bash AvatarSimWorld.sh
+```
+
 ## More documentation
 
 - [Simulator configuration](CONFIGURATION.md)
