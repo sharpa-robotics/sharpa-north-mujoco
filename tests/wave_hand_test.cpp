@@ -116,7 +116,7 @@ bool send_all(int socket, const std::vector<std::uint8_t>& bytes)
     while (sent < bytes.size())
     {
         const ssize_t result =
-            ::send(socket, bytes.data() + sent, bytes.size() - sent, 0);
+            ::send(socket, bytes.data() + sent, bytes.size() - sent, MSG_NOSIGNAL);
         if (result <= 0) return false;
         sent += static_cast<std::size_t>(result);
     }
@@ -1238,6 +1238,7 @@ bool lifecycle_test()
                      "Duplicate Wave endpoints were accepted."))
             return false;
 
+        int shutdown_client = -1;
         if (iteration == 0)
         {
             const auto connect_client = [&config](std::uint16_t port) {
@@ -1256,22 +1257,60 @@ bool lifecycle_test()
                            : -1;
             };
             const int first = connect_client(config.tcp_port);
-            const int replacement = connect_client(config.tcp_port);
-            if (!require(first >= 0 && replacement >= 0 &&
-                             ltc_request(replacement, 0x8004),
-                         "TCP replacement session did not become active."))
-                return false;
-            std::this_thread::sleep_for(std::chrono::milliseconds(20));
-            std::uint8_t byte = 0;
-            const ssize_t first_result =
-                ::recv(first, &byte, sizeof(byte), MSG_DONTWAIT);
-            if (!require(first_result == 0 ||
-                             (first_result < 0 && errno != EAGAIN &&
-                              errno != EWOULDBLOCK),
-                         "Old TCP session was not replaced."))
-                return false;
-            ::close(first);
-            ::close(replacement);
+            const int diagnostic = connect_client(config.tcp_port);
+            const int fragmented = connect_client(config.tcp_port);
+            for (int socket : {first, diagnostic, fragmented})
+            {
+                timeval timeout{};
+                timeout.tv_sec = 1;
+                if (socket >= 0)
+                    ::setsockopt(socket, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+            }
+            if (!require(first >= 0 && diagnostic >= 0 && fragmented >= 0,
+                         "Concurrent TCP connections failed.")) return false;
+            wave_hand::LtcFrame partial_request;
+            partial_request.command = 0x8004;
+            std::vector<std::uint8_t> encoded;
+            if (!wave_hand::encode_ltc_frame(partial_request, encoded) ||
+                !send_all(fragmented, {encoded.begin(), encoded.begin() + 5})) return false;
+            // A partial request on one socket must not affect another parser.
+            for (int query = 0; query < 5; ++query)
+                if (!require(ltc_request(diagnostic, 0x8026) &&
+                                 ltc_request(first, 0x8005, {10}) &&
+                                 ltc_request(first, 0x8005, {13}),
+                             "Fault query interrupted the control connection.")) return false;
+            if (!send_all(fragmented, {encoded.begin() + 5, encoded.end()})) return false;
+            std::array<std::uint8_t, 256> response{};
+            const ssize_t response_size = ::recv(
+                fragmented, response.data(), response.size(), 0);
+            wave_hand::LtcFrame parsed;
+            if (!require(response_size > 0 && wave_hand::decode_ltc_frame(
+                             response.data(), static_cast<std::size_t>(response_size), parsed) &&
+                             parsed.command == 0x8004 && parsed.response_code == 0,
+                         "Fragmented request was corrupted by another connection.")) return false;
+            const int slow = connect_client(config.tcp_port);
+            const int receive_buffer = 1024;
+            if (!require(slow >= 0, "Slow client connect failed.")) return false;
+            ::setsockopt(slow, SOL_SOCKET, SO_RCVBUF, &receive_buffer, sizeof(receive_buffer));
+            wave_hand::LtcFrame parameter_request;
+            parameter_request.command = 0x8052;
+            std::vector<std::uint8_t> parameter_frame;
+            if (!wave_hand::encode_ltc_frame(parameter_request, parameter_frame)) return false;
+            std::vector<std::uint8_t> pipeline;
+            for (int request = 0; request < 4000; ++request)
+                pipeline.insert(pipeline.end(), parameter_frame.begin(), parameter_frame.end());
+            if (!send_all(slow, pipeline)) return false;
+            for (int request = 0; request < 10; ++request)
+                if (!require(ltc_request(first, 0x8004),
+                             "A non-reading client blocked the control connection.")) return false;
+            ::close(slow);
+            ::close(diagnostic);
+            ::close(fragmented);
+            if (!require(ltc_request(first, 0x8005, {10}) &&
+                             ltc_request(first, 0x8005, {13}),
+                         "Closing diagnostic connections interrupted control.")) return false;
+            // Leave a live session for stop() to close and the leak check to cover.
+            shutdown_client = first;
 
             const int https = connect_client(8443);
             bool https_closed = false;
@@ -1300,6 +1339,13 @@ bool lifecycle_test()
         const auto started = std::chrono::steady_clock::now();
         plugin.stop();
         const auto stop_time = std::chrono::steady_clock::now() - started;
+        if (shutdown_client >= 0)
+        {
+            std::uint8_t byte = 0;
+            const ssize_t received = ::recv(shutdown_client, &byte, 1, 0);
+            ::close(shutdown_client);
+            if (!require(received == 0, "Stop did not close the active TCP session.")) return false;
+        }
         if (!require(stop_time < std::chrono::milliseconds(200),
                      "Wave plugin stop exceeded 200 ms."))
             return false;

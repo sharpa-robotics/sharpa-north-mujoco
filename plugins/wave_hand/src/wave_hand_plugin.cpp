@@ -267,27 +267,6 @@ bool read_float_be(const std::vector<std::uint8_t>& payload,
     return std::isfinite(value);
 }
 
-bool send_all(int socket, const std::uint8_t* data, std::size_t size)
-{
-    std::size_t sent = 0;
-    while (sent < size)
-    {
-        const ssize_t result =
-            ::send(socket, data + sent, size - sent, MSG_NOSIGNAL);
-        if (result > 0)
-        {
-            sent += static_cast<std::size_t>(result);
-            continue;
-        }
-        if (result < 0 && errno == EINTR)
-        {
-            continue;
-        }
-        return false;
-    }
-    return true;
-}
-
 }  // namespace
 
 class WaveHandPlugin::Impl
@@ -471,9 +450,9 @@ public:
         }
         command_socket_.close();
         tx_socket_.close();
-        close_tcp_sockets();
         if (tcp_thread_.joinable()) tcp_thread_.join();
         if (https_thread_.joinable()) https_thread_.join();
+        close_tcp_sockets();
         if (command_thread_.joinable()) command_thread_.join();
         if (feedback_thread_.joinable()) feedback_thread_.join();
         if (heartbeat_thread_.joinable()) heartbeat_thread_.join();
@@ -695,7 +674,8 @@ private:
 
     bool open_tcp_server(std::string* error)
     {
-        const int socket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+        const int socket = ::socket(
+            AF_INET, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, IPPROTO_TCP);
         if (socket < 0)
         {
             return fail("Wave hand TCP socket() failed: " +
@@ -704,10 +684,6 @@ private:
         }
         const int reuse = 1;
         ::setsockopt(socket, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
-        timeval timeout{};
-        timeout.tv_usec = 100000;
-        ::setsockopt(socket, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
-
         sockaddr_in address{};
         address.sin_family = AF_INET;
         address.sin_port = htons(config_.tcp_port);
@@ -715,7 +691,7 @@ private:
                 1 ||
             ::bind(socket, reinterpret_cast<const sockaddr*>(&address),
                    sizeof(address)) != 0 ||
-            ::listen(socket, 1) != 0)
+            ::listen(socket, SOMAXCONN) != 0)
         {
             const int code = errno;
             ::close(socket);
@@ -759,12 +735,6 @@ private:
 
     void close_tcp_sockets() noexcept
     {
-        const int client = client_fd_.exchange(-1);
-        if (client >= 0)
-        {
-            ::shutdown(client, SHUT_RDWR);
-            ::close(client);
-        }
         const int listener = listen_fd_.exchange(-1);
         if (listener >= 0)
         {
@@ -804,22 +774,40 @@ private:
 
     void tcp_loop()
     {
-        LtcStreamParser parser;
+        // The SDK and device diagnostics use independent connections. Keep
+        // framing and backpressure local to each peer; one slow or disconnected
+        // client must not replace or block another client's command channel.
+        struct Session
+        {
+            explicit Session(int socket) : fd(socket) {}
+            ~Session() { ::close(fd); }
+            Session(const Session&) = delete;
+            Session& operator=(const Session&) = delete;
+            int fd;
+            LtcStreamParser parser;
+            std::vector<std::uint8_t> output;
+            bool read_closed = false;
+        };
+        constexpr std::size_t max_clients = 64;
+        constexpr std::size_t max_pending_bytes = 1024U * 1024U;
+        std::map<int, Session> clients;
         while (alive_.load())
         {
             const int listener = listen_fd_.load();
             if (listener < 0) break;
-            const int client = client_fd_.load();
-            pollfd descriptors[2]{
-                {listener, POLLIN, 0},
-                {client, POLLIN, 0},
-            };
-            const nfds_t count = client >= 0 ? 2U : 1U;
-            const int ready = ::poll(descriptors, count, 100);
+            std::vector<pollfd> descriptors{{listener, POLLIN, 0}};
+            for (const auto& entry : clients)
+            {
+                const auto& session = entry.second;
+                descriptors.push_back({session.fd,
+                    static_cast<short>((session.read_closed ? 0 : POLLIN) |
+                        (!session.output.empty() ? POLLOUT : 0)), 0});
+            }
+            const int ready = ::poll(descriptors.data(), descriptors.size(), 100);
             if (ready < 0)
             {
                 if (errno == EINTR) continue;
-                return;
+                break;
             }
             if (ready == 0) continue;
 
@@ -827,70 +815,74 @@ private:
             {
                 sockaddr_in peer{};
                 socklen_t peer_size = sizeof(peer);
-                const int accepted = ::accept(
-                    listener, reinterpret_cast<sockaddr*>(&peer), &peer_size);
+                const int accepted = ::accept4(
+                    listener, reinterpret_cast<sockaddr*>(&peer), &peer_size,
+                    SOCK_NONBLOCK | SOCK_CLOEXEC);
                 if (accepted >= 0)
                 {
                     char peer_ip[INET_ADDRSTRLEN]{};
-                    if (::inet_ntop(AF_INET, &peer.sin_addr, peer_ip,
+                    if (clients.size() < max_clients &&
+                        ::inet_ntop(AF_INET, &peer.sin_addr, peer_ip,
                                     sizeof(peer_ip)) != nullptr &&
                         config_.sdk_ip == peer_ip)
-                    {
-                        timeval timeout{};
-                        timeout.tv_usec = 100000;
-                        ::setsockopt(accepted, SOL_SOCKET, SO_RCVTIMEO, &timeout,
-                                     sizeof(timeout));
-                        const int old = client_fd_.exchange(accepted);
-                        if (old >= 0)
-                        {
-                            ::shutdown(old, SHUT_RDWR);
-                            ::close(old);
-                        }
-                        parser.reset();
-                    }
+                        clients.try_emplace(accepted, accepted);
                     else
-                    {
                         ::close(accepted);
-                    }
                 }
             }
 
-            if (client >= 0 &&
-                (descriptors[1].revents & (POLLIN | POLLERR | POLLHUP)) != 0)
+            for (std::size_t i = 1; i < descriptors.size(); ++i)
             {
-                std::array<std::uint8_t, 4096> buffer{};
-                const ssize_t received =
-                    ::recv(client, buffer.data(), buffer.size(), 0);
-                if (received <= 0)
+                const auto& descriptor = descriptors[i];
+                auto entry = clients.find(descriptor.fd);
+                if (entry == clients.end()) continue;
+                auto& session = entry->second;
+                bool closed = (descriptor.revents & (POLLERR | POLLNVAL)) != 0;
+                if (!closed && !session.read_closed &&
+                    (descriptor.revents & (POLLIN | POLLHUP)) != 0)
                 {
-                    close_client(client);
-                    parser.reset();
-                    continue;
-                }
-                for (const LtcFrame& request : parser.push(
-                         buffer.data(), static_cast<std::size_t>(received)))
-                {
-                    const LtcFrame response = handle_ltc(request);
-                    std::vector<std::uint8_t> encoded;
-                    if (!encode_ltc_frame(response, encoded) ||
-                        !send_all(client, encoded.data(), encoded.size()))
+                    std::array<std::uint8_t, 4096> buffer{};
+                    const ssize_t received = ::recv(
+                        session.fd, buffer.data(), buffer.size(), 0);
+                    if (received > 0)
                     {
-                        close_client(client);
-                        parser.reset();
-                        break;
+                        for (const auto& request : session.parser.push(
+                                 buffer.data(), static_cast<std::size_t>(received)))
+                        {
+                            std::vector<std::uint8_t> encoded;
+                            if (!encode_ltc_frame(handle_ltc(request), encoded) ||
+                                session.output.size() + encoded.size() > max_pending_bytes)
+                            {
+                                closed = true;
+                                break;
+                            }
+                            session.output.insert(session.output.end(),
+                                                  encoded.begin(), encoded.end());
+                        }
                     }
+                    else if (received == 0)
+                        session.read_closed = true;
+                    else if (errno != EINTR && errno != EAGAIN && errno != EWOULDBLOCK)
+                        closed = true;
                 }
+                // Nonblocking writes also handle partial responses without
+                // holding up service of the remaining sockets.
+                if (!closed && !session.output.empty())
+                {
+                    const ssize_t sent = ::send(
+                        session.fd, session.output.data(), session.output.size(), MSG_NOSIGNAL);
+                    if (sent > 0)
+                    {
+                        session.output.erase(session.output.begin(),
+                            session.output.begin() + sent);
+                    }
+                    else if (sent == 0 ||
+                             (errno != EINTR && errno != EAGAIN && errno != EWOULDBLOCK))
+                        closed = true;
+                }
+                if (closed || (session.read_closed && session.output.empty()))
+                    clients.erase(entry);
             }
-        }
-    }
-
-    void close_client(int client) noexcept
-    {
-        int expected = client;
-        if (client_fd_.compare_exchange_strong(expected, -1))
-        {
-            ::shutdown(client, SHUT_RDWR);
-            ::close(client);
         }
     }
 
@@ -1525,7 +1517,6 @@ private:
     common::UdpSocket command_socket_;
     common::UdpSocket tx_socket_;
     std::atomic<int> listen_fd_{-1};
-    std::atomic<int> client_fd_{-1};
     std::atomic<int> https_listen_fd_{-1};
     std::thread tcp_thread_;
     std::thread https_thread_;
