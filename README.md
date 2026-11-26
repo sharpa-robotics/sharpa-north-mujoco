@@ -216,6 +216,10 @@ press Ctrl+C in the router terminal to stop the router.
 
 An **experimental preview** with Unreal Engine (UE) rendering is also available, powered by `sharpa-north-mujoco`. You can also integrate your own renderer with this repository.
 
+The preview also supports the Sharpa VR teleoperation application. It streams rendered camera views to the headset, receives control commands for the simulated D01, and returns robot state through Sharpa Platform. This allows users to use the VR application with a simulated robot instead of a physical D01.
+
+https://github.com/user-attachments/assets/d176e63c-eea5-4fb6-ada0-f4607e995fc9
+
 [Download the Linux preview (AvatarSimWorld)](https://packages.sharpa.com/repository/raw-releases/apps/sim/AvatarSimWorld-Linux.tar.zst)
 
 The preview requires Zenoh; see the Zenoh installation instructions under [Prepare the environment](#1-prepare-the-environment) above.
