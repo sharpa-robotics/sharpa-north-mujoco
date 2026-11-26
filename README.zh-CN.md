@@ -203,6 +203,10 @@ python examples/whole_body_motion.py
 
 我们还提供基于 Unreal Engine（UE）渲染的可视化仿真**体验版**，底层使用 `sharpa-north-mujoco`。用户也可基于本仓库适配自己的渲染器。
 
+体验版还支持 Sharpa VR 遥操作应用。它将渲染的相机画面传输至头显，接收用于控制仿真 D01 的指令，并通过 Sharpa Platform 回传机器人状态。用户因此可以通过 VR 应用操控仿真机器人，无需使用实体 D01。
+
+https://github.com/user-attachments/assets/d176e63c-eea5-4fb6-ada0-f4607e995fc9
+
 [下载 Linux 体验版（AvatarSimWorld）](https://packages.sharpa.com/repository/raw-releases/apps/sim/AvatarSimWorld-Linux.tar.zst)
 
 体验版依赖 Zenoh，安装方法见上文[准备环境](#1-准备环境)中的 Zenoh 安装说明。
